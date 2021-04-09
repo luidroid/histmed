@@ -20,6 +20,9 @@ import EditIcon from "@material-ui/icons/Edit";
 import AssignmentIndIcon from "@material-ui/icons/AssignmentInd";
 import DeleteIcon from "@material-ui/icons/Delete";
 
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -69,6 +72,16 @@ export default function PatientCard(props: {
     setOpen(false);
   };
 
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleCloseMenu = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <div>
       <Card className={classes.rootCard}>
@@ -81,9 +94,22 @@ export default function PatientCard(props: {
             ></Avatar>
           }
           action={
-            <IconButton aria-label="settings">
-              <MoreVertIcon />
-            </IconButton>
+            <div>
+              <IconButton aria-label="settings" onClick={handleClick}>
+                <MoreVertIcon />
+              </IconButton>
+              <Menu
+                id="simple-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleCloseMenu}
+              >
+                <MenuItem onClick={handleCloseMenu}>Profile</MenuItem>
+                <MenuItem onClick={handleCloseMenu}>My account</MenuItem>
+                <MenuItem onClick={handleCloseMenu}>Logout</MenuItem>
+              </Menu>
+            </div>
           }
           title={`${props.patient.firstname} ${props.patient.lastname}`}
           subheader={dtBirth}
