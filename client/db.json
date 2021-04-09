@@ -1,0 +1,123 @@
+{
+  "patients": [
+    {
+      "id": 1,
+      "dni": "1",
+      "avatar": "",
+      "firstname": "Sean",
+      "lastname": "Gusikowski",
+      "dateOfBirth": "September 14, 2016",
+      "gender": "M",
+      "email": "test@mail.com",
+      "phone": {
+        "phone": "1",
+        "emergency": "",
+        "other": ""
+      },
+      "created": "April 01, 2021",
+      "lastModified": "April 01, 2021"
+    },
+    {
+      "id": 2,
+      "dni": "2",
+      "avatar": "",
+      "firstname": "Francesca",
+      "lastname": "Marks",
+      "dateOfBirth": "September 15, 2016",
+      "gender": "F",
+      "email": "test@mail.com",
+      "phone": {
+        "phone": "530-538-4891",
+        "emergency": "",
+        "other": ""
+      },
+      "created": "April 01, 2021",
+      "lastModified": "May 01, 2021"
+    },
+    {
+      "id": 3,
+      "dni": "3",
+      "avatar": "",
+      "firstname": "Edward",
+      "lastname": "Muller",
+      "dateOfBirth": "September 15, 2016",
+      "gender": "M",
+      "email": "test@mail.com",
+      "phone": {
+        "phone": "530-538-4891",
+        "emergency": "",
+        "other": ""
+      },
+      "created": "April 01, 2021",
+      "lastModified": "May 01, 2021"
+    },
+    {
+      "id": 4,
+      "dni": "4",
+      "avatar": "",
+      "firstname": "Chanelle",
+      "lastname": "Ortiz",
+      "dateOfBirth": "September 16, 2016",
+      "gender": "F",
+      "email": "test@mail.com",
+      "phone": {
+        "phone": "4",
+        "emergency": "",
+        "other": ""
+      },
+      "created": "April 02, 2021",
+      "lastModified": "July 01, 2021"
+    },
+    {
+      "id": 5,
+      "dni": "5",
+      "avatar": "",
+      "firstname": "Pedro",
+      "lastname": "Haley",
+      "dateOfBirth": "September 17, 2016",
+      "gender": "M",
+      "email": "test@mail.com",
+      "phone": {
+        "phone": "5",
+        "emergency": "",
+        "other": ""
+      },
+      "created": "April 02, 2021",
+      "lastModified": "December 01, 2021"
+    },
+    {
+      "id": 6,
+      "dni": "6",
+      "avatar": "",
+      "firstname": "Freddy",
+      "lastname": "Walter",
+      "dateOfBirth": "April 27, 1983",
+      "gender": "O",
+      "email": "test@mail.com",
+      "phone": {
+        "phone": "6",
+        "emergency": "",
+        "other": ""
+      },
+      "created": "April 03, 2021",
+      "lastModified": "September 02, 2021"
+    },
+    {
+      "id": 7,
+      "dni": "7",
+      "avatar": "",
+      "firstname": "Carlotta",
+      "lastname": "Hilll",
+      "dateOfBirth": "September 19, 2016",
+      "gender": "F",
+      "email": "test@mail.com",
+      "phone": {
+        "phone": "7",
+        "emergency": "",
+        "other": ""
+      },
+      "created": "April 04, 2021",
+      "lastModified": "October 01, 2021"
+    }
+  ]
+}
