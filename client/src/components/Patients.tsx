@@ -136,7 +136,7 @@ export default function Patients() {
   return (
     <React.Fragment>
       <Grid item xs={12} md={6} lg={9}>
-        <Paper component="form" className={classes.root}>
+        <Paper elevation={3} component="form" className={classes.root}>
           <InputBase
             className={classes.input}
             placeholder="Búsqueda por nombre"

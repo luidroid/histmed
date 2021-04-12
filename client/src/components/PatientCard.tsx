@@ -11,14 +11,10 @@ import Link from "@material-ui/core/Link";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
-import CardActions from "@material-ui/core/CardActions";
 
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
-import EditIcon from "@material-ui/icons/Edit";
-import AssignmentIndIcon from "@material-ui/icons/AssignmentInd";
-import DeleteIcon from "@material-ui/icons/Delete";
 
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -105,13 +101,27 @@ export default function PatientCard(props: {
                 open={Boolean(anchorEl)}
                 onClose={handleCloseMenu}
               >
-                <MenuItem onClick={handleCloseMenu}>Profile</MenuItem>
-                <MenuItem onClick={handleCloseMenu}>My account</MenuItem>
-                <MenuItem onClick={handleCloseMenu}>Logout</MenuItem>
+                <MenuItem
+                  component={RouterLink}
+                  to={`/patients/${props.patient.id}`}
+                >
+                  Ver más
+                </MenuItem>
+                <MenuItem
+                  component={RouterLink}
+                  to={`/patients/${props.patient.id}/edit`}
+                >
+                  Editar
+                </MenuItem>
+                <MenuItem onClick={handleClickOpen}>Eliminar</MenuItem>
               </Menu>
             </div>
           }
-          title={`${props.patient.firstname} ${props.patient.lastname}`}
+          title={
+            <Link component={RouterLink} to={`/patients/${props.patient.id}`}>
+              {props.patient.firstname} {props.patient.lastname}
+            </Link>
+          }
           subheader={dtBirth}
         />
         <CardContent
@@ -120,11 +130,11 @@ export default function PatientCard(props: {
           }}
         >
           <Typography variant="body2" color="textSecondary" component="p">
-            <b>DNI:</b> {props.patient.dni}
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
             <b>Sexo:</b>{" "}
             <PatientGender gender={props.patient.gender}></PatientGender>
+          </Typography>
+          <Typography variant="body2" color="textSecondary" component="p">
+            <b>DNI:</b> {props.patient.dni}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
             <b>Correo:</b>{" "}
@@ -139,20 +149,6 @@ export default function PatientCard(props: {
             </Link>
           </Typography>
         </CardContent>
-        <CardActions disableSpacing>
-          <IconButton
-            component={RouterLink}
-            to={`/patients/${props.patient.id}`}
-          >
-            <AssignmentIndIcon />
-          </IconButton>
-          <IconButton>
-            <EditIcon />
-          </IconButton>
-          <IconButton className={classes.expand} onClick={handleClickOpen}>
-            <DeleteIcon />
-          </IconButton>
-        </CardActions>
       </Card>
       <Dialog
         open={open}
