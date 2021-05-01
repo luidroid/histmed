@@ -1,7 +1,8 @@
 import React from "react";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
+import { Link as RouterLink } from "react-router-dom";
+
+import { ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
+
 import PeopleIcon from "@material-ui/icons/People";
 import SettingsIcon from "@material-ui/icons/Settings";
 import TodayIcon from "@material-ui/icons/Today";
@@ -9,7 +10,7 @@ import AssignmentIcon from "@material-ui/icons/Assignment";
 
 export const mainListItems = (
   <div>
-    <ListItem button>
+    <ListItem button component={RouterLink} to={"/patients"}>
       <ListItemIcon>
         <PeopleIcon />
       </ListItemIcon>

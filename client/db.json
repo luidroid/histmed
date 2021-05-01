@@ -2,122 +2,194 @@
   "patients": [
     {
       "id": 1,
-      "dni": "1",
-      "avatar": "",
-      "firstname": "Sean",
-      "lastname": "Gusikowski",
+      "reference": "REF1",
+      "avatar": "/images/123456789/avatar.png",
+      "firstname": "Luis",
+      "lastname": "Amoroso",
+      "secondName": "Alcibiades",
+      "secondLastname": "Garces",
       "dateOfBirth": "September 14, 2016",
+      "dni": "123456789A",
       "gender": "M",
       "email": "test@mail.com",
-      "phone": {
-        "phone": "1",
-        "emergency": "",
-        "other": ""
+      "phone": "0711",
+      "mobile": "07110153",
+      "adress": {
+        "street": "Koepp Rapids",
+        "houseNumber": "123",
+        "postalCode": "52902",
+        "city": "North Arnoldchester",
+        "country": "Buckinghamshire"
       },
+      "alergies": [
+        {
+          "name": "id veritatis sapiente",
+          "description": "Enim expedita tempora harum ea aut qui. Fugit magnam sunt optio officiis."
+        },
+        {
+          "name": "velit qui occaecati",
+          "description": "Harum optio hic eum. Sed et amet in officiis quia provident deleniti veniam. Modi ut labore voluptatem tempora quis ut. Est tempore totam et. Ut quia accusamus doloremque sit exercitationem iure vero autem sed. Molestiae sit dolore commodi explicabo."
+        },
+
+        {
+          "name": "tempore voluptatem officia",
+          "description": "Aliquam labore dolor. Illo dolorem qui. Quasi ea occaecati. Quis laudantium quas delectus et et rem distinctio exercitationem quos. Doloribus et et deleniti."
+        },
+        {
+          "name": "tempore voluptatem officia",
+          "description": "Aliquam labore dolor. Illo dolorem qui. Quasi ea occaecati. Quis laudantium quas delectus et et rem distinctio exercitationem quos. Doloribus et et deleniti."
+        }
+      ],
+      "pathologicalHistory": [
+        {
+          "name": "id veritatis sapiente",
+          "description": "Enim expedita tempora harum ea aut qui. Fugit magnam sunt optio officiis."
+        },
+        {
+          "name": "velit qui occaecati",
+          "description": "Harum optio hic eum. Sed et amet in officiis quia provident deleniti veniam. Modi ut labore voluptatem tempora quis ut. Est tempore totam et. Ut quia accusamus doloremque sit exercitationem iure vero autem sed. Molestiae sit dolore commodi explicabo."
+        },
+
+        {
+          "name": "tempore voluptatem officia",
+          "description": "Aliquam labore dolor. Illo dolorem qui. Quasi ea occaecati. Quis laudantium quas delectus et et rem distinctio exercitationem quos. Doloribus et et deleniti."
+        },
+        {
+          "name": "tempore voluptatem officia",
+          "description": "Aliquam labore dolor. Illo dolorem qui. Quasi ea occaecati. Quis laudantium quas delectus et et rem distinctio exercitationem quos. Doloribus et et deleniti."
+        }
+      ],
+      "nonPathologicalHistory": [
+        {
+          "name": "id veritatis sapiente",
+          "description": "Enim expedita tempora harum ea aut qui. Fugit magnam sunt optio officiis."
+        },
+        {
+          "name": "velit qui occaecati",
+          "description": "Harum optio hic eum. Sed et amet in officiis quia provident deleniti veniam. Modi ut labore voluptatem tempora quis ut. Est tempore totam et. Ut quia accusamus doloremque sit exercitationem iure vero autem sed. Molestiae sit dolore commodi explicabo."
+        },
+
+        {
+          "name": "tempore voluptatem officia",
+          "description": "Aliquam labore dolor. Illo dolorem qui. Quasi ea occaecati. Quis laudantium quas delectus et et rem distinctio exercitationem quos. Doloribus et et deleniti."
+        },
+        {
+          "name": "tempore voluptatem officia",
+          "description": "Aliquam labore dolor. Illo dolorem qui. Quasi ea occaecati. Quis laudantium quas delectus et et rem distinctio exercitationem quos. Doloribus et et deleniti."
+        }
+      ],
+      "hereditaryFamilyHistory": [
+        {
+          "name": "id veritatis sapiente",
+          "description": "Enim expedita tempora harum ea aut qui. Fugit magnam sunt optio officiis."
+        },
+        {
+          "name": "velit qui occaecati",
+          "description": "Harum optio hic eum. Sed et amet in officiis quia provident deleniti veniam. Modi ut labore voluptatem tempora quis ut. Est tempore totam et. Ut quia accusamus doloremque sit exercitationem iure vero autem sed. Molestiae sit dolore commodi explicabo."
+        },
+
+        {
+          "name": "tempore voluptatem officia",
+          "description": "Aliquam labore dolor. Illo dolorem qui. Quasi ea occaecati. Quis laudantium quas delectus et et rem distinctio exercitationem quos. Doloribus et et deleniti."
+        },
+        {
+          "name": "tempore voluptatem officia",
+          "description": "Aliquam labore dolor. Illo dolorem qui. Quasi ea occaecati. Quis laudantium quas delectus et et rem distinctio exercitationem quos. Doloribus et et deleniti."
+        }
+      ],
+      "notes": "Vitae et aut eaque nobis repellendus fugit explicabo labore. \nIste ut quas odio veritatis in quo asperiores quam. Adipisci ea omnis quia et ipsa fugit voluptatum et. Eos et et tempora aut quis atque. Voluptatem fugit excepturi porro repellat.",
       "created": "April 01, 2021",
       "lastModified": "April 01, 2021"
     },
     {
       "id": 2,
+      "reference": "REF2",
       "dni": "2",
       "avatar": "",
       "firstname": "Francesca",
       "lastname": "Marks",
+      "secondName": "Francesca",
+      "secondLastname": "Francesca",
       "dateOfBirth": "September 15, 2016",
       "gender": "F",
+
       "email": "test@mail.com",
-      "phone": {
-        "phone": "530-538-4891",
-        "emergency": "",
-        "other": ""
-      },
+      "phone": "530-538-4891",
+      "mobile": "0711",
       "created": "April 01, 2021",
       "lastModified": "May 01, 2021"
     },
     {
       "id": 3,
+      "reference": "REF3",
       "dni": "3",
       "avatar": "",
       "firstname": "Edward",
       "lastname": "Muller",
+      "secondName": "Edward",
+      "secondLastname": "Edward",
       "dateOfBirth": "September 15, 2016",
       "gender": "M",
+
       "email": "test@mail.com",
-      "phone": {
-        "phone": "530-538-4891",
-        "emergency": "",
-        "other": ""
-      },
+      "phone": "530-538-4891",
+      "mobile": "0711",
       "created": "April 01, 2021",
       "lastModified": "May 01, 2021"
     },
     {
       "id": 4,
+      "reference": "REF4",
       "dni": "4",
       "avatar": "",
       "firstname": "Chanelle",
       "lastname": "Ortiz",
+      "secondName": "Chanelle",
+      "secondLastname": "Chanelle",
       "dateOfBirth": "September 16, 2016",
       "gender": "F",
+
       "email": "test@mail.com",
-      "phone": {
-        "phone": "4",
-        "emergency": "",
-        "other": ""
-      },
+      "phone": "4",
+      "mobile": "0711",
       "created": "April 02, 2021",
       "lastModified": "July 01, 2021"
     },
     {
       "id": 5,
+      "reference": "REF5",
       "dni": "5",
       "avatar": "",
       "firstname": "Pedro",
       "lastname": "Haley",
+      "secondName": "Pedro",
+      "secondLastname": "Pedro",
       "dateOfBirth": "September 17, 2016",
       "gender": "M",
+
       "email": "test@mail.com",
-      "phone": {
-        "phone": "5",
-        "emergency": "",
-        "other": ""
-      },
+      "phone": "5",
+      "mobile": "0711",
       "created": "April 02, 2021",
       "lastModified": "December 01, 2021"
     },
     {
       "id": 6,
+      "reference": "REF6",
       "dni": "6",
       "avatar": "",
       "firstname": "Freddy",
       "lastname": "Walter",
+      "secondName": "Freddy",
+      "secondLastname": "Freddy",
       "dateOfBirth": "April 27, 1983",
       "gender": "O",
+
       "email": "test@mail.com",
-      "phone": {
-        "phone": "6",
-        "emergency": "",
-        "other": ""
-      },
+      "phone": "6",
+      "mobile": "0711",
       "created": "April 03, 2021",
       "lastModified": "September 02, 2021"
-    },
-    {
-      "id": 7,
-      "dni": "7",
-      "avatar": "",
-      "firstname": "Carlotta",
-      "lastname": "Hilll",
-      "dateOfBirth": "September 19, 2016",
-      "gender": "F",
-      "email": "test@mail.com",
-      "phone": {
-        "phone": "7",
-        "emergency": "",
-        "other": ""
-      },
-      "created": "April 04, 2021",
-      "lastModified": "October 01, 2021"
     }
   ]
 }

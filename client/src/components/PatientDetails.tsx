@@ -3,30 +3,34 @@ import { useParams } from "react-router-dom";
 import axios from "../api/apiConfig";
 import clsx from "clsx";
 
-import { makeStyles } from "@material-ui/core/styles";
-import { red } from "@material-ui/core/colors";
-import Divider from "@material-ui/core/Divider";
-
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
-import Link from "@material-ui/core/Link";
-import Typography from "@material-ui/core/Typography";
-import Fab from "@material-ui/core/Fab";
-import AddIcon from "@material-ui/icons/Add";
-import EditIcon from "@material-ui/icons/Edit";
-import DeleteIcon from "@material-ui/icons/Delete";
-import IconButton from "@material-ui/core/IconButton";
-import Avatar from "@material-ui/core/Avatar";
-
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-import ImageIcon from "@material-ui/icons/Image";
-import WorkIcon from "@material-ui/icons/Work";
-import BeachAccessIcon from "@material-ui/icons/BeachAccess";
-
 import { Patient } from "../models/patient";
+import { initPatient } from "../api/patientService";
+import PatientInfo from "../components/PatientInfo";
+
+import { red } from "@material-ui/core/colors";
+
+import {
+  makeStyles,
+  Grid,
+  Typography,
+  Paper,
+  Link,
+  Divider,
+  Fab,
+  Avatar,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemAvatar,
+} from "@material-ui/core/";
+
+import AddIcon from "@material-ui/icons/Add";
+import ImageIcon from "@material-ui/icons/Image";
+import BeachAccessIcon from "@material-ui/icons/BeachAccess";
+import PatientAlergies from "./PatientAlergies";
+import PathologicalHistory from "./PathologicalHistory";
+import NonPathologicalHistory from "./NonPathologicalHistory";
+import HereditaryFamilyHistory from "./HereditaryFamilyHistory";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,22 +51,23 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     backgroundColor: red[500],
-    width: theme.spacing(8),
-    height: theme.spacing(8),
+    width: theme.spacing(9),
+    height: theme.spacing(9),
   },
 }));
 
 export default function PatientDetails() {
   const classes = useStyles();
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-
   const { id } = useParams<{ id: string }>();
-  const [patientInfo, setPatientInfo] = useState<Patient>();
+  const [info, setPatientInfo] = useState<Patient>(initPatient);
 
   useEffect(() => {
     (async () => {
       try {
         const { data } = await axios.get<Patient>(`/patients/${id}`);
+        console.log("🚀 ~ file: PatientDetails.tsx ~ line 66 ~ data", data);
+
         setPatientInfo(data);
       } catch (error) {
         console.log(error);
@@ -72,61 +77,11 @@ export default function PatientDetails() {
 
   return (
     <React.Fragment>
-      <Grid item xs={12} md={8} lg={9}>
-        <Paper className={fixedHeightPaper}>
-          <Typography component="h2" variant="h6" color="primary" gutterBottom>
-            Detalles
-            <IconButton>
-              <EditIcon />
-            </IconButton>
-            <IconButton>
-              <DeleteIcon />
-            </IconButton>
-          </Typography>
-          <Avatar
-            className={classes.avatar}
-            alt="Remy Sharp"
-            src="/static/images/avatar/1.jpg"
-          />
-          <Typography component="p" variant="h4">
-            Luis Amoroso
-          </Typography>
-          <Typography color="textSecondary" className={classes.depositContext}>
-            15/March/2019 - 38 anios
-          </Typography>
-          <Typography color="textSecondary" className={classes.depositContext}>
-            DNI: 123{" "}
-          </Typography>
-          <Typography color="textSecondary" className={classes.depositContext}>
-            Sexo: Masculino
-          </Typography>
-          <Typography color="textSecondary" className={classes.depositContext}>
-            Correo: test@c.com
-          </Typography>
-          <Typography color="textSecondary" className={classes.depositContext}>
-            Telefono: 123
-          </Typography>
-          <Typography color="textSecondary" className={classes.depositContext}>
-            Móvil: 123
-          </Typography>
-          <Typography color="textSecondary" className={classes.depositContext}>
-            Direccion: 123
-          </Typography>
-          <Typography color="textSecondary" className={classes.depositContext}>
-            Paciente desde: 12/mar/2020
-          </Typography>
-          <Typography color="textSecondary" className={classes.depositContext}>
-            Informacion adicional
-          </Typography>
-          <div>
-            <Link color="primary" href="#">
-              Ver más{" "}
-            </Link>
-          </div>
-        </Paper>
+      <Grid item xs={12} md={6} lg={8}>
+        <PatientInfo {...info}></PatientInfo>
       </Grid>
-      {/* Consultas */}
-      <Grid item xs={12} md={4} lg={3}>
+      {/* Appointments */}
+      <Grid item xs={12} md={6} lg={4}>
         <Paper className={fixedHeightPaper}>
           <Typography component="h2" variant="h6" color="primary" gutterBottom>
             Consultas
@@ -180,29 +135,12 @@ export default function PatientDetails() {
           </div>
         </Paper>
       </Grid>
-      {/* Recent Orders */}
-      <Grid item xs={12}>
-        <Paper className={fixedHeightPaper}>
-          <Typography component="h2" variant="h6" color="primary" gutterBottom>
-            Antecedentes
-          </Typography>
-          <Typography component="p" variant="h4">
-            Planeadas
-          </Typography>
-          <Typography color="textSecondary" className={classes.depositContext}>
-            Futuras
-          </Typography>
-          <Typography color="textSecondary" className={classes.depositContext}>
-            Anteriores
-          </Typography>
-          <div>
-            <Link color="primary" href="#">
-              Ver más{" "}
-            </Link>
-          </div>
-        </Paper>
+      {/* Alergies */}
+      <Grid item xs={12} md={6} lg={8}>
+        <PatientAlergies alergies={info.alergies}></PatientAlergies>
       </Grid>
-      <Grid item xs={12}>
+      {/* Surgery */}
+      <Grid item xs={12} md={6} lg={4}>
         <Paper className={fixedHeightPaper}>
           <Typography component="h2" variant="h6" color="primary" gutterBottom>
             Operaciones
@@ -222,6 +160,24 @@ export default function PatientDetails() {
             </Link>
           </div>
         </Paper>
+      </Grid>
+      {/* Pahological history */}
+      <Grid item xs={12} md={6} lg={8}>
+        <PathologicalHistory
+          pathologicalList={info.pathologicalHistory}
+        ></PathologicalHistory>
+      </Grid>
+      {/* Non pahological history */}
+      <Grid item xs={12} md={6} lg={8}>
+        <NonPathologicalHistory
+          nonPathologicalList={info.nonPathologicalHistory}
+        ></NonPathologicalHistory>
+      </Grid>
+      {/* Hereditary family history */}
+      <Grid item xs={12} md={6} lg={8}>
+        <HereditaryFamilyHistory
+          hereditaryFamilyList={info.hereditaryFamilyHistory}
+        ></HereditaryFamilyHistory>
       </Grid>
     </React.Fragment>
   );

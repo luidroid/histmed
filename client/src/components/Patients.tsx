@@ -13,7 +13,9 @@ import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 
-import PatientCard from "../components/PatientCard";
+import PatientCard from "./PatientCard";
+import Alert from "@material-ui/lab/Alert";
+
 import { Patient } from "../models/patient";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -49,6 +51,8 @@ export default function Patients() {
   const [filteredPatients, setFilteredPatients] = useState<Patient[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("nameAsc");
+  const [showNetError, setShowNetError] = useState(false);
+  let alertMessage;
 
   /** Get patients */
   const getPatients = async () => {
@@ -56,9 +60,20 @@ export default function Patients() {
       const { data } = await axios.get<Patient[]>("/patients");
       setPatients(data);
     } catch (error) {
-      console.log(error);
+      if (!error.response) {
+        setShowNetError(true);
+      } else {
+        //setShowPatientsError(true);
+        console.log(error);
+      }
     }
   };
+
+  if (showNetError) {
+    alertMessage = (
+      <Alert severity="error">No se puede conectar con la base de datos!</Alert>
+    );
+  }
 
   useEffect(() => {
     getPatients();
@@ -133,55 +148,75 @@ export default function Patients() {
     })();
   };
 
+  const searchComponent = (
+    <Paper elevation={3} component="form" className={classes.root}>
+      <InputBase
+        className={classes.input}
+        placeholder="Búsqueda por nombre"
+        inputProps={{ "aria-label": "búsqueda" }}
+        value={searchTerm}
+        onChange={handleSearch}
+      />
+      <IconButton
+        type="submit"
+        className={classes.iconButton}
+        aria-label="search"
+      >
+        <SearchIcon />
+      </IconButton>
+    </Paper>
+  );
+
+  const sortComponent = (
+    <FormControl className={classes.formControl}>
+      <InputLabel id="demo-simple-select-label">Sortear por</InputLabel>
+      <Select
+        native
+        labelId="demo-simple-select-label"
+        id="demo-simple-select"
+        value={sortBy}
+        onChange={handleSortBy}
+      >
+        <option value={"nameAsc"}>Nombre A-Z</option>
+        <option value={"nameDesc"}>Nombre Z-A</option>
+        <option value={"dateAsc"}>Fecha asc</option>
+        <option value={"dateDesc"}>Ultima modificación</option>
+      </Select>
+    </FormControl>
+  );
+
+  const filteredPatientsComponent = filteredPatients.map((patient) => (
+    <Grid item xs={12} md={4} lg={3} key={patient.id}>
+      <PatientCard
+        patient={patient}
+        onPatientDelete={handlePatientDelete}
+      ></PatientCard>
+    </Grid>
+  ));
+
   return (
     <React.Fragment>
+      <Grid item xs={12} md={12} lg={12}>
+        {alertMessage}
+      </Grid>
+
       <Grid item xs={12} md={6} lg={9}>
-        <Paper elevation={3} component="form" className={classes.root}>
-          <InputBase
-            className={classes.input}
-            placeholder="Búsqueda por nombre"
-            inputProps={{ "aria-label": "búsqueda" }}
-            value={searchTerm}
-            onChange={handleSearch}
-          />
-          <IconButton
-            type="submit"
-            className={classes.iconButton}
-            aria-label="search"
-          >
-            <SearchIcon />
-          </IconButton>
-        </Paper>
+        {searchComponent}
       </Grid>
 
       <Grid item xs={12} md={6} lg={3}>
         <Grid container direction="row" justify="flex-end">
-          <FormControl className={classes.formControl}>
-            <InputLabel id="demo-simple-select-label">Sortear por</InputLabel>
-            <Select
-              native
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={sortBy}
-              onChange={handleSortBy}
-            >
-              <option value={"nameAsc"}>Nombre A-Z</option>
-              <option value={"nameDesc"}>Nombre Z-A</option>
-              <option value={"dateAsc"}>Fecha asc</option>
-              <option value={"dateDesc"}>Ultima modificación</option>
-            </Select>
-          </FormControl>
+          {sortComponent}
         </Grid>
       </Grid>
 
-      {filteredPatients.map((patient) => (
-        <Grid item xs={12} md={4} lg={3} key={patient.id}>
-          <PatientCard
-            patient={patient}
-            onPatientDelete={handlePatientDelete}
-          ></PatientCard>
+      {filteredPatients.length > 0 ? (
+        filteredPatientsComponent
+      ) : (
+        <Grid item xs={12} md={4} lg={3}>
+          No existen pacientes
         </Grid>
-      ))}
+      )}
     </React.Fragment>
   );
 }

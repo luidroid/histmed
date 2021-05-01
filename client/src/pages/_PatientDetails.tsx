@@ -1,9 +1,8 @@
 import React from "react";
-import Grid from "@material-ui/core/Grid";
 
 import PatientDetails from "../components/PatientDetails";
 
-export default function AppointmentsPage() {
+export default function _PatientDetails() {
   return (
     <React.Fragment>
       <PatientDetails></PatientDetails>

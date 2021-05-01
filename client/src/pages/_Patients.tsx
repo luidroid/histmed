@@ -5,7 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import AddIcon from "@material-ui/icons/Add";
 import Patients from "../components/Patients";
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 
 const useStyles = makeStyles(() => ({
   newPatientButton: {
@@ -13,7 +13,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export default function PatientsPage() {
+export default function _Patients() {
   const classes = useStyles();
 
   return (
@@ -30,7 +30,7 @@ export default function PatientsPage() {
             startIcon={<AddIcon />}
             size="large"
             className={classes.newPatientButton}
-            component={Link}
+            component={RouterLink}
             to={"/patients/new"}
           >
             Paciente

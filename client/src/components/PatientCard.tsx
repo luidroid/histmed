@@ -14,7 +14,8 @@ import CardContent from "@material-ui/core/CardContent";
 
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
+
+import { MoreVert as MoreVertIcon } from "@material-ui/icons";
 
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -122,7 +123,7 @@ export default function PatientCard(props: {
               {props.patient.firstname} {props.patient.lastname}
             </Link>
           }
-          subheader={dtBirth}
+          subheader={props.patient.reference}
         />
         <CardContent
           classes={{
@@ -134,7 +135,7 @@ export default function PatientCard(props: {
             <PatientGender gender={props.patient.gender}></PatientGender>
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            <b>DNI:</b> {props.patient.dni}
+            <b>Nacimiento:</b> {dtBirth}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
             <b>Correo:</b>{" "}
@@ -144,8 +145,8 @@ export default function PatientCard(props: {
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
             <b>Teléfono:</b>{" "}
-            <Link href={`tel:${props.patient.phone?.phone}`}>
-              {props.patient.phone?.phone}
+            <Link href={`tel:${props.patient.phone}`}>
+              {props.patient.phone}
             </Link>
           </Typography>
         </CardContent>

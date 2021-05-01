@@ -98,7 +98,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-type Props = {};
+type Props = {
+  children: React.ReactNode;
+};
 
 const DashboardLayout: React.FC<Props> = ({ children }) => {
   const classes = useStyles();
