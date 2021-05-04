@@ -1,6 +1,12 @@
 import { makeStyles } from "@material-ui/core";
 
 export const useGlobalStyles = makeStyles((theme) => ({
+  root: {
+    "& .MuiTextField-root": {
+      margin: theme.spacing(1),
+      //width: "50ch",
+    },
+  },
   spacing: {
     "& > *": {
       margin: theme.spacing(1),

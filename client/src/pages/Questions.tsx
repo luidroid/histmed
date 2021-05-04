@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import axios from "../api/apiConfig";
 
 import {
   Divider,
   IconButton,
+  Link,
   List,
   ListItem,
   ListItemText,
@@ -12,7 +13,7 @@ import {
   Paper,
   Typography,
 } from "@material-ui/core";
-import { Edit, Print, Share } from "@material-ui/icons";
+import { Edit, Mail, Print } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -54,20 +55,24 @@ export default function Questions() {
   ));
 
   return (
-    <Paper className={classes.paper}>
-      <Typography component="h2" variant="h6" color="primary" gutterBottom>
-        Preguntas{" "}
-        <IconButton component={RouterLink} to={`/questionnaire/edit`}>
-          <Edit />
-        </IconButton>
-        <IconButton onClick={() => window.print()}>
-          <Print />
-        </IconButton>
-        <IconButton>
-          <Share />
-        </IconButton>
-        <List>{questionList}</List>
-      </Typography>
-    </Paper>
+    <div>
+      <Paper className={classes.paper}>
+        <Typography component="h2" variant="h6" color="primary" gutterBottom>
+          Preguntas{" "}
+          <IconButton component={RouterLink} to={`/questionnaire/edit`}>
+            <Edit />
+          </IconButton>
+          <Link href={`mailto:`}>
+            <IconButton>
+              <Mail />
+            </IconButton>
+          </Link>
+          <IconButton onClick={() => window.print()}>
+            <Print />
+          </IconButton>
+          <List>{questionList}</List>
+        </Typography>
+      </Paper>
+    </div>
   );
 }

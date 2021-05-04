@@ -6,7 +6,6 @@ import { useGlobalStyles } from "../styles/globalStyles";
 import {
   Box,
   Button,
-  Divider,
   FormControl,
   FormGroup,
   Grid,
@@ -15,11 +14,9 @@ import {
   Paper,
   TextField,
   Typography,
-  FormHelperText,
-  FormLabel,
 } from "@material-ui/core";
 
-import { Formik, Form, FieldArray, Field, getIn } from "formik";
+import { Formik, Form, FieldArray, getIn } from "formik";
 import * as yup from "yup";
 import { ArrowDownward, ArrowUpward, Delete } from "@material-ui/icons";
 
@@ -27,9 +24,6 @@ const validationSchema = yup.object({
   questions: yup.array().of(yup.string().required("Pregunta es requerida")),
 });
 
-type Question = {
-  questions: string[];
-};
 export default function QuestionForm() {
   const classes = useGlobalStyles();
   const [questions, setQuestions] = useState([]);
@@ -71,7 +65,7 @@ export default function QuestionForm() {
           }}
         >
           {(formik) => (
-            <Form autoComplete="off">
+            <Form className={classes.root} autoComplete="off">
               <FieldArray
                 name="questions"
                 render={(arrayHelpers) => {
@@ -95,7 +89,7 @@ export default function QuestionForm() {
 
                           return (
                             <div key={index}>
-                              <Grid container spacing={2}>
+                              <Grid container spacing={1}>
                                 <Grid item xs={12} md={12} lg={8}>
                                   <TextField
                                     fullWidth
@@ -145,40 +139,40 @@ export default function QuestionForm() {
                             </div>
                           );
                         })}
-                      </FormControl>
-                      <FormControl>
-                        <Button
-                          variant="outlined"
-                          color="default"
-                          size="small"
-                          startIcon={<Icon>add</Icon>}
-                          onClick={() => arrayHelpers.push("")}
-                        >
-                          Nueva pregunta{" "}
-                        </Button>
+                        <FormControl>
+                          <Button
+                            variant="outlined"
+                            color="secondary"
+                            size="medium"
+                            startIcon={<Icon>add</Icon>}
+                            onClick={() => arrayHelpers.push("")}
+                          >
+                            Nueva pregunta{" "}
+                          </Button>
+                        </FormControl>{" "}
+                        <Box className={classes.spacing}>
+                          <Button
+                            color="primary"
+                            variant="contained"
+                            size="large"
+                            type="submit"
+                          >
+                            Guardar
+                          </Button>
+                          <Button
+                            variant="contained"
+                            size="large"
+                            component={RouterLink}
+                            to={`/questionnaire`}
+                          >
+                            Cancelar
+                          </Button>
+                        </Box>
                       </FormControl>
                     </FormGroup>
                   );
                 }}
               />
-              <Box className={classes.spacing}>
-                <Button
-                  color="primary"
-                  variant="contained"
-                  size="large"
-                  type="submit"
-                >
-                  Guardar
-                </Button>
-                <Button
-                  variant="contained"
-                  size="large"
-                  component={RouterLink}
-                  to={`/questionnaire`}
-                >
-                  Cancelar
-                </Button>
-              </Box>
             </Form>
           )}
         </Formik>

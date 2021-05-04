@@ -35,19 +35,17 @@ export default function PatientHistory({ historyList }: Props) {
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
   return (
-    <div>
-      <Paper className={fixedHeightPaper}>
-        <Typography component="h2" variant="h6" color="primary" gutterBottom>
-          Antecedentes
-          <IconButton component={RouterLink} to={`/patients/${id}/edit`}>
-            <EditIcon />
-          </IconButton>
-        </Typography>
-        <PatientHistoryGeneric
-          title="Alergias"
-          records={historyList}
-        ></PatientHistoryGeneric>
-      </Paper>
-    </div>
+    <Paper className={fixedHeightPaper}>
+      <Typography component="h2" variant="h6" color="primary" gutterBottom>
+        Antecedentes
+        <IconButton component={RouterLink} to={`/patients/${id}/edit`}>
+          <EditIcon />
+        </IconButton>
+      </Typography>
+      <PatientHistoryGeneric
+        title=""
+        records={historyList}
+      ></PatientHistoryGeneric>
+    </Paper>
   );
 }
