@@ -48,7 +48,7 @@ const initPatient: Patient = {
   email: "",
   phone: "",
   mobile: "",
-  adress: {
+  address: {
     street: "",
     houseNumber: "",
     postalCode: "",

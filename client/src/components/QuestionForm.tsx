@@ -169,7 +169,7 @@ export default function QuestionForm() {
                   variant="contained"
                   size="large"
                   component={RouterLink}
-                  to={`/questions`}
+                  to={`/questionnaire`}
                 >
                   Cancelar
                 </Button>

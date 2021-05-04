@@ -257,10 +257,10 @@ export default function PatientInfo(patient: Patient) {
                       variant="body2"
                       color="textSecondary"
                     >
-                      {patient?.adress?.street}
-                      {patient?.adress?.houseNumber},{" "}
-                      {patient?.adress?.postalCode} {patient?.adress?.city} -{" "}
-                      {patient?.adress?.country}
+                      {patient?.address?.street}
+                      {patient?.address?.houseNumber},{" "}
+                      {patient?.address?.postalCode} {patient?.address?.city} -{" "}
+                      {patient?.address?.country}
                     </Typography>
                   }
                 />

@@ -386,7 +386,7 @@ export default function PatientForm({ edit }: Props) {
                             id="adress.street"
                             name="adress.street"
                             label="calle"
-                            value={formik.values.adress?.street}
+                            value={formik.values.address?.street}
                             onChange={formik.handleChange}
                           />
                           <TextField
@@ -395,7 +395,7 @@ export default function PatientForm({ edit }: Props) {
                             id="adress.houseNumber"
                             name="adress.houseNumber"
                             label="Número"
-                            value={formik.values.adress?.houseNumber}
+                            value={formik.values.address?.houseNumber}
                             onChange={formik.handleChange}
                           />
                           <TextField
@@ -404,7 +404,7 @@ export default function PatientForm({ edit }: Props) {
                             id="adress.postalCode"
                             name="adress.postalCode"
                             label="Código postal"
-                            value={formik.values.adress?.postalCode}
+                            value={formik.values.address?.postalCode}
                             onChange={formik.handleChange}
                           />
                           <TextField
@@ -413,7 +413,7 @@ export default function PatientForm({ edit }: Props) {
                             id="adress.city"
                             name="adress.city"
                             label="Ciudad"
-                            value={formik.values.adress?.city}
+                            value={formik.values.address?.city}
                             onChange={formik.handleChange}
                           />
                           <TextField
@@ -422,7 +422,7 @@ export default function PatientForm({ edit }: Props) {
                             id="adress.country"
                             name="adress.country"
                             label="País"
-                            value={formik.values.adress?.country}
+                            value={formik.values.address?.country}
                             onChange={formik.handleChange}
                           />
                         </FormGroup>

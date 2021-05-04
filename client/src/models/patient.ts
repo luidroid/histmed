@@ -12,7 +12,7 @@ export interface Patient {
   email?: string;
   phone?: string;
   mobile?: string;
-  adress?: Address;
+  address?: Address;
   historyList: History[];
   notes?: string;
   created?: string;
