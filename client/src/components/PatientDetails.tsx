@@ -27,10 +27,7 @@ import {
 import AddIcon from "@material-ui/icons/Add";
 import ImageIcon from "@material-ui/icons/Image";
 import BeachAccessIcon from "@material-ui/icons/BeachAccess";
-import PatientAlergies from "./PatientAlergies";
-import PathologicalHistory from "./PathologicalHistory";
-import NonPathologicalHistory from "./NonPathologicalHistory";
-import HereditaryFamilyHistory from "./HereditaryFamilyHistory";
+import PatientHistory from "./PatientHistory";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -137,7 +134,7 @@ export default function PatientDetails() {
       </Grid>
       {/* Alergies */}
       <Grid item xs={12} md={6} lg={8}>
-        <PatientAlergies alergies={info.alergies}></PatientAlergies>
+        <PatientHistory historyList={info.historyList}></PatientHistory>
       </Grid>
       {/* Surgery */}
       <Grid item xs={12} md={6} lg={4}>
@@ -160,24 +157,6 @@ export default function PatientDetails() {
             </Link>
           </div>
         </Paper>
-      </Grid>
-      {/* Pahological history */}
-      <Grid item xs={12} md={6} lg={8}>
-        <PathologicalHistory
-          pathologicalList={info.pathologicalHistory}
-        ></PathologicalHistory>
-      </Grid>
-      {/* Non pahological history */}
-      <Grid item xs={12} md={6} lg={8}>
-        <NonPathologicalHistory
-          nonPathologicalList={info.nonPathologicalHistory}
-        ></NonPathologicalHistory>
-      </Grid>
-      {/* Hereditary family history */}
-      <Grid item xs={12} md={6} lg={8}>
-        <HereditaryFamilyHistory
-          hereditaryFamilyList={info.hereditaryFamilyHistory}
-        ></HereditaryFamilyHistory>
       </Grid>
     </React.Fragment>
   );

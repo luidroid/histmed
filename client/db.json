@@ -21,7 +21,7 @@
         "city": "North Arnoldchester",
         "country": "Buckinghamshire"
       },
-      "alergies": [
+      "historyList": [
         {
           "name": "id veritatis sapiente",
           "description": "Enim expedita tempora harum ea aut qui. Fugit magnam sunt optio officiis."
@@ -30,7 +30,6 @@
           "name": "velit qui occaecati",
           "description": "Harum optio hic eum. Sed et amet in officiis quia provident deleniti veniam. Modi ut labore voluptatem tempora quis ut. Est tempore totam et. Ut quia accusamus doloremque sit exercitationem iure vero autem sed. Molestiae sit dolore commodi explicabo."
         },
-
         {
           "name": "tempore voluptatem officia",
           "description": "Aliquam labore dolor. Illo dolorem qui. Quasi ea occaecati. Quis laudantium quas delectus et et rem distinctio exercitationem quos. Doloribus et et deleniti."
@@ -49,7 +48,6 @@
           "name": "velit qui occaecati",
           "description": "Harum optio hic eum. Sed et amet in officiis quia provident deleniti veniam. Modi ut labore voluptatem tempora quis ut. Est tempore totam et. Ut quia accusamus doloremque sit exercitationem iure vero autem sed. Molestiae sit dolore commodi explicabo."
         },
-
         {
           "name": "tempore voluptatem officia",
           "description": "Aliquam labore dolor. Illo dolorem qui. Quasi ea occaecati. Quis laudantium quas delectus et et rem distinctio exercitationem quos. Doloribus et et deleniti."
@@ -68,7 +66,6 @@
           "name": "velit qui occaecati",
           "description": "Harum optio hic eum. Sed et amet in officiis quia provident deleniti veniam. Modi ut labore voluptatem tempora quis ut. Est tempore totam et. Ut quia accusamus doloremque sit exercitationem iure vero autem sed. Molestiae sit dolore commodi explicabo."
         },
-
         {
           "name": "tempore voluptatem officia",
           "description": "Aliquam labore dolor. Illo dolorem qui. Quasi ea occaecati. Quis laudantium quas delectus et et rem distinctio exercitationem quos. Doloribus et et deleniti."
@@ -87,7 +84,6 @@
           "name": "velit qui occaecati",
           "description": "Harum optio hic eum. Sed et amet in officiis quia provident deleniti veniam. Modi ut labore voluptatem tempora quis ut. Est tempore totam et. Ut quia accusamus doloremque sit exercitationem iure vero autem sed. Molestiae sit dolore commodi explicabo."
         },
-
         {
           "name": "tempore voluptatem officia",
           "description": "Aliquam labore dolor. Illo dolorem qui. Quasi ea occaecati. Quis laudantium quas delectus et et rem distinctio exercitationem quos. Doloribus et et deleniti."
@@ -112,7 +108,6 @@
       "secondLastname": "Francesca",
       "dateOfBirth": "September 15, 2016",
       "gender": "F",
-
       "email": "test@mail.com",
       "phone": "530-538-4891",
       "mobile": "0711",
@@ -130,7 +125,6 @@
       "secondLastname": "Edward",
       "dateOfBirth": "September 15, 2016",
       "gender": "M",
-
       "email": "test@mail.com",
       "phone": "530-538-4891",
       "mobile": "0711",
@@ -148,7 +142,6 @@
       "secondLastname": "Chanelle",
       "dateOfBirth": "September 16, 2016",
       "gender": "F",
-
       "email": "test@mail.com",
       "phone": "4",
       "mobile": "0711",
@@ -166,7 +159,6 @@
       "secondLastname": "Pedro",
       "dateOfBirth": "September 17, 2016",
       "gender": "M",
-
       "email": "test@mail.com",
       "phone": "5",
       "mobile": "0711",
@@ -184,12 +176,28 @@
       "secondLastname": "Freddy",
       "dateOfBirth": "April 27, 1983",
       "gender": "O",
-
       "email": "test@mail.com",
       "phone": "6",
       "mobile": "0711",
       "created": "April 03, 2021",
       "lastModified": "September 02, 2021"
     }
-  ]
+  ],
+  "questionnaire": {
+    "questions": [
+      "Peso",
+      "Estatura",
+      "¿Cuántos hijos tienes y de qué forma nacieron? (Parto normal o cesárea) ",
+      "¿Planificás tener más hijos?",
+      "¿Fumas? ¿Con cuánta frecuencia?",
+      "¿Consumís alguna medicación?",
+      "¿Tienes alergia a algún medicamento? ¿Cuál?",
+      "¿Tienes alergia a alguna sustancia irritante? (Ej. Pelo de animales, Plantas, Polvo, etc.)",
+      "¿Tuviste o tienes enfermedades graves? (Ej. Presión alta, Diabetes, Tiroides, etc.)",
+      "¿Tienes cicatrización patológica? (Ej. Queloide o cicatriz hipertrofica)",
+      "¿Tuviste alguna cirugía anterior? (Ej. Apéndice, Vesícula, Hernia, Cirugía Plástica o Estética, etc..)",
+      "Procedimientos Estéticos realizados",
+      "¿En qué procedimiento estás interesado/a?"
+    ]
+  }
 }

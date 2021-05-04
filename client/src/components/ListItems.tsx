@@ -3,30 +3,33 @@ import { Link as RouterLink } from "react-router-dom";
 
 import { ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
 
-import PeopleIcon from "@material-ui/icons/People";
-import SettingsIcon from "@material-ui/icons/Settings";
-import TodayIcon from "@material-ui/icons/Today";
-import AssignmentIcon from "@material-ui/icons/Assignment";
+import { People, Settings, Today, Assignment, List } from "@material-ui/icons";
 
 export const mainListItems = (
   <div>
-    <ListItem button component={RouterLink} to={"/patients"}>
+    <ListItem button component={RouterLink} to={"/"}>
       <ListItemIcon>
-        <PeopleIcon />
+        <People />
       </ListItemIcon>
       <ListItemText primary="Pacientes" />
     </ListItem>
     <ListItem button>
       <ListItemIcon>
-        <AssignmentIcon />
+        <Assignment />
       </ListItemIcon>
       <ListItemText primary="Consultas" />
     </ListItem>
     <ListItem button>
       <ListItemIcon>
-        <TodayIcon />
+        <Today />
       </ListItemIcon>
       <ListItemText primary="Calendario" />
+    </ListItem>
+    <ListItem button component={RouterLink} to={"/questionnaire"}>
+      <ListItemIcon>
+        <List />
+      </ListItemIcon>
+      <ListItemText primary="Cuestionario" />
     </ListItem>
   </div>
 );
@@ -35,7 +38,7 @@ export const secondaryListItems = (
   <div>
     <ListItem button>
       <ListItemIcon>
-        <SettingsIcon />
+        <Settings />
       </ListItemIcon>
       <ListItemText primary="Ajustes" />
     </ListItem>

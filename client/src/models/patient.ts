@@ -13,10 +13,7 @@ export interface Patient {
   phone?: string;
   mobile?: string;
   adress?: Address;
-  alergies: History[];
-  pathologicalHistory: History[];
-  nonPathologicalHistory: History[];
-  hereditaryFamilyHistory: History[];
+  historyList: History[];
   notes?: string;
   created?: string;
   lastModified: string;
@@ -37,26 +34,6 @@ export interface Address {
 }
 
 export interface History {
-  name: string;
-  description: string;
-}
-
-export interface Alergy {
-  name: string;
-  description: string;
-}
-
-export interface PathologicalList {
-  name: string;
-  description: string;
-}
-
-export interface NonPathologicalList {
-  name: string;
-  description: string;
-}
-
-export interface HereditaryFamilyList {
   name: string;
   description: string;
 }

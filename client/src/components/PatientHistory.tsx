@@ -2,8 +2,8 @@ import React from "react";
 import { Link as RouterLink, useParams } from "react-router-dom";
 import clsx from "clsx";
 
-import { Alergy } from "../models/patient";
-import PatientHistoryGeneric from "../components/PatientHistoryGeneric";
+import { History } from "../models/patient";
+import PatientHistoryGeneric from "./PatientHistoryGeneric";
 
 import { makeStyles, Paper, Typography, IconButton } from "@material-ui/core";
 
@@ -26,9 +26,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 type Props = {
-  alergies: Alergy[];
+  historyList: History[];
 };
-export default function PatientAlergies({ alergies }: Props) {
+export default function PatientHistory({ historyList }: Props) {
   const { id } = useParams<{ id: string }>();
 
   const classes = useStyles();
@@ -45,7 +45,7 @@ export default function PatientAlergies({ alergies }: Props) {
         </Typography>
         <PatientHistoryGeneric
           title="Alergias"
-          records={alergies}
+          records={historyList}
         ></PatientHistoryGeneric>
       </Paper>
     </div>
