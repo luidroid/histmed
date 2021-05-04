@@ -95,48 +95,54 @@ export default function QuestionForm() {
 
                           return (
                             <div key={index}>
-                              <TextField
-                                variant="filled"
-                                name={questionIndex}
-                                label="Pregunta"
-                                value={question}
-                                onChange={formik.handleChange}
-                                error={Boolean(
-                                  touchedQuestion && errorQuestion
-                                )}
-                                helperText={
-                                  touchedQuestion && errorQuestion
-                                    ? errorQuestion
-                                    : ""
-                                }
-                              />
-
-                              <IconButton
-                                disabled={disabledArrowDownward}
-                                onClick={() => {
-                                  if (!disabledArrowDownward) {
-                                    arrayHelpers.swap(index, index + 1);
-                                  }
-                                }}
-                              >
-                                <ArrowDownward />
-                              </IconButton>
-                              <IconButton
-                                disabled={disabledArrowUpward}
-                                onClick={() => {
-                                  if (!disabledArrowUpward) {
-                                    arrayHelpers.swap(index, index - 1);
-                                  }
-                                }}
-                              >
-                                <ArrowUpward />
-                              </IconButton>
-                              <IconButton
-                                onClick={() => arrayHelpers.remove(index)}
-                              >
-                                <Delete />
-                              </IconButton>
-                              <Divider></Divider>
+                              <Grid container spacing={1}>
+                                <Grid item xs={12} md={12} lg={6}>
+                                  <TextField
+                                    fullWidth
+                                    variant="filled"
+                                    name={questionIndex}
+                                    label="Pregunta"
+                                    value={question}
+                                    onChange={formik.handleChange}
+                                    error={Boolean(
+                                      touchedQuestion && errorQuestion
+                                    )}
+                                    helperText={
+                                      touchedQuestion && errorQuestion
+                                        ? errorQuestion
+                                        : ""
+                                    }
+                                  />
+                                </Grid>
+                                <Grid item xs={12} md={12} lg={6}>
+                                  <IconButton
+                                    disabled={disabledArrowDownward}
+                                    onClick={() => {
+                                      if (!disabledArrowDownward) {
+                                        arrayHelpers.swap(index, index + 1);
+                                      }
+                                    }}
+                                  >
+                                    <ArrowDownward />
+                                  </IconButton>
+                                  <IconButton
+                                    disabled={disabledArrowUpward}
+                                    onClick={() => {
+                                      if (!disabledArrowUpward) {
+                                        arrayHelpers.swap(index, index - 1);
+                                      }
+                                    }}
+                                  >
+                                    <ArrowUpward />
+                                  </IconButton>
+                                  <IconButton
+                                    onClick={() => arrayHelpers.remove(index)}
+                                  >
+                                    <Delete />
+                                  </IconButton>
+                                  <Divider></Divider>
+                                </Grid>
+                              </Grid>
                             </div>
                           );
                         })}
