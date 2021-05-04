@@ -95,8 +95,8 @@ export default function QuestionForm() {
 
                           return (
                             <div key={index}>
-                              <Grid container spacing={1}>
-                                <Grid item xs={12} md={12} lg={6}>
+                              <Grid container spacing={2}>
+                                <Grid item xs={12} md={12} lg={8}>
                                   <TextField
                                     fullWidth
                                     variant="filled"
@@ -114,7 +114,7 @@ export default function QuestionForm() {
                                     }
                                   />
                                 </Grid>
-                                <Grid item xs={12} md={12} lg={6}>
+                                <Grid item xs={12} md={12} lg={4}>
                                   <IconButton
                                     disabled={disabledArrowDownward}
                                     onClick={() => {
@@ -140,7 +140,6 @@ export default function QuestionForm() {
                                   >
                                     <Delete />
                                   </IconButton>
-                                  <Divider></Divider>
                                 </Grid>
                               </Grid>
                             </div>
