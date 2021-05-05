@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import axios from "../api/apiConfig";
-import { useStyles } from "../styles/globalStyles";
+import { useGlobalStyles } from "../styles/globalStyles";
 
 import {
   Divider,
@@ -10,14 +10,13 @@ import {
   List,
   ListItem,
   ListItemText,
-  makeStyles,
   Paper,
   Typography,
 } from "@material-ui/core";
 import { Edit, Mail, Print } from "@material-ui/icons";
 
 export default function Questions() {
-  const classes = useStyles();
+  const globalClasses = useGlobalStyles();
   const [questions, setQuestions] = useState([]);
 
   useEffect(() => {
@@ -48,7 +47,7 @@ export default function Questions() {
 
   return (
     <div>
-      <Paper className={classes.paper}>
+      <Paper className={globalClasses.paper}>
         <Typography component="h2" variant="h6" color="primary" gutterBottom>
           Preguntas{" "}
           <IconButton component={RouterLink} to={`/questionnaire/edit`}>

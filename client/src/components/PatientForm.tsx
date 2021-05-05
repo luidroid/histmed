@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Link as RouterLink } from "react-router-dom";
+import { useParams, Link as RouterLink, useHistory } from "react-router-dom";
 import axios from "../api/apiConfig";
-import { useStyles } from "../styles/globalStyles";
+import { useGlobalStyles } from "../styles/globalStyles";
 import clsx from "clsx";
 
 import { Gender, Patient } from "../models/patient";
@@ -48,7 +48,7 @@ import {
 import { Formik, Form, FieldArray } from "formik";
 import * as yup from "yup";
 
-const useCustomStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: "flex",
@@ -114,18 +114,24 @@ type Props = {
 };
 
 export default function PatientForm({ edit }: Props) {
-  const globalClasses = useStyles();
-  const classes = useCustomStyles();
-  // const combinePaper = clsx(globalClasses.spacing, globalClasses.paper);
+  const globalClasses = useGlobalStyles();
+  const classes = useStyles();
+  const history = useHistory();
 
   const { id } = useParams<{ id: string }>();
+  const urlPatient = `/patients/${id}`;
+  const urlPatients = `/patients`;
+  const gotoPage = edit ? urlPatient : urlPatients;
+
   const [patient, setPatient] = useState<Patient>(initPatient);
 
   useEffect(() => {
+    console.log(edit);
+
     if (edit) {
       (async () => {
         try {
-          const { data } = await axios.get<Patient>(`/patients/${id}`);
+          const { data } = await axios.get<Patient>(urlPatient);
           setPatient(data);
         } catch (error) {
           console.log(error);
@@ -141,7 +147,7 @@ export default function PatientForm({ edit }: Props) {
         }
       })();
     }
-  }, [id, edit]);
+  }, [id, edit, urlPatient]);
 
   const [selectedDate, setSelectedDate] = React.useState<Date | null>(
     new Date("2014-08-18T21:11:54")
@@ -204,6 +210,26 @@ export default function PatientForm({ edit }: Props) {
         enableReinitialize
         onSubmit={(values, actions) => {
           console.log(values);
+
+          if (edit) {
+            (async () => {
+              try {
+                await axios.put<Patient>(urlPatient, values);
+                history.push(urlPatient);
+              } catch (error) {
+                console.log(error);
+              }
+            })();
+          } else {
+            (async () => {
+              try {
+                await axios.post<Patient>(urlPatients, values);
+                history.push(urlPatients);
+              } catch (error) {
+                console.log(error);
+              }
+            })();
+          }
         }}
       >
         {(formik) => (
@@ -335,12 +361,13 @@ export default function PatientForm({ edit }: Props) {
               >
                 Guardar
               </Button>
+
               <Button
                 color="default"
                 variant="outlined"
                 size="large"
                 component={RouterLink}
-                to={{ edit } ? `/patients/${id}` : `/patients`}
+                to={gotoPage}
               >
                 Cancelar
               </Button>

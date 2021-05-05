@@ -1,35 +1,16 @@
 import React from "react";
-import clsx from "clsx";
 
 import { History } from "../models/patient";
 
-import { makeStyles, Typography, Grid, Divider, Box } from "@material-ui/core";
-/**
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: "100%",
-  },
-  paper: {
-    padding: theme.spacing(2),
-    display: "flex",
-    overflow: "auto",
-    flexDirection: "column",
-  },
+import { Typography, Grid, Divider } from "@material-ui/core";
 
-  fixedHeight: {
-    height: 540, //240
-  },
-}));
- */
 type Props = {
-  title: string;
+  title?: string;
   records: History[];
 };
 export default function PatientHistoryGeneric({ title, records }: Props) {
-  // const classes = useStyles();
-
   return (
-    <Box>
+    <div>
       <Typography component="p" variant="h4">
         {title}
       </Typography>
@@ -57,6 +38,6 @@ export default function PatientHistoryGeneric({ title, records }: Props) {
           </React.Fragment>
         ))}
       </Grid>
-    </Box>
+    </div>
   );
 }

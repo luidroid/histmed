@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import axios from "../api/apiConfig";
-import { useStyles } from "../styles/globalStyles";
+import { useGlobalStyles } from "../styles/globalStyles";
 
 import {
   Box,
@@ -25,7 +25,7 @@ const validationSchema = yup.object({
 });
 
 export default function QuestionForm() {
-  const classes = useStyles();
+  const globalClasses = useGlobalStyles();
   const [questions, setQuestions] = useState([]);
 
   useEffect(() => {
@@ -51,7 +51,7 @@ export default function QuestionForm() {
 
   return (
     <React.Fragment>
-      <Paper className={classes.paper}>
+      <Paper className={globalClasses.paper}>
         <Typography component="h2" variant="h6" color="primary" gutterBottom>
           Preguntas{" "}
         </Typography>
@@ -65,7 +65,7 @@ export default function QuestionForm() {
           }}
         >
           {(formik) => (
-            <Form className={classes.root} autoComplete="off">
+            <Form className={globalClasses.root} autoComplete="off">
               <FieldArray
                 name="questions"
                 render={(arrayHelpers) => {
@@ -150,7 +150,7 @@ export default function QuestionForm() {
                             Nueva pregunta{" "}
                           </Button>
                         </FormControl>{" "}
-                        <Box className={classes.spacing}>
+                        <Box className={globalClasses.spacing}>
                           <Button
                             color="primary"
                             variant="contained"

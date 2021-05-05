@@ -73,11 +73,12 @@ export default function PatientDetails() {
 
   return (
     <React.Fragment>
-      <Grid item xs={12} md={6} lg={8}>
+      <Grid item xs={12} md={8} lg={8}>
         <PatientInfo {...info}></PatientInfo>
       </Grid>
+
       {/* Appointments */}
-      <Grid item xs={12} md={6} lg={4}>
+      <Grid item xs={12} md={4} lg={4}>
         <Paper className={fixedHeightPaper}>
           <Typography component="h2" variant="h6" color="primary" gutterBottom>
             Consultas
@@ -131,12 +132,14 @@ export default function PatientDetails() {
           </div>
         </Paper>
       </Grid>
+
       {/* Alergies */}
-      <Grid item xs={12} md={6} lg={8}>
+      <Grid item xs={12} md={8} lg={8}>
         <PatientHistory historyList={info.historyList}></PatientHistory>
       </Grid>
+
       {/* Surgery */}
-      <Grid item xs={12} md={6} lg={4}>
+      <Grid item xs={12} md={4} lg={4}>
         <Paper className={fixedHeightPaper}>
           <Typography component="h2" variant="h6" color="primary" gutterBottom>
             Operaciones

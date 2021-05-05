@@ -1,7 +1,7 @@
 import React from "react";
 import { Link as RouterLink, useHistory } from "react-router-dom";
-import clsx from "clsx";
 import axios from "../api/apiConfig";
+import { useGlobalStyles } from "../styles/globalStyles";
 
 import { Patient } from "../models/patient";
 import { red } from "@material-ui/core/colors";
@@ -48,15 +48,6 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     maxWidth: "46ch",
   },
-  paper: {
-    padding: theme.spacing(2),
-    display: "flex",
-    overflow: "auto",
-    flexDirection: "column",
-  },
-  fixedHeight: {
-    height: 550, //240
-  },
   avatar: {
     backgroundColor: red[500],
     width: theme.spacing(9),
@@ -65,8 +56,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function PatientInfo(patient: Patient) {
+  const globalClasses = useGlobalStyles();
   const classes = useStyles();
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+
   const history = useHistory();
   const [open, setOpen] = React.useState(false);
 
@@ -97,7 +89,7 @@ export default function PatientInfo(patient: Patient) {
 
   return (
     <Box>
-      <Paper className={fixedHeightPaper}>
+      <Paper className={globalClasses.paper}>
         <Typography component="h2" variant="h6" color="primary" gutterBottom>
           Datos personales
           <IconButton
