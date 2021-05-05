@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { useParams, Link as RouterLink } from "react-router-dom";
 import axios from "../api/apiConfig";
+import { useStyles } from "../styles/globalStyles";
 import clsx from "clsx";
 
 import { Gender, Patient } from "../models/patient";
-import { useParams } from "react-router-dom";
 import { initPatient } from "../api/patientService";
 
 import {
@@ -46,12 +47,15 @@ import {
 import { Formik, Form, FieldArray } from "formik";
 import * as yup from "yup";
 
-const useStyles = makeStyles((theme: Theme) =>
+const useCustomStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      "& .MuiTextField-root": {
+      display: "flex",
+      flexWrap: "wrap",
+      "& > *": {
         margin: theme.spacing(1),
-        //width: "50ch",
+        width: theme.spacing(16),
+        height: theme.spacing(16),
       },
     },
     formControl: {
@@ -63,17 +67,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     input: {
       display: "none",
-    },
-    spacing: {
-      "& > *": {
-        margin: theme.spacing(1),
-      },
-    },
-    paper: {
-      padding: theme.spacing(2),
-      display: "flex",
-      overflow: "auto",
-      flexDirection: "column",
     },
   })
 );
@@ -121,15 +114,26 @@ type Props = {
 
 export default function PatientForm({ edit }: Props) {
   const classes = useStyles();
+  const customClasses = useCustomStyles();
+  // const combinePaper = clsx(globalClasses.spacing, globalClasses.paper);
+
   const { id } = useParams<{ id: string }>();
   const [patient, setPatient] = useState<Patient>(initPatient);
-  const fixedHeightPaper = clsx(classes.paper);
 
   useEffect(() => {
     if (edit) {
       (async () => {
         try {
           const { data } = await axios.get<Patient>(`/patients/${id}`);
+          setPatient(data);
+        } catch (error) {
+          console.log(error);
+        }
+      })();
+    } else {
+      (async () => {
+        try {
+          const { data } = await axios.get<Patient>(`/patient`);
           setPatient(data);
         } catch (error) {
           console.log(error);
@@ -165,7 +169,7 @@ export default function PatientForm({ edit }: Props) {
         <SmallAvatar alt="Remy Sharp">
           <input
             accept=""
-            className={classes.input}
+            className={customClasses.input}
             id="icon-button-file"
             type="file"
             onChange={handleUploadPhoto}
@@ -185,7 +189,7 @@ export default function PatientForm({ edit }: Props) {
       <Avatar
         alt="Foto de perfil"
         src={selectedPhoto ? URL.createObjectURL(selectedPhoto) : ""}
-        className={classes.large}
+        className={customClasses.large}
         variant="square"
       />
     </Badge>
@@ -202,310 +206,82 @@ export default function PatientForm({ edit }: Props) {
         }}
       >
         {(formik) => (
-          <Form className={classes.root} autoComplete="off">
-            <Grid container spacing={1}>
-              <Grid item xs={12} md={12} lg={12}>
-                <Paper className={fixedHeightPaper}>
-                  <Typography
-                    component="h2"
-                    variant="h6"
-                    color="primary"
-                    gutterBottom
-                  >
-                    Datos personales
-                  </Typography>
-                  <Grid container spacing={1}>
-                    <Grid item xs={12} md={2}>
-                      {photoSection}
-                    </Grid>
-                    <Grid item xs={12} md={10}>
-                      <FormControl component="fieldset">
-                        <FormLabel component="legend">
-                          Datos personales
-                        </FormLabel>
-                        <FormGroup row>
+          <Form autoComplete="off">
+            <Paper className={classes.paper}>
+              <Typography
+                component="h2"
+                variant="h6"
+                color="primary"
+                gutterBottom
+              >
+                Datos personales{" "}
+              </Typography>
+            </Paper>
+
+            <Paper className={classes.paper}>
+              <Typography
+                component="h2"
+                variant="h6"
+                color="primary"
+                gutterBottom
+              >
+                Antecedentes{" "}
+              </Typography>
+
+              <FormControl component="fieldset">
+                <FieldArray
+                  name="historyList"
+                  render={(arrayHelpers) => (
+                    <div>
+                      {formik.values.historyList?.map((historyItem, index) => (
+                        <div key={index}>
                           <TextField
+                            className={classes.spacing}
                             variant="filled"
-                            id="firstname"
-                            name="firstname"
-                            label="Nombre *"
-                            value={formik.values.firstname}
-                            onChange={formik.handleChange}
-                            error={
-                              formik.touched.firstname &&
-                              Boolean(formik.errors.firstname)
-                            }
-                            helperText={
-                              formik.touched.firstname &&
-                              formik.errors.firstname
-                            }
-                          />
-                          <TextField
-                            variant="filled"
-                            id="secondName"
-                            name="secondName"
-                            label="Segundo nombre"
-                            value={formik.values.secondName}
+                            name={`historyList.${index}.name`}
+                            label="Nombre"
+                            value={historyItem.name}
                             onChange={formik.handleChange}
                           />
                           <TextField
+                            className={classes.spacing}
                             variant="filled"
-                            id="lastname"
-                            name="lastname"
-                            label="Apellido *"
-                            value={formik.values.lastname}
-                            onChange={formik.handleChange}
-                            error={
-                              formik.touched.lastname &&
-                              Boolean(formik.errors.lastname)
-                            }
-                            helperText={
-                              formik.touched.lastname && formik.errors.lastname
-                            }
-                          />
-
-                          <TextField
-                            variant="filled"
-                            id="secondLastname"
-                            name="secondLastname"
-                            label="Segundo apellido"
-                            value={formik.values.secondLastname}
-                            onChange={formik.handleChange}
-                          />
-
-                          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                            <KeyboardDatePicker
-                              disableToolbar
-                              inputVariant="filled"
-                              variant="inline"
-                              format="MM/dd/yyyy"
-                              margin="normal"
-                              id="date-picker-inline"
-                              label="Fecha de nacimiento"
-                              value={selectedDate}
-                              onChange={handleDateChange}
-                              KeyboardButtonProps={{
-                                "aria-label": "change date",
-                              }}
-                            />
-                          </MuiPickersUtilsProvider>
-
-                          <FormControl className={classes.formControl}>
-                            <InputLabel htmlFor="outlined-age-native-simple">
-                              Sexo
-                            </InputLabel>
-                            <Select
-                              fullWidth
-                              variant="filled"
-                              native
-                              value={formik.values.gender}
-                              label="Sexo"
-                              inputProps={{
-                                name: "age",
-                                id: "outlined-age-native-simple",
-                              }}
-                            >
-                              <option value={Gender.Female}>Femenino</option>
-                              <option value={Gender.Male}>Masculino</option>
-                              <option value={Gender.Other}>Otro</option>
-                            </Select>
-                          </FormControl>
-
-                          <TextField
-                            fullWidth
-                            variant="filled"
-                            id="dni"
-                            name="dni"
-                            label="DNI"
-                            value={formik.values.dni}
-                            onChange={formik.handleChange}
-                          />
-
-                          <TextField
-                            fullWidth
-                            variant="filled"
-                            id="notes"
-                            name="notes"
-                            label="Notas"
                             multiline
                             rows={4}
-                            value={formik.values.notes}
+                            name={`historyList.${index}.description`}
+                            label="Description"
+                            value={historyItem.description}
                             onChange={formik.handleChange}
                           />
-                        </FormGroup>
+                          <IconButton
+                            onClick={() => arrayHelpers.remove(index)}
+                          >
+                            <DeleteIcon />
+                          </IconButton>
+                          <Divider></Divider>
+                        </div>
+                      ))}
+                      <FormControl>
+                        <Button
+                          variant="outlined"
+                          color="default"
+                          size="small"
+                          startIcon={<Icon>add</Icon>}
+                          onClick={() =>
+                            arrayHelpers.push({
+                              name: "",
+                              description: "",
+                            })
+                          }
+                        >
+                          Antecedente{" "}
+                        </Button>
                       </FormControl>
-                    </Grid>
-                    <Grid item xs={12} md={4}>
-                      <FormControl component="fieldset">
-                        <FormLabel component="legend">Contacto</FormLabel>
-                        <FormGroup row>
-                          <TextField
-                            fullWidth
-                            variant="filled"
-                            id="email"
-                            name="email"
-                            label="E-Mail"
-                            value={formik.values.email}
-                            onChange={formik.handleChange}
-                            error={
-                              formik.touched.email &&
-                              Boolean(formik.errors.email)
-                            }
-                            helperText={
-                              formik.touched.email && formik.errors.email
-                            }
-                          />
-                          <TextField
-                            fullWidth
-                            variant="filled"
-                            id="phone"
-                            name="phone"
-                            label="Teléfono"
-                            value={formik.values.phone}
-                            onChange={formik.handleChange}
-                          />
-                          <TextField
-                            fullWidth
-                            variant="filled"
-                            id="mobile"
-                            name="mobile"
-                            label="Móvil"
-                            value={formik.values.mobile}
-                            onChange={formik.handleChange}
-                          />
-                        </FormGroup>
-                        <FormHelperText></FormHelperText>
-                      </FormControl>
-
-                      <FormControl component="fieldset">
-                        <FormLabel component="legend">Dirección</FormLabel>
-                        <FormGroup row>
-                          <TextField
-                            fullWidth
-                            variant="filled"
-                            id="adress.street"
-                            name="adress.street"
-                            label="calle"
-                            value={formik.values.address?.street}
-                            onChange={formik.handleChange}
-                          />
-                          <TextField
-                            fullWidth
-                            variant="filled"
-                            id="adress.houseNumber"
-                            name="adress.houseNumber"
-                            label="Número"
-                            value={formik.values.address?.houseNumber}
-                            onChange={formik.handleChange}
-                          />
-                          <TextField
-                            fullWidth
-                            variant="filled"
-                            id="adress.postalCode"
-                            name="adress.postalCode"
-                            label="Código postal"
-                            value={formik.values.address?.postalCode}
-                            onChange={formik.handleChange}
-                          />
-                          <TextField
-                            fullWidth
-                            variant="filled"
-                            id="adress.city"
-                            name="adress.city"
-                            label="Ciudad"
-                            value={formik.values.address?.city}
-                            onChange={formik.handleChange}
-                          />
-                          <TextField
-                            fullWidth
-                            variant="filled"
-                            id="adress.country"
-                            name="adress.country"
-                            label="País"
-                            value={formik.values.address?.country}
-                            onChange={formik.handleChange}
-                          />
-                        </FormGroup>
-                        <FormHelperText></FormHelperText>
-                      </FormControl>
-                    </Grid>
-                  </Grid>
-                </Paper>
-              </Grid>
-
-              <Grid item xs={12} md={12} lg={12}>
-                <Paper className={fixedHeightPaper}>
-                  <Typography
-                    component="h2"
-                    variant="h6"
-                    color="primary"
-                    gutterBottom
-                  >
-                    Antecedentes{" "}
-                  </Typography>
-                  <Grid container spacing={1}>
-                    <Grid item xs={12} md={12} lg={12}>
-                      <FormControl component="fieldset">
-                        <FieldArray
-                          name="historyList"
-                          render={(arrayHelpers) => (
-                            <FormGroup row>
-                              {formik.values.historyList?.map(
-                                (historyItem, index) => (
-                                  <div key={index}>
-                                    <TextField
-                                      fullWidth
-                                      variant="filled"
-                                      name={`historyList.${index}.name`}
-                                      label="Nombre"
-                                      value={historyItem.name}
-                                      onChange={formik.handleChange}
-                                    />
-                                    <TextField
-                                      fullWidth
-                                      variant="filled"
-                                      multiline
-                                      rows={4}
-                                      name={`historyList.${index}.description`}
-                                      label="Description"
-                                      value={historyItem.description}
-                                      onChange={formik.handleChange}
-                                    />
-                                    <IconButton
-                                      onClick={() => arrayHelpers.remove(index)}
-                                    >
-                                      <DeleteIcon />
-                                    </IconButton>
-                                    <Divider></Divider>
-                                  </div>
-                                )
-                              )}
-                              <FormControl>
-                                <Button
-                                  variant="outlined"
-                                  color="default"
-                                  size="small"
-                                  startIcon={<Icon>add</Icon>}
-                                  onClick={() =>
-                                    arrayHelpers.push({
-                                      name: "",
-                                      description: "",
-                                    })
-                                  }
-                                >
-                                  Antecedente{" "}
-                                </Button>
-                              </FormControl>
-                            </FormGroup>
-                          )}
-                        />
-                      </FormControl>
-                    </Grid>
-                  </Grid>
-                </Paper>
-              </Grid>
-            </Grid>
-
+                    </div>
+                  )}
+                />
+              </FormControl>
+            </Paper>
             <Box className={classes.spacing}>
               <Button
                 color="primary"
@@ -515,7 +291,12 @@ export default function PatientForm({ edit }: Props) {
               >
                 Guardar
               </Button>
-              <Button variant="contained" size="large" type="submit">
+              <Button
+                variant="contained"
+                size="large"
+                component={RouterLink}
+                to={{ edit } ? `/patients/${id}` : `/patients`}
+              >
                 Cancelar
               </Button>
             </Box>

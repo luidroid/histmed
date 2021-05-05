@@ -63,7 +63,6 @@ export default function PatientDetails() {
     (async () => {
       try {
         const { data } = await axios.get<Patient>(`/patients/${id}`);
-        console.log("🚀 ~ file: PatientDetails.tsx ~ line 66 ~ data", data);
 
         setPatientInfo(data);
       } catch (error) {

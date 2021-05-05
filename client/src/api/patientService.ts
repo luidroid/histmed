@@ -55,7 +55,7 @@ const initPatient: Patient = {
     city: "",
     country: "",
   },
-  historyList: initHistory,
+  historyList: [],
   notes: "",
   lastModified: "",
 };

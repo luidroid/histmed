@@ -1,6 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import axios from "../api/apiConfig";
+import { useStyles } from "../styles/globalStyles";
 
 import {
   Divider,
@@ -14,15 +15,6 @@ import {
   Typography,
 } from "@material-ui/core";
 import { Edit, Mail, Print } from "@material-ui/icons";
-
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    padding: theme.spacing(2),
-    display: "flex",
-    overflow: "auto",
-    flexDirection: "column",
-  },
-}));
 
 export default function Questions() {
   const classes = useStyles();

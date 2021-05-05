@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import axios from "../api/apiConfig";
-import { useGlobalStyles } from "../styles/globalStyles";
+import { useStyles } from "../styles/globalStyles";
 
 import {
   Box,
@@ -25,7 +25,7 @@ const validationSchema = yup.object({
 });
 
 export default function QuestionForm() {
-  const classes = useGlobalStyles();
+  const classes = useStyles();
   const [questions, setQuestions] = useState([]);
 
   useEffect(() => {
@@ -61,7 +61,7 @@ export default function QuestionForm() {
           enableReinitialize
           onSubmit={(values) => {
             console.log(values);
-            // handleSubmit(values);
+            handleSubmit(values);
           }}
         >
           {(formik) => (
