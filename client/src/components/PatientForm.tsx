@@ -60,7 +60,7 @@ const useCustomStyles = makeStyles((theme: Theme) =>
       },
     },
     formControl: {
-      margin: theme.spacing(1),
+      margin: theme.spacing(2),
     },
     large: {
       width: theme.spacing(20),
@@ -114,8 +114,8 @@ type Props = {
 };
 
 export default function PatientForm({ edit }: Props) {
-  const classes = useStyles();
-  const customClasses = useCustomStyles();
+  const globalClasses = useStyles();
+  const classes = useCustomStyles();
   // const combinePaper = clsx(globalClasses.spacing, globalClasses.paper);
 
   const { id } = useParams<{ id: string }>();
@@ -170,7 +170,7 @@ export default function PatientForm({ edit }: Props) {
         <SmallAvatar alt="Remy Sharp">
           <input
             accept=""
-            className={customClasses.input}
+            className={classes.input}
             id="icon-button-file"
             type="file"
             onChange={handleUploadPhoto}
@@ -190,7 +190,7 @@ export default function PatientForm({ edit }: Props) {
       <Avatar
         alt="Foto de perfil"
         src={selectedPhoto ? URL.createObjectURL(selectedPhoto) : ""}
-        className={customClasses.large}
+        className={classes.large}
         variant="square"
       />
     </Badge>
@@ -210,7 +210,7 @@ export default function PatientForm({ edit }: Props) {
           <Form autoComplete="off">
             <Grid container spacing={1}>
               <Grid item xs={12} md={8} lg={8}>
-                <Paper className={classes.paper}>
+                <Paper className={globalClasses.paper}>
                   <Typography
                     component="h2"
                     variant="h6"
@@ -223,7 +223,7 @@ export default function PatientForm({ edit }: Props) {
               </Grid>
 
               <Grid item xs={12} md={4} lg={4}>
-                <Paper className={classes.paper}>
+                <Paper className={globalClasses.paper}>
                   <Typography
                     component="h2"
                     variant="h6"
@@ -236,7 +236,7 @@ export default function PatientForm({ edit }: Props) {
               </Grid>
 
               <Grid item xs={12} md={8} lg={8}>
-                <Paper className={classes.paper}>
+                <Paper className={globalClasses.paper}>
                   <Typography
                     component="h2"
                     variant="h6"
@@ -257,7 +257,7 @@ export default function PatientForm({ edit }: Props) {
                                 <Grid item xs={12} md={4} lg={6}>
                                   <TextField
                                     fullWidth
-                                    className={classes.spacing}
+                                    className={globalClasses.spacing}
                                     variant="filled"
                                     name={`historyList.${index}.name`}
                                     label="Asunto"
@@ -268,7 +268,7 @@ export default function PatientForm({ edit }: Props) {
                                 <Grid item xs={12} md={4} lg={5}>
                                   <TextField
                                     fullWidth
-                                    className={classes.spacing}
+                                    className={globalClasses.spacing}
                                     variant="filled"
                                     multiline
                                     rows={4}
@@ -291,10 +291,10 @@ export default function PatientForm({ edit }: Props) {
                               </Grid>
                             )
                           )}
-                          <FormControl>
+                          <FormControl className={classes.formControl}>
                             <Button
-                              variant="outlined"
-                              color="default"
+                              variant="contained"
+                              color="secondary"
                               size="small"
                               startIcon={<Icon>add</Icon>}
                               onClick={() =>
@@ -314,7 +314,7 @@ export default function PatientForm({ edit }: Props) {
                 </Paper>
               </Grid>
               <Grid item xs={12} md={4} lg={4}>
-                <Paper className={classes.paper}>
+                <Paper className={globalClasses.paper}>
                   <Typography
                     component="h2"
                     variant="h6"
@@ -326,7 +326,7 @@ export default function PatientForm({ edit }: Props) {
                 </Paper>
               </Grid>
             </Grid>
-            <Box className={classes.spacing}>
+            <Box className={globalClasses.spacing}>
               <Button
                 color="primary"
                 variant="contained"
@@ -336,7 +336,8 @@ export default function PatientForm({ edit }: Props) {
                 Guardar
               </Button>
               <Button
-                variant="contained"
+                color="default"
+                variant="outlined"
                 size="large"
                 component={RouterLink}
                 to={{ edit } ? `/patients/${id}` : `/patients`}
