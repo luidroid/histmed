@@ -32,6 +32,7 @@ import {
   Paper,
   Typography,
   Divider,
+  Container,
 } from "@material-ui/core";
 
 import { Delete as DeleteIcon } from "@material-ui/icons";
@@ -207,81 +208,124 @@ export default function PatientForm({ edit }: Props) {
       >
         {(formik) => (
           <Form autoComplete="off">
-            <Paper className={classes.paper}>
-              <Typography
-                component="h2"
-                variant="h6"
-                color="primary"
-                gutterBottom
-              >
-                Datos personales{" "}
-              </Typography>
-            </Paper>
+            <Grid container spacing={1}>
+              <Grid item xs={12} md={8} lg={8}>
+                <Paper className={classes.paper}>
+                  <Typography
+                    component="h2"
+                    variant="h6"
+                    color="primary"
+                    gutterBottom
+                  >
+                    Datos personales{" "}
+                  </Typography>
+                </Paper>
+              </Grid>
 
-            <Paper className={classes.paper}>
-              <Typography
-                component="h2"
-                variant="h6"
-                color="primary"
-                gutterBottom
-              >
-                Antecedentes{" "}
-              </Typography>
+              <Grid item xs={12} md={4} lg={4}>
+                <Paper className={classes.paper}>
+                  <Typography
+                    component="h2"
+                    variant="h6"
+                    color="primary"
+                    gutterBottom
+                  >
+                    Notas{" "}
+                  </Typography>
+                </Paper>
+              </Grid>
 
-              <FormControl component="fieldset">
-                <FieldArray
-                  name="historyList"
-                  render={(arrayHelpers) => (
-                    <div>
-                      {formik.values.historyList?.map((historyItem, index) => (
-                        <div key={index}>
-                          <TextField
-                            className={classes.spacing}
-                            variant="filled"
-                            name={`historyList.${index}.name`}
-                            label="Nombre"
-                            value={historyItem.name}
-                            onChange={formik.handleChange}
-                          />
-                          <TextField
-                            className={classes.spacing}
-                            variant="filled"
-                            multiline
-                            rows={4}
-                            name={`historyList.${index}.description`}
-                            label="Description"
-                            value={historyItem.description}
-                            onChange={formik.handleChange}
-                          />
-                          <IconButton
-                            onClick={() => arrayHelpers.remove(index)}
-                          >
-                            <DeleteIcon />
-                          </IconButton>
-                          <Divider></Divider>
+              <Grid item xs={12} md={8} lg={8}>
+                <Paper className={classes.paper}>
+                  <Typography
+                    component="h2"
+                    variant="h6"
+                    color="primary"
+                    gutterBottom
+                  >
+                    Antecedentes{" "}
+                  </Typography>
+
+                  <FormControl component="fieldset">
+                    <FieldArray
+                      name="historyList"
+                      render={(arrayHelpers) => (
+                        <div>
+                          {formik.values.historyList?.map(
+                            (historyItem, index) => (
+                              <Grid container spacing={1} key={index}>
+                                <Grid item xs={12} md={4} lg={6}>
+                                  <TextField
+                                    fullWidth
+                                    className={classes.spacing}
+                                    variant="filled"
+                                    name={`historyList.${index}.name`}
+                                    label="Asunto"
+                                    value={historyItem.name}
+                                    onChange={formik.handleChange}
+                                  />
+                                </Grid>
+                                <Grid item xs={12} md={4} lg={5}>
+                                  <TextField
+                                    fullWidth
+                                    className={classes.spacing}
+                                    variant="filled"
+                                    multiline
+                                    rows={4}
+                                    name={`historyList.${index}.description`}
+                                    label="Observación"
+                                    value={historyItem.description}
+                                    onChange={formik.handleChange}
+                                  />
+                                </Grid>
+                                <Grid item xs={12} md={4} lg={1}>
+                                  <IconButton
+                                    onClick={() => arrayHelpers.remove(index)}
+                                  >
+                                    <DeleteIcon />
+                                  </IconButton>
+                                </Grid>
+                                <Grid item xs={12} md={12} lg={12}>
+                                  <Divider></Divider>
+                                </Grid>
+                              </Grid>
+                            )
+                          )}
+                          <FormControl>
+                            <Button
+                              variant="outlined"
+                              color="default"
+                              size="small"
+                              startIcon={<Icon>add</Icon>}
+                              onClick={() =>
+                                arrayHelpers.push({
+                                  name: "",
+                                  description: "",
+                                })
+                              }
+                            >
+                              Antecedente{" "}
+                            </Button>
+                          </FormControl>
                         </div>
-                      ))}
-                      <FormControl>
-                        <Button
-                          variant="outlined"
-                          color="default"
-                          size="small"
-                          startIcon={<Icon>add</Icon>}
-                          onClick={() =>
-                            arrayHelpers.push({
-                              name: "",
-                              description: "",
-                            })
-                          }
-                        >
-                          Antecedente{" "}
-                        </Button>
-                      </FormControl>
-                    </div>
-                  )}
-                />
-              </FormControl>
-            </Paper>
+                      )}
+                    />
+                  </FormControl>
+                </Paper>
+              </Grid>
+              <Grid item xs={12} md={4} lg={4}>
+                <Paper className={classes.paper}>
+                  <Typography
+                    component="h2"
+                    variant="h6"
+                    color="primary"
+                    gutterBottom
+                  >
+                    Archivos{" "}
+                  </Typography>
+                </Paper>
+              </Grid>
+            </Grid>
             <Box className={classes.spacing}>
               <Button
                 color="primary"
