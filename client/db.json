@@ -6,22 +6,46 @@
       "avatar": "/images/123456789/avatar.png",
       "firstname": "Luis",
       "lastname": "Amoroso",
-      "secondName": "Alcibiades",
-      "secondLastname": "Garces",
       "dateOfBirth": "September 14, 2016",
       "dni": "123456789A",
       "gender": "M",
       "email": "test@mail.com",
       "phone": "0711",
       "mobile": "07110153",
-      "adress": {
-        "street": "Koepp Rapids",
-        "houseNumber": "123",
-        "postalCode": "52902",
-        "city": "North Arnoldchester",
-        "country": "Buckinghamshire"
-      },
+      "address": "Koepp Rapids 123, 70185 London",
       "historyList": [
+        {
+          "name": "id veritatis sapiente",
+          "description": "Enim expedita tempora harum ea aut qui. Fugit magnam sunt optio officiis."
+        },
+        {
+          "name": "velit qui occaecati",
+          "description": "Harum optio hic eum. Sed et amet in officiis quia provident deleniti veniam. Modi ut labore voluptatem tempora quis ut. Est tempore totam et. Ut quia accusamus doloremque sit exercitationem iure vero autem sed. Molestiae sit dolore commodi explicabo."
+        },
+        {
+          "name": "tempore voluptatem officia",
+          "description": "Aliquam labore dolor. Illo dolorem qui. Quasi ea occaecati. Quis laudantium quas delectus et et rem distinctio exercitationem quos. Doloribus et et deleniti."
+        },
+        {
+          "name": "tempore voluptatem officia",
+          "description": "Aliquam labore dolor. Illo dolorem qui. Quasi ea occaecati. Quis laudantium quas delectus et et rem distinctio exercitationem quos. Doloribus et et deleniti."
+        },
+        {
+          "name": "id veritatis sapiente",
+          "description": "Enim expedita tempora harum ea aut qui. Fugit magnam sunt optio officiis."
+        },
+        {
+          "name": "velit qui occaecati",
+          "description": "Harum optio hic eum. Sed et amet in officiis quia provident deleniti veniam. Modi ut labore voluptatem tempora quis ut. Est tempore totam et. Ut quia accusamus doloremque sit exercitationem iure vero autem sed. Molestiae sit dolore commodi explicabo."
+        },
+        {
+          "name": "tempore voluptatem officia",
+          "description": "Aliquam labore dolor. Illo dolorem qui. Quasi ea occaecati. Quis laudantium quas delectus et et rem distinctio exercitationem quos. Doloribus et et deleniti."
+        },
+        {
+          "name": "tempore voluptatem officia",
+          "description": "Aliquam labore dolor. Illo dolorem qui. Quasi ea occaecati. Quis laudantium quas delectus et et rem distinctio exercitationem quos. Doloribus et et deleniti."
+        },
         {
           "name": "id veritatis sapiente",
           "description": "Enim expedita tempora harum ea aut qui. Fugit magnam sunt optio officiis."
@@ -212,23 +236,32 @@
     "email": "",
     "phone": "",
     "mobile": "",
-    "address": {
-      "street": "",
-      "houseNumber": "",
-      "postalCode": "",
-      "city": "",
-      "country": ""
-    },
+    "address": "",
     "historyList": [
-      { "name": "Peso", "description": "" },
-      { "name": "Estatura", "description": "" },
+      {
+        "name": "Peso",
+        "description": ""
+      },
+      {
+        "name": "Estatura",
+        "description": ""
+      },
       {
         "name": "¿Cuántos hijos tienes y de qué forma nacieron? (Parto normal o cesárea) ",
         "description": ""
       },
-      { "name": "¿Planificás tener más hijos?", "description": "" },
-      { "name": "¿Fumas? ¿Con cuánta frecuencia?", "description": "" },
-      { "name": "¿Consumís alguna medicación?", "description": "" },
+      {
+        "name": "¿Planificás tener más hijos?",
+        "description": ""
+      },
+      {
+        "name": "¿Fumas? ¿Con cuánta frecuencia?",
+        "description": ""
+      },
+      {
+        "name": "¿Consumís alguna medicación?",
+        "description": ""
+      },
       {
         "name": "¿Tienes alergia a algún medicamento? ¿Cuál?",
         "description": ""
@@ -249,7 +282,10 @@
         "name": "¿Tuviste alguna cirugía anterior? (Ej. Apéndice, Vesícula, Hernia, Cirugía Plástica o Estética, etc..)",
         "description": ""
       },
-      { "name": "Procedimientos Estéticos realizados", "description": "" },
+      {
+        "name": "Procedimientos Estéticos realizados",
+        "description": ""
+      },
       {
         "name": "¿En qué procedimiento estás interesado/a?",
         "description": ""

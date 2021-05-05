@@ -31,7 +31,6 @@ import {
 import {
   Edit as EditIcon,
   Delete as DeleteIcon,
-  PermContactCalendar as PermContactCalendarIcon,
   Cake as CakeIcon,
   RecentActors as RecentActorsIcon,
   Mail as MailIcon,
@@ -139,25 +138,6 @@ export default function PatientInfo(patient: Patient) {
               <Divider variant="inset" component="li" />
               <ListItem alignItems="flex-start">
                 <ListItemIcon>
-                  <PermContactCalendarIcon />
-                </ListItemIcon>
-                <ListItemText
-                  primary="Nombre completo"
-                  secondary={
-                    <Typography
-                      component="span"
-                      variant="body2"
-                      color="textSecondary"
-                    >
-                      {patient?.firstname} {patient?.secondName}{" "}
-                      {patient?.lastname} {patient?.secondLastname}{" "}
-                    </Typography>
-                  }
-                />
-              </ListItem>
-              <Divider variant="inset" component="li" />
-              <ListItem alignItems="flex-start">
-                <ListItemIcon>
                   <CakeIcon />
                 </ListItemIcon>
                 <ListItemText
@@ -249,10 +229,7 @@ export default function PatientInfo(patient: Patient) {
                       variant="body2"
                       color="textSecondary"
                     >
-                      {patient?.address?.street}
-                      {patient?.address?.houseNumber},{" "}
-                      {patient?.address?.postalCode} {patient?.address?.city} -{" "}
-                      {patient?.address?.country}
+                      {patient?.address}
                     </Typography>
                   }
                 />

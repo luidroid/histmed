@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link as RouterLink, useHistory } from "react-router-dom";
 import axios from "../api/apiConfig";
 import { useGlobalStyles } from "../styles/globalStyles";
-import clsx from "clsx";
 
 import { Gender, Patient } from "../models/patient";
 import { initPatient } from "../api/patientService";
@@ -15,7 +14,6 @@ import {
 } from "@material-ui/core/styles";
 
 import {
-  FormGroup,
   FormControl,
   TextField,
   Select,
@@ -23,16 +21,13 @@ import {
   Button,
   Box,
   Avatar,
-  FormLabel,
   Badge,
   IconButton,
   Grid,
-  FormHelperText,
   Icon,
   Paper,
   Typography,
   Divider,
-  Container,
 } from "@material-ui/core";
 
 import { Delete as DeleteIcon } from "@material-ui/icons";
@@ -60,7 +55,7 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     formControl: {
-      margin: theme.spacing(2),
+      margin: theme.spacing(1),
     },
     large: {
       width: theme.spacing(20),
@@ -93,13 +88,7 @@ const validationSchema = yup.object({
   email: yup.string().email("Ingrese un correo válido"),
   phone: yup.string(),
   mobile: yup.string(),
-  adress: yup.object({
-    street: yup.string(),
-    houseNumber: yup.string(),
-    postalCode: yup.string(),
-    city: yup.string(),
-    country: yup.string(),
-  }),
+  adress: yup.string(),
   historyList: yup.array().of(
     yup.object({
       name: yup.string(),
@@ -126,8 +115,6 @@ export default function PatientForm({ edit }: Props) {
   const [patient, setPatient] = useState<Patient>(initPatient);
 
   useEffect(() => {
-    console.log(edit);
-
     if (edit) {
       (async () => {
         try {
@@ -245,6 +232,103 @@ export default function PatientForm({ edit }: Props) {
                   >
                     Datos personales{" "}
                   </Typography>
+                  <Grid container spacing={1}>
+                    <Grid item xs={12} md={2} lg={3}>
+                      {photoSection}
+                    </Grid>
+                    <Grid item xs={12} md={10} lg={9}>
+                      <FormControl fullWidth className={globalClasses.root}>
+                        <TextField
+                          variant="filled"
+                          id="firstname"
+                          name="firstname"
+                          label="Nombre *"
+                          value={formik.values.firstname}
+                          onChange={formik.handleChange}
+                          error={
+                            formik.touched.firstname &&
+                            Boolean(formik.errors.firstname)
+                          }
+                          helperText={
+                            formik.touched.firstname && formik.errors.firstname
+                          }
+                        />
+
+                        <TextField
+                          variant="filled"
+                          id="lastname"
+                          name="lastname"
+                          label="Apellido *"
+                          value={formik.values.lastname}
+                          onChange={formik.handleChange}
+                          error={
+                            formik.touched.lastname &&
+                            Boolean(formik.errors.lastname)
+                          }
+                          helperText={
+                            formik.touched.lastname && formik.errors.lastname
+                          }
+                        />
+
+                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                          <KeyboardDatePicker
+                            disableToolbar
+                            inputVariant="filled"
+                            variant="inline"
+                            format="MM/dd/yyyy"
+                            margin="normal"
+                            id="date-picker-inline"
+                            label="Fecha de nacimiento"
+                            value={selectedDate}
+                            onChange={handleDateChange}
+                            KeyboardButtonProps={{
+                              "aria-label": "change date",
+                            }}
+                          />
+                        </MuiPickersUtilsProvider>
+
+                        <FormControl
+                          variant="filled"
+                          className={classes.formControl}
+                        >
+                          <InputLabel htmlFor="outlined-age-native-simple">
+                            Sexo
+                          </InputLabel>
+                          <Select
+                            value={formik.values.gender}
+                            label="Sexo"
+                            inputProps={{
+                              name: "gender",
+                              id: "outlined-age-native-simple",
+                            }}
+                          >
+                            <option value={Gender.Female}>Femenino</option>
+                            <option value={Gender.Male}>Masculino</option>
+                            <option value={Gender.Other}>Otro</option>
+                          </Select>
+                        </FormControl>
+
+                        <TextField
+                          variant="filled"
+                          id="dni"
+                          name="dni"
+                          label="Documento de identidad"
+                          value={formik.values.dni}
+                          onChange={formik.handleChange}
+                        />
+                        <TextField
+                          variant="filled"
+                          id="address"
+                          name="address"
+                          label="Dirección"
+                          multiline
+                          rows={4}
+                          value={formik.values.address}
+                          onChange={formik.handleChange}
+                        />
+                      </FormControl>
+                    </Grid>
+                  </Grid>
                 </Paper>
               </Grid>
 
@@ -256,8 +340,60 @@ export default function PatientForm({ edit }: Props) {
                     color="primary"
                     gutterBottom
                   >
-                    Notas{" "}
+                    Contacto{" "}
                   </Typography>
+                  <FormControl fullWidth className={globalClasses.root}>
+                    <TextField
+                      variant="filled"
+                      id="email"
+                      name="email"
+                      label="E-Mail"
+                      value={formik.values.email}
+                      onChange={formik.handleChange}
+                      error={
+                        formik.touched.email && Boolean(formik.errors.email)
+                      }
+                      helperText={formik.touched.email && formik.errors.email}
+                    />
+                    <TextField
+                      variant="filled"
+                      id="phone"
+                      name="phone"
+                      label="Teléfono"
+                      value={formik.values.phone}
+                      onChange={formik.handleChange}
+                    />
+                    <TextField
+                      variant="filled"
+                      id="mobile"
+                      name="mobile"
+                      label="Móvil"
+                      value={formik.values.mobile}
+                      onChange={formik.handleChange}
+                    />
+                  </FormControl>
+                </Paper>
+
+                <Paper className={globalClasses.paper}>
+                  <Typography
+                    component="h2"
+                    variant="h6"
+                    color="primary"
+                    gutterBottom
+                  >
+                    Información adicional{" "}
+                  </Typography>
+                  <TextField
+                    fullWidth
+                    variant="filled"
+                    id="notes"
+                    name="notes"
+                    label="Notas"
+                    multiline
+                    rows={8}
+                    value={formik.values.notes}
+                    onChange={formik.handleChange}
+                  />
                 </Paper>
               </Grid>
 

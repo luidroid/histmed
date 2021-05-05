@@ -18,12 +18,12 @@ export default function PatientHistoryGeneric({ title, records }: Props) {
       <Grid container spacing={1}>
         {records.map((record, index) => (
           <React.Fragment key={index}>
-            <Grid item xs={12} md={12} lg={4}>
+            <Grid item xs={12} md={12} lg={6}>
               <Typography component="span" variant="body1" color="textPrimary">
                 {record.name}
               </Typography>
             </Grid>
-            <Grid item xs={12} md={12} lg={8}>
+            <Grid item xs={12} md={12} lg={6}>
               <Typography
                 component="span"
                 variant="body2"

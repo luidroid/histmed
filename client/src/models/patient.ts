@@ -4,15 +4,13 @@ export interface Patient {
   avatar?: string;
   firstname: string;
   lastname: string;
-  secondName?: string;
-  secondLastname?: string;
   dateOfBirth?: string;
   gender: Gender;
   dni?: string;
   email?: string;
   phone?: string;
   mobile?: string;
-  address?: Address;
+  address?: string;
   historyList: History[];
   notes?: string;
   created?: string;
@@ -23,14 +21,6 @@ export enum Gender {
   Male = "M",
   Female = "F",
   Other = "O",
-}
-
-export interface Address {
-  street: string;
-  houseNumber: string;
-  postalCode: string;
-  city: string;
-  country: string;
 }
 
 export interface History {
