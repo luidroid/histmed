@@ -4,7 +4,6 @@ import axios from "../api/apiConfig";
 import { useGlobalStyles } from "../styles/globalStyles";
 
 import {
-  Divider,
   IconButton,
   Link,
   List,
@@ -22,7 +21,6 @@ export default function Questions() {
   const mailSalutation = "Estimado(a)%20,%0A%0A";
   const mailSignature =
     "%0A%0ASaludos cordiales,%0A%0ADr.%20Andrés%20Amoroso%0AEspecialista%20en%20Cirugía%20Plástica,%20Estética%20y%20Reconstructiva%0Awww.doctoramoroso.com";
-
   useEffect(() => {
     (async () => {
       try {
@@ -38,7 +36,7 @@ export default function Questions() {
     let content = mailSalutation;
     let result = "";
     questions.map((q, index) => {
-      result = result.concat(`${index + 1}. ${q}%0A`);
+      return (result = result.concat(`${index + 1}. ${q}%0A`));
     });
     content = content.concat(result).concat(mailSignature);
     setMailContent(content);

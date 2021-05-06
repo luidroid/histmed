@@ -4,15 +4,16 @@ export interface Patient {
   avatar?: string;
   firstname: string;
   lastname: string;
-  dateOfBirth?: string;
+  dateOfBirth: string;
   gender: Gender;
-  dni?: string;
-  email?: string;
-  phone?: string;
-  mobile?: string;
-  address?: string;
+  dni: string;
+  email: string;
+  phone: string;
+  mobile: string;
+  address: string;
   historyList: History[];
-  notes?: string;
+  appointments: Appointment[];
+  notes: string;
   created?: string;
   lastModified: string;
 }

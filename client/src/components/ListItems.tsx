@@ -17,7 +17,7 @@ export const mainListItems = (
       <ListItemIcon>
         <Today />
       </ListItemIcon>
-      <ListItemText primary="Calendario" />
+      <ListItemText primary="Agenda" />
     </ListItem>
     <ListItem button component={RouterLink} to={"/questionnaire"}>
       <ListItemIcon>

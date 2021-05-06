@@ -2,7 +2,6 @@ import React from "react";
 import Grid from "@material-ui/core/Grid";
 
 import Button from "@material-ui/core/Button";
-import AddIcon from "@material-ui/icons/Add";
 import Patients from "../components/Patients";
 import { Link as RouterLink } from "react-router-dom";
 import { Typography } from "@material-ui/core";
@@ -21,12 +20,11 @@ export default function _Patients() {
           <Button
             variant="contained"
             color="primary"
-            startIcon={<AddIcon />}
             size="large"
             component={RouterLink}
             to={"/patients/new"}
           >
-            Paciente
+            Nuevo paciente
           </Button>
         </Grid>
       </Grid>

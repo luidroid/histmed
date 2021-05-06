@@ -10,7 +10,6 @@ import { Grid } from "@material-ui/core/";
 
 import PatientHistory from "./PatientHistory";
 import PatientAppointments from "./PatientAppointments";
-import PatientSurgeries from "./PatientSurgeries";
 import PatientAttachments from "./PatientAttachments";
 
 export default function PatientDetails() {
@@ -37,8 +36,9 @@ export default function PatientDetails() {
       </Grid>
 
       <Grid item xs={12} md={4} lg={4}>
-        <PatientAppointments appointmentsId={1}></PatientAppointments>{" "}
-        <PatientSurgeries surgeriesId={1}></PatientSurgeries>
+        <PatientAppointments
+          appointments={info.appointments}
+        ></PatientAppointments>{" "}
         <PatientAttachments patientId={info?.id}></PatientAttachments>
       </Grid>
     </React.Fragment>

@@ -7,18 +7,16 @@ import {
   ListItemAvatar,
   ListItemText,
   makeStyles,
-  Paper,
   Theme,
-  Typography,
 } from "@material-ui/core";
 import {
-  BeachAccess,
   Image,
   ImportContacts,
+  RecordVoiceOver,
   SettingsInputSvideo,
 } from "@material-ui/icons";
-import { green, pink } from "@material-ui/core/colors";
-import { Appointment, AppointmentType } from "../models/patient";
+import { blue, green, red } from "@material-ui/core/colors";
+import { AppointmentType, Appointment } from "../models/patient";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -28,9 +26,13 @@ const useStyles = makeStyles((theme: Theme) =>
         margin: theme.spacing(1),
       },
     },
-    pink: {
-      color: theme.palette.getContrastText(pink[500]),
-      backgroundColor: pink[500],
+    blue: {
+      color: theme.palette.getContrastText(blue[500]),
+      backgroundColor: blue[500],
+    },
+    red: {
+      color: theme.palette.getContrastText(red[500]),
+      backgroundColor: red[500],
     },
     green: {
       color: "#fff",
@@ -40,23 +42,50 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 type Props = {
-  title: string;
-  date: string;
-  type: string;
+  item: Appointment;
 };
-export default function PatientAppointmentItem({ title, date, type }: Props) {
+export default function PatientAppointmentItem({ item }: Props) {
   const classes = useStyles();
+  let avatar;
+
+  switch (item.type) {
+    case AppointmentType.PreliminaryTalk:
+      avatar = (
+        <Avatar className={classes.green}>
+          <RecordVoiceOver />
+        </Avatar>
+      );
+      break;
+
+    case AppointmentType.Surgery:
+      avatar = (
+        <Avatar className={classes.red}>
+          <SettingsInputSvideo />
+        </Avatar>
+      );
+      break;
+
+    case AppointmentType.Check:
+      avatar = (
+        <Avatar className={classes.blue}>
+          <ImportContacts />
+        </Avatar>
+      );
+      break;
+
+    default:
+      avatar = (
+        <Avatar>
+          <Image />
+        </Avatar>
+      );
+      break;
+  }
 
   return (
-    <React.Fragment>
-      <ListItem>
-        <ListItemAvatar>
-          <Avatar className={classes.green}>
-            <SettingsInputSvideo />
-          </Avatar>
-        </ListItemAvatar>
-        <ListItemText primary={title} secondary={date} />
-      </ListItem>
-    </React.Fragment>
+    <ListItem>
+      <ListItemAvatar>{avatar}</ListItemAvatar>
+      <ListItemText primary={item.title} secondary={item.date} />
+    </ListItem>
   );
 }

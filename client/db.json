@@ -63,58 +63,26 @@
           "description": "Aliquam labore dolor. Illo dolorem qui. Quasi ea occaecati. Quis laudantium quas delectus et et rem distinctio exercitationem quos. Doloribus et et deleniti."
         }
       ],
-      "pathologicalHistory": [
+      "appointments": [
         {
-          "name": "id veritatis sapiente",
-          "description": "Enim expedita tempora harum ea aut qui. Fugit magnam sunt optio officiis."
+          "title": "Cirugia",
+          "date": "27/12/2020",
+          "type": "S"
         },
         {
-          "name": "velit qui occaecati",
-          "description": "Harum optio hic eum. Sed et amet in officiis quia provident deleniti veniam. Modi ut labore voluptatem tempora quis ut. Est tempore totam et. Ut quia accusamus doloremque sit exercitationem iure vero autem sed. Molestiae sit dolore commodi explicabo."
+          "title": "Revision",
+          "date": "27/12/2020",
+          "type": "C"
         },
         {
-          "name": "tempore voluptatem officia",
-          "description": "Aliquam labore dolor. Illo dolorem qui. Quasi ea occaecati. Quis laudantium quas delectus et et rem distinctio exercitationem quos. Doloribus et et deleniti."
+          "title": "Dolor",
+          "date": "27/12/2020",
+          "type": "O"
         },
         {
-          "name": "tempore voluptatem officia",
-          "description": "Aliquam labore dolor. Illo dolorem qui. Quasi ea occaecati. Quis laudantium quas delectus et et rem distinctio exercitationem quos. Doloribus et et deleniti."
-        }
-      ],
-      "nonPathologicalHistory": [
-        {
-          "name": "id veritatis sapiente",
-          "description": "Enim expedita tempora harum ea aut qui. Fugit magnam sunt optio officiis."
-        },
-        {
-          "name": "velit qui occaecati",
-          "description": "Harum optio hic eum. Sed et amet in officiis quia provident deleniti veniam. Modi ut labore voluptatem tempora quis ut. Est tempore totam et. Ut quia accusamus doloremque sit exercitationem iure vero autem sed. Molestiae sit dolore commodi explicabo."
-        },
-        {
-          "name": "tempore voluptatem officia",
-          "description": "Aliquam labore dolor. Illo dolorem qui. Quasi ea occaecati. Quis laudantium quas delectus et et rem distinctio exercitationem quos. Doloribus et et deleniti."
-        },
-        {
-          "name": "tempore voluptatem officia",
-          "description": "Aliquam labore dolor. Illo dolorem qui. Quasi ea occaecati. Quis laudantium quas delectus et et rem distinctio exercitationem quos. Doloribus et et deleniti."
-        }
-      ],
-      "hereditaryFamilyHistory": [
-        {
-          "name": "id veritatis sapiente",
-          "description": "Enim expedita tempora harum ea aut qui. Fugit magnam sunt optio officiis."
-        },
-        {
-          "name": "velit qui occaecati",
-          "description": "Harum optio hic eum. Sed et amet in officiis quia provident deleniti veniam. Modi ut labore voluptatem tempora quis ut. Est tempore totam et. Ut quia accusamus doloremque sit exercitationem iure vero autem sed. Molestiae sit dolore commodi explicabo."
-        },
-        {
-          "name": "tempore voluptatem officia",
-          "description": "Aliquam labore dolor. Illo dolorem qui. Quasi ea occaecati. Quis laudantium quas delectus et et rem distinctio exercitationem quos. Doloribus et et deleniti."
-        },
-        {
-          "name": "tempore voluptatem officia",
-          "description": "Aliquam labore dolor. Illo dolorem qui. Quasi ea occaecati. Quis laudantium quas delectus et et rem distinctio exercitationem quos. Doloribus et et deleniti."
+          "title": "Consulta",
+          "date": "27/12/2020",
+          "type": "P"
         }
       ],
       "notes": "Vitae et aut eaque nobis repellendus fugit explicabo labore. \nIste ut quas odio veritatis in quo asperiores quam. Adipisci ea omnis quia et ipsa fugit voluptatum et. Eos et et tempora aut quis atque. Voluptatem fugit excepturi porro repellat.",

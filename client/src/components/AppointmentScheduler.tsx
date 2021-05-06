@@ -20,7 +20,7 @@ const schedulerData = [
     title: "Go to a gym",
   },
 ];
-export default function PatientScheduler() {
+export default function AppointmentScheduler() {
   return (
     <div>
       <Paper>
