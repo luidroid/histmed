@@ -18,6 +18,7 @@ import {
   SettingsInputSvideo,
 } from "@material-ui/icons";
 import { green, pink } from "@material-ui/core/colors";
+import { Appointment, AppointmentType } from "../models/patient";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -38,18 +39,23 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default function PatientAppointmentItem() {
+type Props = {
+  title: string;
+  date: string;
+  type: string;
+};
+export default function PatientAppointmentItem({ title, date, type }: Props) {
   const classes = useStyles();
 
   return (
     <React.Fragment>
       <ListItem>
         <ListItemAvatar>
-          <Avatar className={classes.pink}>
+          <Avatar className={classes.green}>
             <SettingsInputSvideo />
           </Avatar>
         </ListItemAvatar>
-        <ListItemText primary="Dolors" secondary="Jan 7, 2014" />
+        <ListItemText primary={title} secondary={date} />
       </ListItem>
     </React.Fragment>
   );

@@ -22,8 +22,20 @@ export enum Gender {
   Female = "F",
   Other = "O",
 }
-
 export interface History {
   name: string;
   description: string;
+}
+
+export interface Appointment {
+  title: "";
+  date: "";
+  type: AppointmentType;
+}
+
+export enum AppointmentType {
+  PreliminaryTalk = "P",
+  Check = "C",
+  Surgery = "S",
+  Other = "O",
 }

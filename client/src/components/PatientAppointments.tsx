@@ -78,7 +78,11 @@ export default function PatientAppointments({ appointmentsId }: Props) {
             </ListSubheader>
           }
         >
-          <PatientAppointmentItem></PatientAppointmentItem>
+          <PatientAppointmentItem
+            title="Dolor"
+            date="27/apr/1980"
+            type="O"
+          ></PatientAppointmentItem>
 
           <Divider variant="inset" component="li" />
           <ListItem>
