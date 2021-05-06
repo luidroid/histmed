@@ -1,10 +1,13 @@
 import React from "react";
 
 import { useGlobalStyles } from "../styles/globalStyles";
+import { green, pink } from "@material-ui/core/colors";
 
 import {
   Avatar,
   Button,
+  Chip,
+  createStyles,
   Divider,
   Icon,
   Link,
@@ -12,53 +15,76 @@ import {
   ListItem,
   ListItemAvatar,
   ListItemText,
+  ListSubheader,
+  makeStyles,
   Paper,
+  Theme,
   Typography,
 } from "@material-ui/core";
-import { BeachAccess, Image } from "@material-ui/icons";
+import {
+  BeachAccess,
+  Image,
+  ImportContacts,
+  SettingsInputSvideo,
+} from "@material-ui/icons";
+
+import PatientAppointmentItem from "../components/PatientAppointmentItem";
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      display: "flex",
+      "& > *": {
+        margin: theme.spacing(1),
+      },
+    },
+    pink: {
+      color: theme.palette.getContrastText(pink[500]),
+      backgroundColor: pink[500],
+    },
+    green: {
+      color: "#fff",
+      backgroundColor: green[500],
+    },
+  })
+);
 
 type Props = {
   appointmentsId: number;
 };
 export default function PatientAppointments({ appointmentsId }: Props) {
   const globalClasses = useGlobalStyles();
+  const classes = useStyles();
+
   return (
     <div>
       <Paper className={globalClasses.paper}>
-        <Typography component="h2" variant="h6" color="primary" gutterBottom>
+        <Typography component="h3" variant="h6" color="primary" gutterBottom>
           Consultas{" "}
-          <Button
-            variant="contained"
-            color="secondary"
-            size="medium"
-            startIcon={<Icon>add</Icon>}
-          >
-            Iniciar consulta{" "}
-          </Button>
         </Typography>
-        <List>
-          <ListItem>
-            <ListItemAvatar>
-              <Avatar>
-                <Image />
-              </Avatar>
-            </ListItemAvatar>
-            <ListItemText primary="Gripe" secondary="Jan 9, 2014" />
-          </ListItem>
-          <Divider variant="inset" component="li" />
+        <Button
+          variant="contained"
+          color="secondary"
+          size="large"
+          startIcon={<Icon>add</Icon>}
+        >
+          Iniciar consulta{" "}
+        </Button>
 
-          <ListItem>
-            <ListItemText
-              inset={true}
-              primary="Dolor"
-              secondary="Jan 7, 2014"
-            />
-          </ListItem>
+        <List
+          subheader={
+            <ListSubheader component="div" id="nested-list-subheader">
+              Agendadas
+            </ListSubheader>
+          }
+        >
+          <PatientAppointmentItem></PatientAppointmentItem>
+
           <Divider variant="inset" component="li" />
           <ListItem>
             <ListItemAvatar>
-              <Avatar>
-                <BeachAccess />
+              <Avatar className={classes.green}>
+                <ImportContacts />
               </Avatar>
             </ListItemAvatar>
             <ListItemText primary="Lipo" secondary="July 20, 2014" />
