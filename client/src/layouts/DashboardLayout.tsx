@@ -138,7 +138,7 @@ const DashboardLayout: React.FC<Props> = ({ children }) => {
             noWrap
             className={classes.title}
           >
-            Historial Médico App
+            Historial Médico
           </Typography>
           <IconButton color="inherit">
             <Badge badgeContent={4} color="secondary">

@@ -1,25 +1,19 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
-import { makeStyles } from "@material-ui/core/styles";
 
 import Button from "@material-ui/core/Button";
 import AddIcon from "@material-ui/icons/Add";
 import Patients from "../components/Patients";
 import { Link as RouterLink } from "react-router-dom";
-
-const useStyles = makeStyles(() => ({
-  newPatientButton: {
-    marginTop: 15,
-  },
-}));
+import { Typography } from "@material-ui/core";
 
 export default function _Patients() {
-  const classes = useStyles();
-
   return (
     <React.Fragment>
       <Grid item xs={6} md={6} lg={6}>
-        <h1>Pacientes</h1>
+        <Typography component="h1" variant="h4">
+          Pacientes
+        </Typography>
       </Grid>
 
       <Grid item xs={6} md={6} lg={6}>
@@ -29,7 +23,6 @@ export default function _Patients() {
             color="primary"
             startIcon={<AddIcon />}
             size="large"
-            className={classes.newPatientButton}
             component={RouterLink}
             to={"/patients/new"}
           >

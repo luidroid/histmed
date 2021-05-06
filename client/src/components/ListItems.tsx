@@ -3,7 +3,7 @@ import { Link as RouterLink } from "react-router-dom";
 
 import { ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
 
-import { People, Settings, Today, Assignment, List } from "@material-ui/icons";
+import { People, Settings, Today, Assignment } from "@material-ui/icons";
 
 export const mainListItems = (
   <div>
@@ -13,13 +13,7 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primary="Pacientes" />
     </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <Assignment />
-      </ListItemIcon>
-      <ListItemText primary="Consultas" />
-    </ListItem>
-    <ListItem button>
+    <ListItem button component={RouterLink} to={"/scheduler"}>
       <ListItemIcon>
         <Today />
       </ListItemIcon>
@@ -27,7 +21,7 @@ export const mainListItems = (
     </ListItem>
     <ListItem button component={RouterLink} to={"/questionnaire"}>
       <ListItemIcon>
-        <List />
+        <Assignment />
       </ListItemIcon>
       <ListItemText primary="Cuestionario" />
     </ListItem>

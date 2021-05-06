@@ -38,6 +38,7 @@ const initHistory: History[] = [
 
 const initPatient: Patient = {
   avatar: "",
+  reference: "",
   firstname: "init lui",
   lastname: "",
   dateOfBirth: "",

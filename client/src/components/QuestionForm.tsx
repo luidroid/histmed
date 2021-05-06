@@ -7,7 +7,6 @@ import {
   Box,
   Button,
   FormControl,
-  FormGroup,
   Grid,
   Icon,
   IconButton,
@@ -51,28 +50,29 @@ export default function QuestionForm() {
 
   return (
     <React.Fragment>
-      <Paper className={globalClasses.paper}>
-        <Typography component="h2" variant="h6" color="primary" gutterBottom>
-          Preguntas{" "}
-        </Typography>
-        <Formik
-          initialValues={{ questions }}
-          validationSchema={validationSchema}
-          enableReinitialize
-          onSubmit={(values) => {
-            console.log(values);
-            handleSubmit(values);
-          }}
-        >
-          {(formik) => (
-            <Form className={globalClasses.root} autoComplete="off">
-              <FieldArray
-                name="questions"
-                render={(arrayHelpers) => {
-                  const len = formik.values.questions.length;
-                  return (
-                    <FormGroup>
-                      <FormControl>
+      <Formik
+        initialValues={{ questions }}
+        validationSchema={validationSchema}
+        enableReinitialize
+        onSubmit={(values) => {
+          console.log(values);
+          handleSubmit(values);
+        }}
+      >
+        {(formik) => (
+          <Form className={globalClasses.root} autoComplete="off">
+            <Paper className={globalClasses.paper}>
+              <Typography component="h2" variant="h6" color="primary">
+                Preguntas{" "}
+              </Typography>
+
+              <FormControl component="fieldset">
+                <FieldArray
+                  name="questions"
+                  render={(arrayHelpers) => {
+                    const len = formik.values.questions.length;
+                    return (
+                      <div>
                         {formik.values.questions.map((question, index) => {
                           const questionIndex = `questions[${index}]`;
                           const touchedQuestion = getIn(
@@ -139,44 +139,44 @@ export default function QuestionForm() {
                             </div>
                           );
                         })}
-                        <FormControl>
+                        <FormControl className={globalClasses.spacing}>
                           <Button
-                            variant="outlined"
+                            variant="contained"
                             color="secondary"
-                            size="medium"
+                            size="small"
                             startIcon={<Icon>add</Icon>}
                             onClick={() => arrayHelpers.push("")}
                           >
                             Nueva pregunta{" "}
                           </Button>
-                        </FormControl>{" "}
-                        <Box className={globalClasses.spacing}>
-                          <Button
-                            color="primary"
-                            variant="contained"
-                            size="large"
-                            type="submit"
-                          >
-                            Guardar
-                          </Button>
-                          <Button
-                            variant="contained"
-                            size="large"
-                            component={RouterLink}
-                            to={`/questionnaire`}
-                          >
-                            Cancelar
-                          </Button>
-                        </Box>
-                      </FormControl>
-                    </FormGroup>
-                  );
-                }}
-              />
-            </Form>
-          )}
-        </Formik>
-      </Paper>
+                        </FormControl>
+                      </div>
+                    );
+                  }}
+                />
+              </FormControl>
+            </Paper>
+            <Box className={globalClasses.spacing}>
+              <Button
+                color="primary"
+                variant="contained"
+                size="large"
+                type="submit"
+              >
+                Guardar
+              </Button>
+              <Button
+                variant="outlined"
+                size="large"
+                component={RouterLink}
+                to={`/questionnaire`}
+              >
+                Cancelar
+              </Button>
+            </Box>
+          </Form>
+        )}
+      </Formik>
     </React.Fragment>
   );
 }

@@ -54,9 +54,6 @@ const useStyles = makeStyles((theme: Theme) =>
         height: theme.spacing(16),
       },
     },
-    formControl: {
-      margin: theme.spacing(1),
-    },
     large: {
       width: theme.spacing(20),
       height: theme.spacing(20),
@@ -289,7 +286,7 @@ export default function PatientForm({ edit }: Props) {
 
                         <FormControl
                           variant="filled"
-                          className={classes.formControl}
+                          className={globalClasses.spacing}
                         >
                           <InputLabel htmlFor="outlined-age-native-simple">
                             Sexo
@@ -453,7 +450,7 @@ export default function PatientForm({ edit }: Props) {
                               </Grid>
                             )
                           )}
-                          <FormControl className={classes.formControl}>
+                          <FormControl className={globalClasses.spacing}>
                             <Button
                               variant="contained"
                               color="secondary"

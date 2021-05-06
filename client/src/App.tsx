@@ -13,6 +13,7 @@ import _PatientEditForm from "./pages/_PatientEditForm";
 import _PageNotFound from "./pages/_PageNotFound";
 import _Questions from "./pages/_Questions";
 import _QuestionEditForm from "./pages/_QuestionEditForm";
+import _PatientScheduler from "./pages/_PatientScheduler";
 //import './App.css';
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
             <Route path="/patients/:id/edit" component={_PatientEditForm} />
             <Route path="/patients/:id" component={PatientDetailPage} />
             <Route path="/patients" component={_Patients} />
+            <Route path="/scheduler" component={_PatientScheduler} />
             <Route path="/questionnaire/edit" component={_QuestionEditForm} />
             <Route path="/questionnaire" component={_Questions} />
             <Route path="*" component={_PageNotFound} />

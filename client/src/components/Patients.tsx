@@ -92,7 +92,8 @@ export default function Patients() {
     const results = patients.filter((patient) => {
       const firtname = patient.firstname.toLowerCase();
       const lastname = patient.lastname.toLowerCase();
-      const name = firtname.concat(lastname);
+      const reference = patient.reference?.toLowerCase();
+      const name = firtname.concat(lastname).concat(reference);
       return name.includes(searchTerm.trim().toLowerCase());
     });
 

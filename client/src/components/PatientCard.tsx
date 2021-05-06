@@ -120,7 +120,9 @@ export default function PatientCard(props: {
           }
           title={
             <Link component={RouterLink} to={`/patients/${props.patient.id}`}>
-              {props.patient.firstname} {props.patient.lastname}
+              <Typography component="h6" variant="body1">
+                {props.patient.firstname} {props.patient.lastname}
+              </Typography>
             </Link>
           }
           subheader={props.patient.reference}
