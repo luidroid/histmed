@@ -14,6 +14,8 @@ import _PageNotFound from "./pages/_PageNotFound";
 import _Questions from "./pages/_Questions";
 import _QuestionEditForm from "./pages/_QuestionEditForm";
 import _AppointmentScheduler from "./pages/_AppointmentScheduler";
+import _AppointmentCreateForm from "./pages/_AppointmentCreateForm";
+import _AppointmentEditForm from "./pages/_AppointmentEditForm";
 //import './App.css';
 
 function App() {
@@ -25,6 +27,14 @@ function App() {
             <Route exact path="/">
               <Redirect to="/patients" />
             </Route>
+            <Route
+              path="/patients/:id/appointments/new"
+              component={_AppointmentCreateForm}
+            />
+            <Route
+              path="/patients/:id/appointments/:id/edit"
+              component={_AppointmentEditForm}
+            />
             <Route path="/patients/new" component={_PatientCreateForm} />
             <Route path="/patients/:id/edit" component={_PatientEditForm} />
             <Route path="/patients/:id" component={PatientDetailPage} />

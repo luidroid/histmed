@@ -85,7 +85,7 @@ export default function PatientAppointmentItem({ item }: Props) {
   return (
     <ListItem>
       <ListItemAvatar>{avatar}</ListItemAvatar>
-      <ListItemText primary={item.title} secondary={item.date} />
+      <ListItemText primary={item.title} secondary={item.createdAt} />
     </ListItem>
   );
 }

@@ -1,4 +1,9 @@
-import { Patient, Gender } from "../models/patient";
+import {
+  Patient,
+  Gender,
+  Appointment,
+  AppointmentType,
+} from "../models/patient";
 
 const initPatient: Patient = {
   avatar: "",
@@ -18,4 +23,16 @@ const initPatient: Patient = {
   lastModified: "",
 };
 
-export { initPatient };
+const initAppointment: Appointment = {
+  title: "",
+  description: "",
+  type: AppointmentType.PreliminaryTalk,
+  createdAt: "",
+  analysis: "",
+  plan: "",
+  comment: "",
+  recommendation: "",
+  attachments: [],
+};
+
+export { initPatient, initAppointment };

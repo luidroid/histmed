@@ -23,15 +23,40 @@ export enum Gender {
   Female = "F",
   Other = "O",
 }
+
 export interface History {
   name: string;
   description: string;
 }
 
 export interface Appointment {
-  title: "";
-  date: "";
+  pattientId?: string;
+  title: string;
+  description: string;
   type: AppointmentType;
+  createdAt: string;
+  analysis: string;
+  plan: string;
+  comment: string;
+  recommendation: string;
+  attachments: Attachment[];
+}
+
+export interface Surgery {
+  pattientId?: string;
+  title: string;
+  description: string;
+  date: string;
+  comment: string;
+  attachmentsBefore: Attachment[];
+  attachmentsAfter: Attachment[];
+  status: string;
+}
+
+export interface Attachment {
+  name: string;
+  size: string;
+  modified: string;
 }
 
 export enum AppointmentType {

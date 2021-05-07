@@ -144,7 +144,7 @@ export default function QuestionForm() {
                             variant="contained"
                             color="secondary"
                             size="small"
-                            startIcon={<Icon>add</Icon>}
+                            startIcon={<Icon>subdirectory_arrow_right</Icon>}
                             onClick={() => arrayHelpers.push("")}
                           >
                             Nueva pregunta{" "}

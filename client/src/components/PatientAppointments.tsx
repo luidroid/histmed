@@ -1,4 +1,5 @@
 import React from "react";
+import { useParams, Link as RouterLink } from "react-router-dom";
 
 import { useGlobalStyles } from "../styles/globalStyles";
 
@@ -21,6 +22,7 @@ type Props = {
 };
 export default function PatientAppointments({ appointments }: Props) {
   const globalClasses = useGlobalStyles();
+  const { id } = useParams<{ id: string }>();
 
   return (
     <div>
@@ -33,6 +35,8 @@ export default function PatientAppointments({ appointments }: Props) {
           color="secondary"
           size="large"
           startIcon={<Icon>add</Icon>}
+          component={RouterLink}
+          to={`/patients/${id}/appointments/new`}
         >
           Iniciar consulta{" "}
         </Button>
@@ -40,7 +44,7 @@ export default function PatientAppointments({ appointments }: Props) {
         <List
           subheader={
             <ListSubheader component="div" id="nested-list-subheader">
-              Agendadas
+              Consultas agendadas
             </ListSubheader>
           }
         >

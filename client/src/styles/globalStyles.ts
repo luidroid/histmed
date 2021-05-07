@@ -1,4 +1,5 @@
 import { makeStyles } from "@material-ui/core";
+import { deepOrange } from "@material-ui/core/colors";
 
 export const useGlobalStyles = makeStyles((theme) => ({
   root: {
@@ -18,5 +19,9 @@ export const useGlobalStyles = makeStyles((theme) => ({
     overflow: "auto",
     flexDirection: "column",
     marginBottom: theme.spacing(2),
+  },
+  orange: {
+    color: theme.palette.getContrastText(deepOrange[500]),
+    backgroundColor: deepOrange[500],
   },
 }));

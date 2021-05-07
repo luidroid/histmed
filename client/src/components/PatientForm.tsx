@@ -43,6 +43,8 @@ import {
 import { Formik, Form, FieldArray } from "formik";
 import * as yup from "yup";
 
+import { DropzoneArea } from "material-ui-dropzone";
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -294,10 +296,8 @@ export default function PatientForm({ edit }: Props) {
                           <Select
                             value={formik.values.gender}
                             label="Sexo"
-                            inputProps={{
-                              name: "gender",
-                              id: "outlined-age-native-simple",
-                            }}
+                            name="gender"
+                            onChange={formik.handleChange}
                           >
                             <option value={Gender.Female}>Femenino</option>
                             <option value={Gender.Male}>Masculino</option>
@@ -455,7 +455,7 @@ export default function PatientForm({ edit }: Props) {
                               variant="contained"
                               color="secondary"
                               size="small"
-                              startIcon={<Icon>add</Icon>}
+                              startIcon={<Icon>subdirectory_arrow_right</Icon>}
                               onClick={() =>
                                 arrayHelpers.push({
                                   name: "",
@@ -482,6 +482,13 @@ export default function PatientForm({ edit }: Props) {
                   >
                     Archivos{" "}
                   </Typography>
+                  <DropzoneArea
+                    acceptedFiles={["image/*"]}
+                    dropzoneText={"Drag and drop an image here or click"}
+                    onChange={(files) => console.log("Files:", files)}
+                    filesLimit={2}
+                    showFileNames={true}
+                  />
                 </Paper>
               </Grid>
             </Grid>
