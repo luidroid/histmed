@@ -30,6 +30,7 @@ export interface History {
 }
 
 export interface Appointment {
+  id?: number;
   pattientId?: string;
   title: string;
   description: string;

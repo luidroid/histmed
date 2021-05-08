@@ -175,23 +175,6 @@
       "lastModified": "September 02, 2021"
     }
   ],
-  "questionnaire": {
-    "questions": [
-      "Peso",
-      "Estatura",
-      "¿Cuántos hijos tienes y de qué forma nacieron? (Parto normal o cesárea) ",
-      "¿Planificás tener más hijos?",
-      "¿Fumas? ¿Con cuánta frecuencia?",
-      "¿Consumís alguna medicación?",
-      "¿Tienes alergia a algún medicamento? ¿Cuál?",
-      "¿Tienes alergia a alguna sustancia irritante? (Ej. Pelo de animales, Plantas, Polvo, etc.)",
-      "¿Tuviste o tienes enfermedades graves? (Ej. Presión alta, Diabetes, Tiroides, etc.)",
-      "¿Tienes cicatrización patológica? (Ej. Queloide o cicatriz hipertrofica)",
-      "¿Tuviste alguna cirugía anterior? (Ej. Apéndice, Vesícula, Hernia, Cirugía Plástica o Estética, etc..)",
-      "Procedimientos Estéticos realizados",
-      "¿En qué procedimiento estás interesado/a?"
-    ]
-  },
   "patient": {
     "avatar": "",
     "firstname": "",
@@ -261,5 +244,50 @@
     ],
     "notes": "",
     "lastModified": ""
+  },
+  "appointments": [
+    {
+      "id": 1,
+      "pattientId": "1",
+      "title": "Ullam amet molestiae exercitationem.",
+      "description": "Aliquam labore dolor. Illo dolorem qui. Quasi ea occaecati. Quis laudantium quas delectus et et rem distinctio exercitationem quos. Doloribus et et deleniti.",
+      "type": "C",
+      "createdAt": "27-apr",
+      "analysis": "Nihil quo aliquam est repellat qui quia incidunt vel. Voluptate ad adipisci cupiditate et quas. Nemo qui debitis sapiente nam facere eius omnis. Veniam ut saepe temporibus sed asperiores officiis aut omnis.",
+      "plan": "Esse vitae voluptas omnis temporibus sed facere vel. Aut itaque modi voluptatibus cum earum. Enim illum et corrupti quasi placeat nisi ad. Culpa deleniti voluptatem quaerat numquam natus in maxime. Dolorem doloribus enim.",
+      "comment": "Culpa nesciunt quis magnam aut amet quo nihil minima rerum.Natus hic et occaecati nesciunt fugiat doloribus.",
+      "recommendation": "Eaque iste aliquam. Est exercitationem a recusandae ut. Dolorem corporis expedita.",
+      "attachments": ""
+    },
+    {
+      "id": 2,
+      "pattientId": "2",
+      "title": "Ullam amet molestiae exercitationem.",
+      "description": "Aliquam labore dolor. Illo dolorem qui. Quasi ea occaecati. Quis laudantium quas delectus et et rem distinctio exercitationem quos. Doloribus et et deleniti.",
+      "type": "C",
+      "createdAt": "27-apr",
+      "analysis": "Nihil quo aliquam est repellat qui quia incidunt vel. Voluptate ad adipisci cupiditate et quas. Nemo qui debitis sapiente nam facere eius omnis. Veniam ut saepe temporibus sed asperiores officiis aut omnis.",
+      "plan": "Esse vitae voluptas omnis temporibus sed facere vel. Aut itaque modi voluptatibus cum earum. Enim illum et corrupti quasi placeat nisi ad. Culpa deleniti voluptatem quaerat numquam natus in maxime. Dolorem doloribus enim.",
+      "comment": "Culpa nesciunt quis magnam aut amet quo nihil minima rerum.Natus hic et occaecati nesciunt fugiat doloribus.",
+      "recommendation": "Eaque iste aliquam. Est exercitationem a recusandae ut. Dolorem corporis expedita.",
+      "attachments": []
+    }
+  ],
+  "questionnaire": {
+    "questions": [
+      "Peso",
+      "Estatura",
+      "¿Cuántos hijos tienes y de qué forma nacieron? (Parto normal o cesárea) ",
+      "¿Planificás tener más hijos?",
+      "¿Fumas? ¿Con cuánta frecuencia?",
+      "¿Consumís alguna medicación?",
+      "¿Tienes alergia a algún medicamento? ¿Cuál?",
+      "¿Tienes alergia a alguna sustancia irritante? (Ej. Pelo de animales, Plantas, Polvo, etc.)",
+      "¿Tuviste o tienes enfermedades graves? (Ej. Presión alta, Diabetes, Tiroides, etc.)",
+      "¿Tienes cicatrización patológica? (Ej. Queloide o cicatriz hipertrofica)",
+      "¿Tuviste alguna cirugía anterior? (Ej. Apéndice, Vesícula, Hernia, Cirugía Plástica o Estética, etc..)",
+      "Procedimientos Estéticos realizados",
+      "¿En qué procedimiento estás interesado/a?"
+    ]
   }
 }

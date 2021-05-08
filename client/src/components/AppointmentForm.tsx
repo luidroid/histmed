@@ -246,6 +246,7 @@ export default function AppointmentForm({ edit }: Props) {
                 <Typography component="h2" variant="h6" color="primary">
                   Archivos
                 </Typography>
+                ^{" "}
                 <DropzoneArea
                   acceptedFiles={["image/*"]}
                   dropzoneText={"Drag and drop an image here or click"}
