@@ -3,6 +3,7 @@ import {
   Gender,
   Appointment,
   AppointmentType,
+  Status,
 } from "../models/patient";
 
 const initPatient: Patient = {
@@ -33,6 +34,7 @@ const initAppointment: Appointment = {
   comment: "",
   recommendation: "",
   attachments: [],
+  status: Status.Open,
 };
 
 export { initPatient, initAppointment };

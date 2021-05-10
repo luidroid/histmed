@@ -66,22 +66,22 @@
       "appointments": [
         {
           "title": "Cirugia",
-          "date": "27/12/2020",
+          "createdAt": "27/12/2020",
           "type": "S"
         },
         {
           "title": "Revision",
-          "date": "27/12/2020",
+          "createdAt": "27/12/2020",
           "type": "C"
         },
         {
           "title": "Dolor",
-          "date": "27/12/2020",
+          "createdAt": "27/12/2020",
           "type": "O"
         },
         {
           "title": "Consulta",
-          "date": "27/12/2020",
+          "createdAt": "27/12/2020",
           "type": "P"
         }
       ],
@@ -257,7 +257,8 @@
       "plan": "Esse vitae voluptas omnis temporibus sed facere vel. Aut itaque modi voluptatibus cum earum. Enim illum et corrupti quasi placeat nisi ad. Culpa deleniti voluptatem quaerat numquam natus in maxime. Dolorem doloribus enim.",
       "comment": "Culpa nesciunt quis magnam aut amet quo nihil minima rerum.Natus hic et occaecati nesciunt fugiat doloribus.",
       "recommendation": "Eaque iste aliquam. Est exercitationem a recusandae ut. Dolorem corporis expedita.",
-      "attachments": ""
+      "attachments": "",
+      "status": "O"
     },
     {
       "id": 2,
@@ -270,7 +271,8 @@
       "plan": "Esse vitae voluptas omnis temporibus sed facere vel. Aut itaque modi voluptatibus cum earum. Enim illum et corrupti quasi placeat nisi ad. Culpa deleniti voluptatem quaerat numquam natus in maxime. Dolorem doloribus enim.",
       "comment": "Culpa nesciunt quis magnam aut amet quo nihil minima rerum.Natus hic et occaecati nesciunt fugiat doloribus.",
       "recommendation": "Eaque iste aliquam. Est exercitationem a recusandae ut. Dolorem corporis expedita.",
-      "attachments": []
+      "attachments": [],
+      "status": "I"
     }
   ],
   "questionnaire": {

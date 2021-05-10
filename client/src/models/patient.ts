@@ -41,6 +41,7 @@ export interface Appointment {
   comment: string;
   recommendation: string;
   attachments: Attachment[];
+  status: Status;
 }
 
 export interface Surgery {
@@ -65,4 +66,12 @@ export enum AppointmentType {
   Check = "C",
   Surgery = "S",
   Other = "O",
+}
+
+export enum Status {
+  Open = "O",
+  InProgress = "I",
+  Done = "D",
+  Pending = "P",
+  Canceled = "C",
 }

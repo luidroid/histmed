@@ -3,6 +3,8 @@ import { useParams, Link as RouterLink } from "react-router-dom";
 
 import axios from "../api/apiConfig";
 import { useGlobalStyles } from "../styles/globalStyles";
+import AppointmentStatus from "../components/AppointmentStatus";
+
 import MaterialTable from "material-table";
 
 import { Appointment } from "../models/patient";
@@ -65,6 +67,15 @@ export default function Appointments() {
               { title: "Tipo", field: "type" },
               { title: "Motivo", field: "title" },
               {
+                title: "Estado",
+                field: "status",
+                render: (rowData) => (
+                  <AppointmentStatus
+                    status={rowData.status}
+                  ></AppointmentStatus>
+                ),
+              },
+              {
                 title: "Actions",
                 field: "patientId",
                 render: (rowData) => (
@@ -82,7 +93,7 @@ export default function Appointments() {
             ]}
             isLoading={loading}
             data={appointments}
-            title="Demo Title"
+            title="Consultas"
           />
         </Grid>
       </Grid>
