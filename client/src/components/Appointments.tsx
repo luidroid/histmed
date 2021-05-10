@@ -17,11 +17,6 @@ import {
 } from "@material-ui/core";
 import AppointmentItem from "./AppointmentItem";
 
-import {
-  DataGrid,
-  GridColDef,
-  GridValueGetterParams,
-} from "@material-ui/data-grid";
 import { Alert } from "@material-ui/lab";
 
 type Props = {
