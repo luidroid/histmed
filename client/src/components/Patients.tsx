@@ -153,7 +153,7 @@ export default function Patients() {
     <Paper elevation={3} component="form" className={classes.root}>
       <InputBase
         className={classes.input}
-        placeholder="Búsqueda por nombre"
+        placeholder="Búsqueda de pacientes por nombre, apellido y referencia"
         inputProps={{ "aria-label": "búsqueda" }}
         value={searchTerm}
         onChange={handleSearch}

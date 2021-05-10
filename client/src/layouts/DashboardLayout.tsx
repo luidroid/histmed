@@ -140,11 +140,6 @@ const DashboardLayout: React.FC<Props> = ({ children }) => {
           >
             Historial Médico
           </Typography>
-          <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
         </Toolbar>
       </AppBar>
       <Drawer

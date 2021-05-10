@@ -25,6 +25,7 @@ const initPatient: Patient = {
 };
 
 const initAppointment: Appointment = {
+  patient: initPatient,
   title: "",
   description: "",
   type: AppointmentType.PreliminaryTalk,

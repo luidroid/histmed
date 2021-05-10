@@ -60,7 +60,7 @@ export default function Questions() {
     <div>
       <Paper className={globalClasses.paper}>
         <Typography component="h2" variant="h6" color="primary">
-          Preguntas{" "}
+          Cuestionario
           <IconButton component={RouterLink} to={`/questionnaire/edit`}>
             <Edit />
           </IconButton>

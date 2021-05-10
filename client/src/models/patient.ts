@@ -31,7 +31,7 @@ export interface History {
 
 export interface Appointment {
   id?: number;
-  patientId?: string;
+  patient?: Patient;
   title: string;
   description: string;
   type: AppointmentType;
@@ -62,10 +62,11 @@ export interface Attachment {
 }
 
 export enum AppointmentType {
-  PreliminaryTalk = "P",
+  PreliminaryTalk = "T",
   Check = "C",
   Surgery = "S",
   Other = "O",
+  Paid = "P",
 }
 
 export enum Status {
