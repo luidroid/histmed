@@ -21,7 +21,7 @@ export default function AppointmentItem({ appointment }: Props) {
             {appointment.title}
           </Grid>
           <Grid item xs={12} md={12} lg={2}>
-            {appointment.pattientId}
+            {appointment.patientId}
           </Grid>
           <Grid item xs={12} md={12} lg={2}>
             Actions

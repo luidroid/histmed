@@ -31,7 +31,7 @@ export interface History {
 
 export interface Appointment {
   id?: number;
-  pattientId?: string;
+  patientId?: string;
   title: string;
   description: string;
   type: AppointmentType;
@@ -44,7 +44,7 @@ export interface Appointment {
 }
 
 export interface Surgery {
-  pattientId?: string;
+  patientId?: string;
   title: string;
   description: string;
   date: string;
