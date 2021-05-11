@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Link as RouterLink } from "react-router-dom";
+import { useHistory, useParams, Link as RouterLink } from "react-router-dom";
 import axios from "../api/apiConfig";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -25,6 +25,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import EditIcon from "@material-ui/icons/Edit";
+import DeleteIcon from "@material-ui/icons/Delete";
 import { formatAppointmentType } from "../helpers/helpers";
 
 type Props = {
@@ -36,10 +37,11 @@ export default function Appointments() {
 
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
+  const [deleteId, setDeleteId] = useState(-1);
   const [open, setOpen] = React.useState(false);
 
   useEffect(() => {
+    setDeleteId(-1);
     (async () => {
       try {
         const { data } = await axios.get(`/appointments`);
@@ -48,11 +50,39 @@ export default function Appointments() {
         setLoading(false);
       } catch (error) {
         console.log(error);
-        setError(true);
+        // setError(true);
         setLoading(false);
       }
     })();
   }, []);
+
+  const handleClickOpen = (id: number) => {
+    console.log("del", id);
+    setDeleteId(id);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setDeleteId(-1);
+    setOpen(false);
+  };
+
+  const handleDelete = () => {
+    handlePatientDelete(deleteId);
+  };
+
+  /** Delete patient */
+  const handlePatientDelete = (appointmentId: number) => {
+    (async () => {
+      try {
+        await axios.delete(`/appointments/${appointmentId}`);
+        // history.push("/appointments");
+      } catch (error) {
+        console.log(error);
+      }
+      handleClose();
+    })();
+  };
 
   return (
     <React.Fragment>
@@ -117,6 +147,12 @@ export default function Appointments() {
                     >
                       <EditIcon />
                     </IconButton>
+                    <IconButton
+                      aria-label="delete"
+                      onClick={() => handleClickOpen(rowData.id!)}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
                   </div>
                 ),
               },
@@ -134,6 +170,30 @@ export default function Appointments() {
               pageSizeOptions: [10, 25, 50, 100],
             }}
           />
+          <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">
+              Desea eliminar esta consulta?
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                Esta consulta serán eliminada del sistema y no se podrá
+                recuperar posteriormente.
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose} color="primary">
+                Cancelar
+              </Button>
+              <Button onClick={handleDelete} color="primary" autoFocus>
+                OK
+              </Button>
+            </DialogActions>
+          </Dialog>
         </Grid>
       </Grid>
     </React.Fragment>
