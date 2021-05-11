@@ -116,7 +116,7 @@ export default function AppointmentForm({ edit }: Props) {
             <Grid item xs={12} md={12} lg={8}>
               <Paper className={globalClasses.paper}>
                 <Typography component="h2" variant="h6" color="primary">
-                  Consulta
+                  {edit ? "Editar" : "Nueva"} consulta
                 </Typography>
                 <FormControl fullWidth className={globalClasses.root}>
                   <FormControl

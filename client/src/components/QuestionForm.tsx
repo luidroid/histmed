@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import axios from "../api/apiConfig";
 import { useGlobalStyles } from "../styles/globalStyles";
-
+import Loading from "../components/Loading";
+import AlertError from "../components/AlertError";
 import {
   Box,
   Button,
@@ -25,6 +26,9 @@ const validationSchema = yup.object({
 
 export default function QuestionForm() {
   const globalClasses = useGlobalStyles();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+
   const [questions, setQuestions] = useState([]);
 
   useEffect(() => {
@@ -32,7 +36,10 @@ export default function QuestionForm() {
       try {
         const { data } = await axios.get(`/questionnaire`);
         setQuestions(data.questions);
+        setLoading(false);
       } catch (error) {
+        setLoading(false);
+        setError(true);
         console.log(error);
       }
     })();
@@ -63,105 +70,116 @@ export default function QuestionForm() {
           <Form className={globalClasses.root} autoComplete="off">
             <Paper className={globalClasses.paper}>
               <Typography component="h2" variant="h6" color="primary">
-                Preguntas{" "}
+                Editar cuestionario
               </Typography>
+              {error && (
+                <AlertError
+                  message="No existe conexión"
+                  recommendation="Reinicie la base de datos"
+                ></AlertError>
+              )}
+              {loading ? (
+                <Loading></Loading>
+              ) : (
+                <FormControl component="fieldset">
+                  <FieldArray
+                    name="questions"
+                    render={(arrayHelpers) => {
+                      const len = formik.values.questions.length;
+                      return (
+                        <div>
+                          {formik.values.questions.map((question, index) => {
+                            const questionIndex = `questions[${index}]`;
+                            const touchedQuestion = getIn(
+                              formik.touched,
+                              questionIndex
+                            );
+                            const errorQuestion = getIn(
+                              formik.errors,
+                              questionIndex
+                            );
 
-              <FormControl component="fieldset">
-                <FieldArray
-                  name="questions"
-                  render={(arrayHelpers) => {
-                    const len = formik.values.questions.length;
-                    return (
-                      <div>
-                        {formik.values.questions.map((question, index) => {
-                          const questionIndex = `questions[${index}]`;
-                          const touchedQuestion = getIn(
-                            formik.touched,
-                            questionIndex
-                          );
-                          const errorQuestion = getIn(
-                            formik.errors,
-                            questionIndex
-                          );
+                            const disabledArrowDownward = index === len - 1;
+                            const disabledArrowUpward = index === 0;
 
-                          const disabledArrowDownward = index === len - 1;
-                          const disabledArrowUpward = index === 0;
-
-                          return (
-                            <div key={index}>
-                              <Grid container spacing={1}>
-                                <Grid item xs={12} md={12} lg={8}>
-                                  <TextField
-                                    fullWidth
-                                    variant="filled"
-                                    name={questionIndex}
-                                    label="Pregunta"
-                                    value={question}
-                                    onChange={formik.handleChange}
-                                    error={Boolean(
-                                      touchedQuestion && errorQuestion
-                                    )}
-                                    helperText={
-                                      touchedQuestion && errorQuestion
-                                        ? errorQuestion
-                                        : ""
-                                    }
-                                  />
-                                </Grid>
-                                <Grid item xs={12} md={12} lg={4}>
-                                  <IconButton
-                                    disabled={disabledArrowDownward}
-                                    onClick={() => {
-                                      if (!disabledArrowDownward) {
-                                        arrayHelpers.swap(index, index + 1);
+                            return (
+                              <div key={index}>
+                                <Grid container spacing={1}>
+                                  <Grid item xs={12} md={12} lg={8}>
+                                    <TextField
+                                      fullWidth
+                                      variant="filled"
+                                      name={questionIndex}
+                                      label="Pregunta"
+                                      value={question}
+                                      onChange={formik.handleChange}
+                                      error={Boolean(
+                                        touchedQuestion && errorQuestion
+                                      )}
+                                      helperText={
+                                        touchedQuestion && errorQuestion
+                                          ? errorQuestion
+                                          : ""
                                       }
-                                    }}
-                                  >
-                                    <ArrowDownward />
-                                  </IconButton>
-                                  <IconButton
-                                    disabled={disabledArrowUpward}
-                                    onClick={() => {
-                                      if (!disabledArrowUpward) {
-                                        arrayHelpers.swap(index, index - 1);
-                                      }
-                                    }}
-                                  >
-                                    <ArrowUpward />
-                                  </IconButton>
-                                  <IconButton
-                                    onClick={() => arrayHelpers.remove(index)}
-                                  >
-                                    <Delete />
-                                  </IconButton>
+                                    />
+                                  </Grid>
+                                  <Grid item xs={12} md={12} lg={4}>
+                                    <IconButton
+                                      disabled={disabledArrowDownward}
+                                      onClick={() => {
+                                        if (!disabledArrowDownward) {
+                                          arrayHelpers.swap(index, index + 1);
+                                        }
+                                      }}
+                                    >
+                                      <ArrowDownward />
+                                    </IconButton>
+                                    <IconButton
+                                      disabled={disabledArrowUpward}
+                                      onClick={() => {
+                                        if (!disabledArrowUpward) {
+                                          arrayHelpers.swap(index, index - 1);
+                                        }
+                                      }}
+                                    >
+                                      <ArrowUpward />
+                                    </IconButton>
+                                    <IconButton
+                                      onClick={() => arrayHelpers.remove(index)}
+                                    >
+                                      <Delete />
+                                    </IconButton>
+                                  </Grid>
                                 </Grid>
-                              </Grid>
-                            </div>
-                          );
-                        })}
-                        <FormControl className={globalClasses.spacing}>
-                          <Button
-                            variant="contained"
-                            color="secondary"
-                            size="small"
-                            startIcon={<Icon>subdirectory_arrow_right</Icon>}
-                            onClick={() => arrayHelpers.push("")}
-                          >
-                            Nueva pregunta{" "}
-                          </Button>
-                        </FormControl>
-                      </div>
-                    );
-                  }}
-                />
-              </FormControl>
+                              </div>
+                            );
+                          })}
+                          <FormControl className={globalClasses.spacing}>
+                            <Button
+                              variant="contained"
+                              color="secondary"
+                              size="small"
+                              startIcon={<Icon>subdirectory_arrow_right</Icon>}
+                              onClick={() => arrayHelpers.push("")}
+                            >
+                              Nueva pregunta{" "}
+                            </Button>
+                          </FormControl>
+                        </div>
+                      );
+                    }}
+                  />
+                </FormControl>
+              )}
             </Paper>
+
             <Box className={globalClasses.spacing}>
               <Button
                 color="primary"
                 variant="contained"
                 size="large"
                 type="submit"
+                disabled={formik.isSubmitting}
               >
                 Guardar
               </Button>
@@ -170,6 +188,7 @@ export default function QuestionForm() {
                 size="large"
                 component={RouterLink}
                 to={`/questionnaire`}
+                disabled={formik.isSubmitting}
               >
                 Cancelar
               </Button>

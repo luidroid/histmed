@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import axios from "../api/apiConfig";
 import { useGlobalStyles } from "../styles/globalStyles";
+import Loading from "../components/Loading";
 
 import {
   IconButton,
@@ -16,17 +17,26 @@ import { Edit, Mail, Print } from "@material-ui/icons";
 
 export default function Questions() {
   const globalClasses = useGlobalStyles();
+  const [loading, setLoading] = useState(true);
+
   const [questions, setQuestions] = useState([]);
   const [mailContent, setMailContent] = useState("");
   const mailSalutation = "Estimado(a)%20,%0A%0A";
   const mailSignature =
     "%0A%0ASaludos cordiales,%0A%0ADr.%20Andrés%20Amoroso%0AEspecialista%20en%20Cirugía%20Plástica,%20Estética%20y%20Reconstructiva%0Awww.doctoramoroso.com";
+
   useEffect(() => {
     (async () => {
       try {
         const { data } = await axios.get(`/questionnaire`);
         setQuestions(data.questions);
+        setLoading(false);
       } catch (error) {
+        if (!error.response) {
+          setLoading(false);
+        } else {
+          setLoading(false);
+        }
         console.log(error);
       }
     })();
@@ -40,10 +50,13 @@ export default function Questions() {
     });
     content = content.concat(result).concat(mailSignature);
     setMailContent(content);
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
   }, [questions]);
 
   const questionList = questions.map((question, index) => (
-    <React.Fragment key={index}>
+    <div key={index}>
       <ListItem dense>
         <ListItemText
           primary={
@@ -53,7 +66,7 @@ export default function Questions() {
           }
         />
       </ListItem>
-    </React.Fragment>
+    </div>
   ));
 
   return (
@@ -73,7 +86,7 @@ export default function Questions() {
             <Print />
           </IconButton>
         </Typography>
-        <List>{questionList}</List>
+        {loading ? <Loading></Loading> : <List>{questionList}</List>}
       </Paper>
     </div>
   );
