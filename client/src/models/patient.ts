@@ -76,3 +76,8 @@ export enum Status {
   Pending = "P",
   Canceled = "C",
 }
+
+export interface CustomError {
+  status?: string;
+  message: string;
+}

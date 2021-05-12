@@ -1,6 +1,6 @@
 import React from "react";
-import { Grid, Typography } from "@material-ui/core";
-import Questions from "./Questions";
+import Questions from "../components/Questions";
+import Grid from "@material-ui/core/Grid";
 
 export default function _Questions() {
   return (

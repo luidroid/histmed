@@ -20,7 +20,6 @@ export default function PatientDetails() {
     (async () => {
       try {
         const { data } = await axios.get<Patient>(`/patients/${id}`);
-
         setPatientInfo(data);
       } catch (error) {
         console.log(error);

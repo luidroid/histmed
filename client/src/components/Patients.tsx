@@ -17,6 +17,7 @@ import PatientCard from "./PatientCard";
 import Alert from "@material-ui/lab/Alert";
 
 import { Patient } from "../models/patient";
+import Loading from "./Loading";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -52,10 +53,12 @@ export default function Patients() {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("nameAsc");
   const [showNetError, setShowNetError] = useState(false);
+  const [loading, setLoading] = useState(true);
   let alertMessage;
 
   /** Get patients */
   const getPatients = async () => {
+    setLoading(true);
     try {
       const { data } = await axios.get<Patient[]>("/patients");
       setPatients(data);
@@ -67,6 +70,7 @@ export default function Patients() {
         console.log(error);
       }
     }
+    setLoading(false);
   };
 
   if (showNetError) {
@@ -198,6 +202,7 @@ export default function Patients() {
   return (
     <React.Fragment>
       <Grid item xs={12} md={12} lg={12}>
+        {loading && <Loading></Loading>}
         {alertMessage}
       </Grid>
 

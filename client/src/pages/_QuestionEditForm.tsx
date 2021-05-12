@@ -1,6 +1,6 @@
-import { Grid, Typography } from "@material-ui/core";
 import React from "react";
 import QuestionForm from "../components/QuestionForm";
+import Grid from "@material-ui/core/Grid";
 
 export default function _QuestionForm() {
   return (

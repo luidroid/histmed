@@ -4,17 +4,16 @@ import axios from "../api/apiConfig";
 import { useGlobalStyles } from "../styles/globalStyles";
 import Loading from "../components/Loading";
 import AlertError from "../components/AlertError";
-import {
-  Box,
-  Button,
-  FormControl,
-  Grid,
-  Icon,
-  IconButton,
-  Paper,
-  TextField,
-  Typography,
-} from "@material-ui/core";
+
+import Box from "@material-ui/core/Box";
+import Button from "@material-ui/core/Button";
+import FormControl from "@material-ui/core/FormControl";
+import Grid from "@material-ui/core/Grid";
+import Icon from "@material-ui/core/Icon";
+import IconButton from "@material-ui/core/IconButton";
+import Paper from "@material-ui/core/Paper";
+import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
 
 import { Formik, Form, FieldArray, getIn } from "formik";
 import * as yup from "yup";
@@ -33,13 +32,14 @@ export default function QuestionForm() {
 
   useEffect(() => {
     (async () => {
+      setLoading(true);
       try {
         const { data } = await axios.get(`/questionnaire`);
         setQuestions(data.questions);
         setLoading(false);
       } catch (error) {
-        setLoading(false);
         setError(true);
+        setLoading(false);
         console.log(error);
       }
     })();

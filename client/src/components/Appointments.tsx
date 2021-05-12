@@ -6,7 +6,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import MaterialTable from "material-table";
 
 import { useGlobalStyles } from "../styles/globalStyles";
-import { DATETIME_FORMAT } from "../helpers/constants";
+import { DATETIME_FORMAT } from "../constants/constants";
 import AppointmentStatus from "../components/AppointmentStatus";
 import { Appointment } from "../models/patient";
 
