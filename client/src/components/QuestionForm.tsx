@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { useParams, useHistory, Link as RouterLink } from "react-router-dom";
 import axios from "../api/apiConfig";
 import { useGlobalStyles } from "../styles/globalStyles";
 import Loading from "../components/Loading";
@@ -27,6 +27,8 @@ export default function QuestionForm() {
   const globalClasses = useGlobalStyles();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const { id } = useParams<{ id: string }>();
+  const history = useHistory();
 
   const [questions, setQuestions] = useState([]);
 
@@ -35,7 +37,7 @@ export default function QuestionForm() {
       setLoading(true);
       try {
         const { data } = await axios.get(`/questionnaire`);
-        setQuestions(data.questions);
+        setQuestions(data[0].questions);
         setLoading(false);
       } catch (error) {
         setError(true);
@@ -48,7 +50,8 @@ export default function QuestionForm() {
   const handleSubmit = (questions: any) => {
     (async () => {
       try {
-        await axios.put(`/questionnaire`, questions);
+        await axios.put(`/questionnaire/${id}`, questions);
+        history.push("/questionnaire");
       } catch (error) {
         console.log(error);
       }

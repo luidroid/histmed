@@ -44,7 +44,10 @@ function App() {
             <Route path="/appointments/:id" component={_AppointmentDetails} />
             <Route path="/appointments" component={_Appointments} />
             <Route path="/scheduler" component={_AppointmentScheduler} />
-            <Route path="/questionnaire/edit" component={_QuestionEditForm} />
+            <Route
+              path="/questionnaire/:id/edit"
+              component={_QuestionEditForm}
+            />
             <Route path="/questionnaire" component={_Questions} />
             <Route path="*" component={_PageNotFound} />
           </Switch>

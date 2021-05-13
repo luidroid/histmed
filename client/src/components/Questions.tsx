@@ -18,10 +18,15 @@ import PrintIcon from "@material-ui/icons/Print";
 import { CustomError } from "../models/patient";
 import AlertError from "./AlertError";
 
+export interface Questionnarie {
+  _id: string;
+  questions: string[];
+}
+
 export default function Questions() {
   const globalClasses = useGlobalStyles();
   const [loading, setLoading] = useState(true);
-  const [questions, setQuestions] = useState([]);
+  const [questionnarie, setQuestionnarie] = useState<Questionnarie>();
   const [error, setError] = useState(false);
   const [customError, setCustomError] = useState<CustomError>({
     status: "",
@@ -39,7 +44,8 @@ export default function Questions() {
       setError(false);
       try {
         const { data } = await axios.get(`/questionnaire`);
-        setQuestions(data.questions);
+        console.log("🚀 ~ file: Questions.tsx ~ line 42 ~ data", data);
+        setQuestionnarie(data[0]);
       } catch (error) {
         setCustomError(error);
         setError(true);
@@ -53,17 +59,15 @@ export default function Questions() {
     let content = mailSalutation;
 
     let result = "";
-    questions.map((q, index) => {
+    questionnarie?.questions.map((q, index) => {
       return (result = result.concat(`${index + 1}. ${q}%0A`));
     });
     content = content.concat(result).concat(mailSignature);
     setMailContent(content);
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
-  }, [questions]);
+    setLoading(false);
+  }, [questionnarie]);
 
-  const questionList = questions.map((question, index) => (
+  const questionList = questionnarie?.questions.map((question, index) => (
     <ListItem dense key={index}>
       <ListItemText
         primary={
@@ -79,7 +83,10 @@ export default function Questions() {
     <Paper className={globalClasses.paper}>
       <Typography component="h2" variant="h6" color="primary">
         Cuestionario
-        <IconButton component={RouterLink} to={`/questionnaire/edit`}>
+        <IconButton
+          component={RouterLink}
+          to={`/questionnaire/${questionnarie?._id}/edit`}
+        >
           <EditIcon />
         </IconButton>
         <Link href={`mailto:?subject=${subject}&body=${mailContent}`}>
