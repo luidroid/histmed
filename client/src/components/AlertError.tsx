@@ -2,14 +2,14 @@ import React from "react";
 import { Alert, AlertTitle } from "@material-ui/lab";
 
 type Props = {
+  status: string;
   message: string;
-  recommendation: string;
 };
-export default function AlertError({ message, recommendation }: Props) {
+export default function AlertError({ status, message }: Props) {
   return (
     <Alert severity="error">
       <AlertTitle>Error</AlertTitle>
-      {message} — <strong>{recommendation}!</strong>
+      <strong>{status}</strong> - {message}.
     </Alert>
   );
 }

@@ -1,7 +1,7 @@
 export interface Patient {
   id?: number;
   reference: string;
-  avatar?: string;
+  avatar: string;
   firstname: string;
   lastname: string;
   dateOfBirth: string;
@@ -77,7 +77,12 @@ export enum Status {
   Canceled = "C",
 }
 
+export interface Questionnarie {
+  _id: string;
+  questions: string[];
+}
+
 export interface CustomError {
-  status?: string;
+  status: string;
   message: string;
 }

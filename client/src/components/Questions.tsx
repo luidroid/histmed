@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import axios from "../api/apiConfig";
 import { useGlobalStyles } from "../styles/globalStyles";
+import { CustomError, Questionnarie } from "../models/patient";
 import Loading from "./Loading";
 
 import ListItem from "@material-ui/core/ListItem";
@@ -15,13 +16,7 @@ import List from "@material-ui/core/List";
 import EditIcon from "@material-ui/icons/Edit";
 import MailIcon from "@material-ui/icons/Mail";
 import PrintIcon from "@material-ui/icons/Print";
-import { CustomError } from "../models/patient";
 import AlertError from "./AlertError";
-
-export interface Questionnarie {
-  _id: string;
-  questions: string[];
-}
 
 export default function Questions() {
   const globalClasses = useGlobalStyles();
@@ -100,8 +95,8 @@ export default function Questions() {
       </Typography>
       {error && (
         <AlertError
+          status={customError.status}
           message={customError.message}
-          recommendation=""
         ></AlertError>
       )}
       {loading ? <Loading></Loading> : <List>{questionList}</List>}

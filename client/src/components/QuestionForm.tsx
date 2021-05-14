@@ -77,8 +77,8 @@ export default function QuestionForm() {
               </Typography>
               {error && (
                 <AlertError
-                  message="No existe conexión"
-                  recommendation="Reinicie la base de datos"
+                  status="No existe conexión"
+                  message="Reinicie la base de datos"
                 ></AlertError>
               )}
               {loading ? (

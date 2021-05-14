@@ -2,7 +2,7 @@ const express = require("express");
 
 const {
   createPatient,
-  readPatient,
+  readPatients,
   updatePatient,
   deletePatient,
 } = require("../controllers/patient_controller");
@@ -11,7 +11,7 @@ const router = express.Router();
 
 router
   .post("/", createPatient)
-  .get("/", readPatient)
+  .get("/", readPatients)
   .put("/:id", updatePatient)
   .delete("/:id", deletePatient);
 

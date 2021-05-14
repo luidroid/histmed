@@ -19,7 +19,7 @@ const createPatient = (req, res) => {
     });
 };
 
-const readPatient = (req, res) => {
+const readPatients = (req, res) => {
   Patient.find()
     .then((data) => {
       res.status(200).json(data);
@@ -70,7 +70,7 @@ const deletePatient = (req, res) => {
 
 module.exports = {
   createPatient,
-  readPatient,
+  readPatients,
   updatePatient,
   deletePatient,
 };
