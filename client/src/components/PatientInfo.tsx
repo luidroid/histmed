@@ -148,7 +148,7 @@ export default function PatientInfo(patient: Patient) {
                       variant="body2"
                       color="textSecondary"
                     >
-                      {patient?.dateOfBirth} - 38 anios
+                      {patient?.birth} - 38 anios
                     </Typography>
                   }
                 />

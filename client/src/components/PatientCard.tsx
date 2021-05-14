@@ -52,7 +52,7 @@ export default function PatientCard(props: {
 }) {
   const classes = useStyles();
   dayjs.extend(relativeTime);
-  const dtBirth = dayjs(props.patient.dateOfBirth).format("DD/MMM/YYYY");
+  const dtBirth = dayjs(props.patient.birth).format("DD/MMM/YYYY");
   //const age = dayjs(dateOfBirth).toNow(true).trim().replace("years", "años");
   const [open, setOpen] = React.useState(false);
 

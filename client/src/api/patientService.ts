@@ -11,7 +11,7 @@ const initPatient: Patient = {
   reference: "",
   firstname: "init lui",
   lastname: "",
-  dateOfBirth: "",
+  birth: "",
   gender: Gender.Other,
   dni: "",
   email: "",

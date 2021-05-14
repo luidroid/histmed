@@ -4,7 +4,7 @@ export interface Patient {
   avatar: string;
   firstname: string;
   lastname: string;
-  dateOfBirth: string;
+  birth: string;
   gender: Gender;
   dni: string;
   email: string;
