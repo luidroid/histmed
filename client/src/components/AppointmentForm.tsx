@@ -127,7 +127,7 @@ export default function AppointmentForm({ edit }: Props) {
                       Tipo
                     </InputLabel>
                     <Select
-                      value={formik.values.type}
+                      value={formik.values.reason}
                       label="Tipo"
                       name="type"
                       onChange={formik.handleChange}
@@ -317,7 +317,7 @@ export default function AppointmentForm({ edit }: Props) {
                           variant="body2"
                           color="textSecondary"
                         >
-                          {patient?.dateOfBirth} - 38 anios
+                          {patient?.birth} - 38 anios
                         </Typography>
                       }
                     />

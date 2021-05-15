@@ -24,6 +24,7 @@ app.use(express.static(__dirname + "/views/"));
 // Defining route middleware
 //app.use("/api", require("./routes/api"));
 app.use("/patients", require("./routes/patientApi"));
+app.use("/appointments", require("./routes/appointmentApi"));
 app.use("/questionnaire", require("./routes/questionApi"));
 
 // Listening to port

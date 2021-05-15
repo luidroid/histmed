@@ -34,8 +34,8 @@ export interface Appointment {
   patient?: Patient;
   title: string;
   description: string;
-  type: AppointmentType;
-  createdAt: string;
+  reason: AppointmentType;
+  created: string;
   analysis: string;
   plan: string;
   comment: string;

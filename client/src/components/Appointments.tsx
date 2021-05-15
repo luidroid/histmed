@@ -97,7 +97,7 @@ export default function Appointments() {
                 sorting: false,
 
                 render: (rowData) =>
-                  dayjs(rowData.createdAt).format(DATETIME_FORMAT),
+                  dayjs(rowData.created).format(DATETIME_FORMAT),
               },
               {
                 title: "Paciente",
@@ -116,7 +116,7 @@ export default function Appointments() {
                 title: "Tipo",
                 field: "type",
                 sorting: false,
-                render: (rowData) => formatAppointmentType(rowData.type),
+                render: (rowData) => formatAppointmentType(rowData.reason),
               },
               {
                 title: "Estado",

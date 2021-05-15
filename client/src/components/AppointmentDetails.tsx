@@ -106,7 +106,7 @@ export default function AppointmentDetails() {
                 variant="body2"
                 color="textSecondary"
               >
-                {appointment.createdAt}
+                {appointment.created}
               </Typography>
             </Grid>
             <Grid item xs={12} md={12} lg={12}>
@@ -140,7 +140,7 @@ export default function AppointmentDetails() {
                 variant="body2"
                 color="textSecondary"
               >
-                {formatAppointmentType(appointment.type)}
+                {formatAppointmentType(appointment.reason)}
               </Typography>
             </Grid>
             <Grid item xs={12} md={12} lg={12}>
@@ -346,7 +346,7 @@ export default function AppointmentDetails() {
                     variant="body2"
                     color="textSecondary"
                   >
-                    {appointment.patient?.dateOfBirth} - 38 anios
+                    {appointment.patient?.birth} - 38 anios
                   </Typography>
                 }
               />
