@@ -4,7 +4,6 @@ const patientSchema = new Schema(
   {
     reference: { type: String },
     avatar: { type: String },
-    salutation: { type: String },
     firstname: {
       type: String,
       required: [true, "firstname field is required"],
@@ -17,8 +16,8 @@ const patientSchema = new Schema(
     phone: { type: String },
     mobile: { type: String },
     address: { type: String },
-    historyList: { type: String },
-    appointments: { type: String },
+    historyList: [{ name: String, description: String }],
+    appointments: { type: Array, default: [] },
     notes: { type: String },
   },
   { timestamps: true }

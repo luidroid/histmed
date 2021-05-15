@@ -127,7 +127,7 @@ export default function AppointmentForm({ edit }: Props) {
                       Tipo
                     </InputLabel>
                     <Select
-                      value={formik.values.reason}
+                      value={formik.values.category}
                       label="Tipo"
                       name="type"
                       onChange={formik.handleChange}

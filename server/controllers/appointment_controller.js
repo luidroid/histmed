@@ -1,11 +1,11 @@
 "use strict";
 
-const Question = require("../models/question_schema");
+const Appointment = require("../models/appointment_schema");
 
-const createQuestion = (req, res) => {
-  Question.create(req.body)
+const createAppointment = (req, res) => {
+  Appointment.create(req.body)
     .then((data) => {
-      console.log("New Question created!", data);
+      console.log("New Appointment created!", data);
       res.status(201).json(data);
     })
     .catch((err) => {
@@ -19,8 +19,8 @@ const createQuestion = (req, res) => {
     });
 };
 
-const readQuestion = (req, res) => {
-  Question.find()
+const readAppointments = (req, res) => {
+  Appointment.find()
     .then((data) => {
       res.status(200).json(data);
     })
@@ -30,13 +30,13 @@ const readQuestion = (req, res) => {
     });
 };
 
-const updateQuestion = (req, res) => {
-  Question.findByIdAndUpdate(req.params.id, req.body, {
+const updateAppointment = (req, res) => {
+  Appointment.findByIdAndUpdate(req.params.id, req.body, {
     useFindAndModify: false,
     new: true,
   })
     .then((data) => {
-      console.log("Question updated!");
+      console.log("Appointment updated!");
       res.status(201).json(data);
     })
     .catch((err) => {
@@ -50,16 +50,16 @@ const updateQuestion = (req, res) => {
     });
 };
 
-const deleteQuestion = (req, res) => {
-  Question.findById(req.params.id)
+const deleteAppointment = (req, res) => {
+  Appointment.findById(req.params.id)
     .then((data) => {
       if (!data) {
-        throw new Error("Question not available");
+        throw new Error("Appointment not available");
       }
       return data.remove();
     })
     .then((data) => {
-      console.log("Question removed!");
+      console.log("Appointment removed!");
       res.status(200).json(data);
     })
     .catch((err) => {
@@ -69,8 +69,8 @@ const deleteQuestion = (req, res) => {
 };
 
 module.exports = {
-  createQuestion,
-  readQuestion,
-  updateQuestion,
-  deleteQuestion,
+  createAppointment,
+  readAppointments,
+  updateAppointment,
+  deleteAppointment,
 };

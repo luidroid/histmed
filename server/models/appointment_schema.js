@@ -2,20 +2,21 @@ const { Schema, model } = require("mongoose");
 
 const appointmentSchema = new Schema(
   {
+    patientId: { type: String },
     title: {
       type: String,
       required: [true, "title field is required"],
     },
-    reason: { type: String },
+    description: { type: String },
+    category: { type: String, enum: ["T", "C", "S", "O", "P"], default: "T" },
+    scheduled: { type: String },
     analysis: { type: String },
     plan: { type: String },
     comment: { type: String },
     recommendation: { type: String },
-    description: { type: String },
-    description: { type: String },
-    description: { type: String },
+    status: { type: String, enum: ["O", "I", "D", "P", "C"], default: "O" },
   },
   { timestamps: true }
 );
 
-module.exports = model("users", questionSchema);
+module.exports = model("appointments", appointmentSchema);

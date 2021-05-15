@@ -48,7 +48,7 @@ export default function PatientAppointmentItem({ item }: Props) {
   const classes = useStyles();
   let avatar;
 
-  switch (item.reason) {
+  switch (item.category) {
     case AppointmentType.PreliminaryTalk:
       avatar = (
         <Avatar className={classes.green}>
@@ -85,7 +85,7 @@ export default function PatientAppointmentItem({ item }: Props) {
   return (
     <ListItem>
       <ListItemAvatar>{avatar}</ListItemAvatar>
-      <ListItemText primary={item.title} secondary={item.created} />
+      <ListItemText primary={item.title} secondary={item.scheduled} />
     </ListItem>
   );
 }
