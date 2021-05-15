@@ -10,4 +10,4 @@ const questionSchema = new Schema(
   { timestamps: true }
 );
 
-module.exports = model("questions", questionSchema);
+module.exports = model("Question", questionSchema);

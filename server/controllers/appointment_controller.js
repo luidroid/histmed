@@ -22,6 +22,7 @@ const createAppointment = (req, res) => {
 const readAppointments = (req, res) => {
   Appointment.find()
     .then((data) => {
+      console.log("Appointments found!");
       res.status(200).json(data);
     })
     .catch((err) => {

@@ -22,6 +22,32 @@ const createPatient = (req, res) => {
 const readPatients = (req, res) => {
   Patient.find()
     .then((data) => {
+      console.log("Patients found!");
+      res.status(200).json(data);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).json(err);
+    });
+};
+
+const readPatient = (req, res) => {
+  Patient.findById(req.params.id)
+    .then((data) => {
+      console.log("Patient found!");
+      res.status(200).json(data);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).json(err);
+    });
+};
+
+const readPatientAppointments = (req, res) => {
+  Patient.find(req.params.id)
+    .populate("appointments")
+    .then((data) => {
+      console.log("Patient with appointments found!");
       res.status(200).json(data);
     })
     .catch((err) => {
@@ -71,6 +97,8 @@ const deletePatient = (req, res) => {
 module.exports = {
   createPatient,
   readPatients,
+  readPatient,
+  readPatientAppointments,
   updatePatient,
   deletePatient,
 };

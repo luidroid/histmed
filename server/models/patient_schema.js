@@ -17,10 +17,10 @@ const patientSchema = new Schema(
     mobile: { type: String },
     address: { type: String },
     historyList: [{ name: String, description: String }],
-    appointments: { type: Array, default: [] },
+    appointments: [{ type: Schema.Types.ObjectId, ref: "Appointment" }],
     notes: { type: String },
   },
   { timestamps: true }
 );
 
-module.exports = model("patients", patientSchema);
+module.exports = model("Patient", patientSchema);

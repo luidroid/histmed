@@ -2,7 +2,7 @@ const { Schema, model } = require("mongoose");
 
 const appointmentSchema = new Schema(
   {
-    patientId: { type: String },
+    person: { type: Schema.Types.ObjectId, ref: "Patient" },
     title: {
       type: String,
       required: [true, "title field is required"],
@@ -19,4 +19,4 @@ const appointmentSchema = new Schema(
   { timestamps: true }
 );
 
-module.exports = model("appointments", appointmentSchema);
+module.exports = model("Appointment", appointmentSchema);
