@@ -44,7 +44,7 @@ const readPatient = (req, res) => {
 };
 
 const readPatientAppointments = (req, res) => {
-  Patient.find(req.params.id)
+  Patient.findById(req.params.id)
     .populate("appointments")
     .then((data) => {
       console.log("Patient with appointments found!");
