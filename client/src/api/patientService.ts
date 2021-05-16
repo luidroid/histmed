@@ -4,6 +4,7 @@ import {
   Appointment,
   AppointmentType,
   Status,
+  Questionnaire,
 } from "../models/patient";
 
 const initPatient: Patient = {
@@ -40,4 +41,10 @@ const initAppointment: Appointment = {
   status: Status.Open,
 };
 
-export { initPatient, initAppointment };
+const initQuestionnaire: Questionnaire = {
+  _id: "",
+  name: "",
+  questions: [],
+};
+
+export { initPatient, initAppointment, initQuestionnaire };

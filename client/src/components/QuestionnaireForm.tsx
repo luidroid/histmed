@@ -18,6 +18,7 @@ import Typography from "@material-ui/core/Typography";
 import { Formik, Form, FieldArray, getIn } from "formik";
 import * as yup from "yup";
 import { ArrowDownward, ArrowUpward, Delete } from "@material-ui/icons";
+import { initQuestionnaire } from "../api/patientService";
 
 const validationSchema = yup.object({
   questions: yup.array().of(yup.string().required("Pregunta es requerida")),
@@ -33,28 +34,34 @@ export default function QuestionnaireForm({ edit }: Props) {
   const { id } = useParams<{ id: string }>();
   const history = useHistory();
 
-  const [questions, setQuestions] = useState([]);
+  const [questionnaire, setQuestionnaire] = useState(initQuestionnaire);
 
   useEffect(() => {
-    (async () => {
-      setLoading(true);
-      try {
-        const { data } = await axios.get(`/questionnaire`);
-        setQuestions(data[0].questions);
-        setLoading(false);
-      } catch (error) {
-        setError(true);
-        setLoading(false);
-        console.log(error);
-      }
-    })();
-  }, []);
+    if (edit) {
+      (async () => {
+        setLoading(true);
+        try {
+          const { data } = await axios.get(`/questionnaires/${id}`);
+          setQuestionnaire(data);
+          setLoading(false);
+        } catch (error) {
+          setError(true);
+          setLoading(false);
+          console.log(error);
+        }
+      })();
+    }
+  }, [edit, id]);
 
-  const handleSubmit = (questions: any) => {
+  const handleSubmit = (questionnaire: any) => {
+    let url = "/questionnaires";
+    if (edit) {
+      url = url.concat(`/${id}`);
+    }
     (async () => {
       try {
-        await axios.put(`/questionnaire/${id}`, questions);
-        history.push("/questionnaire");
+        await axios.put(url, questionnaire);
+        history.push(url);
       } catch (error) {
         console.log(error);
       }
@@ -64,7 +71,7 @@ export default function QuestionnaireForm({ edit }: Props) {
   return (
     <React.Fragment>
       <Formik
-        initialValues={{ questions }}
+        initialValues={{ questions: questionnaire }}
         validationSchema={validationSchema}
         enableReinitialize
         onSubmit={(values) => {
@@ -76,7 +83,7 @@ export default function QuestionnaireForm({ edit }: Props) {
           <Form className={globalClasses.root} autoComplete="off">
             <Paper className={globalClasses.paper}>
               <Typography component="h2" variant="h6" color="primary">
-                Editar cuestionario
+                {edit ? "Editar" : "Nuevo"} cuestionario
               </Typography>
               {error && (
                 <AlertError
