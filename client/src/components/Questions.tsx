@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import axios from "../api/apiConfig";
 import { useGlobalStyles } from "../styles/globalStyles";
-import { CustomError, Questionnarie } from "../models/patient";
+import { CustomError, Questionnaire } from "../models/patient";
 import Loading from "./Loading";
 
 import ListItem from "@material-ui/core/ListItem";
@@ -21,7 +21,7 @@ import AlertError from "./AlertError";
 export default function Questions() {
   const globalClasses = useGlobalStyles();
   const [loading, setLoading] = useState(true);
-  const [questionnarie, setQuestionnarie] = useState<Questionnarie>();
+  const [questionnarie, setQuestionnarie] = useState<Questionnaire>();
   const [error, setError] = useState(false);
   const [customError, setCustomError] = useState<CustomError>({
     status: "",

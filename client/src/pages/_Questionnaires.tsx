@@ -1,12 +1,12 @@
 import React from "react";
-import QuestionForm from "../components/QuestionForm";
+import Questionnaires from "../components/Questionnaires";
 import Grid from "@material-ui/core/Grid";
 
-export default function _QuestionForm() {
+export default function _Questionnaires() {
   return (
     <React.Fragment>
       <Grid item xs={12} md={12} lg={12}>
-        <QuestionForm></QuestionForm>
+        <Questionnaires></Questionnaires>
       </Grid>
     </React.Fragment>
   );

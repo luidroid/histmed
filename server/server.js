@@ -25,7 +25,7 @@ app.use(express.static(__dirname + "/views/"));
 //app.use("/api", require("./routes/api"));
 app.use("/patients", require("./routes/patientApi"));
 app.use("/appointments", require("./routes/appointmentApi"));
-app.use("/questionnaire", require("./routes/questionApi"));
+app.use("/questionnaires", require("./routes/questionnaireApi"));
 
 // Listening to port
 app.listen(port);

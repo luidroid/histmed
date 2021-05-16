@@ -79,8 +79,9 @@ export enum Status {
   Canceled = "C",
 }
 
-export interface Questionnarie {
+export interface Questionnaire {
   _id: string;
+  name: string;
   questions: string[];
 }
 

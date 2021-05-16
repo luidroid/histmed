@@ -1,7 +1,8 @@
 const { Schema, model } = require("mongoose");
 
-const questionSchema = new Schema(
+const questionnaireSchema = new Schema(
   {
+    name: { type: String, required: [true, "name field is required"] },
     questions: {
       type: [String],
       required: [true, "question field is required"],
@@ -10,4 +11,4 @@ const questionSchema = new Schema(
   { timestamps: true }
 );
 
-module.exports = model("Question", questionSchema);
+module.exports = model("Questionnaire", questionnaireSchema);

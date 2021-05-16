@@ -11,8 +11,9 @@ import PatientDetailPage from "./pages/_PatientDetails";
 import _PatientCreateForm from "./pages/_PatientCreateForm";
 import _PatientEditForm from "./pages/_PatientEditForm";
 import _PageNotFound from "./pages/_PageNotFound";
-import _Questions from "./pages/_Questions";
-import _QuestionEditForm from "./pages/_QuestionEditForm";
+import _Questionnaires from "./pages/_Questionnaires";
+import _QuestionnaireCreateForm from "./pages/_QuestionnaireCreateForm";
+import _QuestionnaireEditForm from "./pages/_QuestionnaireEditForm";
 import _AppointmentScheduler from "./pages/_AppointmentScheduler";
 import _AppointmentCreateForm from "./pages/_AppointmentCreateForm";
 import _AppointmentEditForm from "./pages/_AppointmentEditForm";
@@ -49,10 +50,14 @@ function App() {
             <Route path="/appointments" component={_Appointments} />
             <Route path="/scheduler" component={_AppointmentScheduler} />
             <Route
-              path="/questionnaire/:id/edit"
-              component={_QuestionEditForm}
+              path="/questionnaires/new"
+              component={_QuestionnaireCreateForm}
             />
-            <Route path="/questionnaire" component={_Questions} />
+            <Route
+              path="/questionnaires/:id/edit"
+              component={_QuestionnaireEditForm}
+            />
+            <Route path="/questionnaires" component={_Questionnaires} />
             <Route path="*" component={_PageNotFound} />
           </Switch>
         </DashboardLayout>

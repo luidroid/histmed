@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useParams, useHistory, Link as RouterLink } from "react-router-dom";
 import axios from "../api/apiConfig";
 import { useGlobalStyles } from "../styles/globalStyles";
-import Loading from "../components/Loading";
-import AlertError from "../components/AlertError";
+import Loading from "./Loading";
+import AlertError from "./AlertError";
 
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
@@ -23,7 +23,10 @@ const validationSchema = yup.object({
   questions: yup.array().of(yup.string().required("Pregunta es requerida")),
 });
 
-export default function QuestionForm() {
+type Props = {
+  edit: boolean;
+};
+export default function QuestionnaireForm({ edit }: Props) {
   const globalClasses = useGlobalStyles();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
