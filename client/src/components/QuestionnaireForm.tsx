@@ -57,6 +57,8 @@ export default function QuestionnaireForm({ edit }: Props) {
     let url = "/questionnaires";
     if (edit) {
       url = url.concat(`/${id}`);
+    } else {
+      url = url.concat("/new");
     }
     (async () => {
       try {
