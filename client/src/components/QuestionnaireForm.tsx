@@ -19,8 +19,10 @@ import { Formik, Form, FieldArray, getIn } from "formik";
 import * as yup from "yup";
 import { ArrowDownward, ArrowUpward, Delete } from "@material-ui/icons";
 import { initQuestionnaire } from "../api/patientService";
+import { QUESTIONNAIRES_URL } from "../constants/constants";
 
 const validationSchema = yup.object({
+  name: yup.string().required("Nombre es requerido"),
   questions: yup.array().of(yup.string().required("Pregunta es requerida")),
 });
 
@@ -32,16 +34,16 @@ export default function QuestionnaireForm({ edit }: Props) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const { id } = useParams<{ id: string }>();
+  const questionnaireUrl = QUESTIONNAIRES_URL.concat(`/${id}`);
   const history = useHistory();
-
   const [questionnaire, setQuestionnaire] = useState(initQuestionnaire);
 
   useEffect(() => {
+    setLoading(true);
     if (edit) {
       (async () => {
-        setLoading(true);
         try {
-          const { data } = await axios.get(`/questionnaires/${id}`);
+          const { data } = await axios.get(questionnaireUrl);
           setQuestionnaire(data);
           setLoading(false);
         } catch (error) {
@@ -50,20 +52,20 @@ export default function QuestionnaireForm({ edit }: Props) {
           console.log(error);
         }
       })();
+    } else {
+      setLoading(false);
     }
-  }, [edit, id]);
+  }, [edit, questionnaireUrl]);
 
   const handleSubmit = (questionnaire: any) => {
-    let url = "/questionnaires";
+    let url = QUESTIONNAIRES_URL;
     if (edit) {
-      url = url.concat(`/${id}`);
-    } else {
-      url = url.concat("/new");
+      url = questionnaireUrl;
     }
     (async () => {
       try {
         await axios.put(url, questionnaire);
-        history.push(url);
+        history.push(QUESTIONNAIRES_URL);
       } catch (error) {
         console.log(error);
       }
@@ -73,7 +75,7 @@ export default function QuestionnaireForm({ edit }: Props) {
   return (
     <React.Fragment>
       <Formik
-        initialValues={{ questions: questionnaire }}
+        initialValues={{ questionnaireItem: questionnaire }}
         validationSchema={validationSchema}
         enableReinitialize
         onSubmit={(values) => {
@@ -97,78 +99,99 @@ export default function QuestionnaireForm({ edit }: Props) {
                 <Loading></Loading>
               ) : (
                 <FormControl component="fieldset">
+                  <TextField
+                    variant="filled"
+                    id="name"
+                    name="name"
+                    label="Nombre *"
+                    value={formik.values.questionnaireItem.name}
+                    onChange={formik.handleChange}
+                    error={
+                      formik.touched.questionnaireItem?.name &&
+                      Boolean(formik.errors.questionnaireItem?.name)
+                    }
+                    helperText={
+                      formik.touched.questionnaireItem?.name &&
+                      formik.errors.questionnaireItem?.name
+                    }
+                  />
                   <FieldArray
                     name="questions"
                     render={(arrayHelpers) => {
-                      const len = formik.values.questions.length;
+                      const len =
+                        formik.values.questionnaireItem.questions.length;
                       return (
                         <div>
-                          {formik.values.questions.map((question, index) => {
-                            const questionIndex = `questions[${index}]`;
-                            const touchedQuestion = getIn(
-                              formik.touched,
-                              questionIndex
-                            );
-                            const errorQuestion = getIn(
-                              formik.errors,
-                              questionIndex
-                            );
+                          {formik.values.questionnaireItem.questions.map(
+                            (question, index) => {
+                              const questionIndex = `questions[${index}]`;
+                              const touchedQuestion = getIn(
+                                formik.touched,
+                                questionIndex
+                              );
+                              const errorQuestion = getIn(
+                                formik.errors,
+                                questionIndex
+                              );
 
-                            const disabledArrowDownward = index === len - 1;
-                            const disabledArrowUpward = index === 0;
+                              const disabledArrowDownward = index === len - 1;
+                              const disabledArrowUpward = index === 0;
 
-                            return (
-                              <div key={index}>
-                                <Grid container spacing={1}>
-                                  <Grid item xs={12} md={12} lg={8}>
-                                    <TextField
-                                      fullWidth
-                                      variant="filled"
-                                      name={questionIndex}
-                                      label="Pregunta"
-                                      value={question}
-                                      onChange={formik.handleChange}
-                                      error={Boolean(
-                                        touchedQuestion && errorQuestion
-                                      )}
-                                      helperText={
-                                        touchedQuestion && errorQuestion
-                                          ? errorQuestion
-                                          : ""
-                                      }
-                                    />
-                                  </Grid>
-                                  <Grid item xs={12} md={12} lg={4}>
-                                    <IconButton
-                                      disabled={disabledArrowDownward}
-                                      onClick={() => {
-                                        if (!disabledArrowDownward) {
-                                          arrayHelpers.swap(index, index + 1);
+                              return (
+                                <div key={index}>
+                                  <Grid container spacing={1}>
+                                    <Grid item xs={12} md={12} lg={8}>
+                                      <TextField
+                                        fullWidth
+                                        variant="filled"
+                                        name={questionIndex}
+                                        label="Pregunta"
+                                        value={question}
+                                        onChange={formik.handleChange}
+                                        error={Boolean(
+                                          touchedQuestion && errorQuestion
+                                        )}
+                                        helperText={
+                                          touchedQuestion && errorQuestion
+                                            ? errorQuestion
+                                            : ""
                                         }
-                                      }}
-                                    >
-                                      <ArrowDownward />
-                                    </IconButton>
-                                    <IconButton
-                                      disabled={disabledArrowUpward}
-                                      onClick={() => {
-                                        if (!disabledArrowUpward) {
-                                          arrayHelpers.swap(index, index - 1);
+                                      />
+                                    </Grid>
+                                    <Grid item xs={12} md={12} lg={4}>
+                                      <IconButton
+                                        disabled={disabledArrowDownward}
+                                        onClick={() => {
+                                          if (!disabledArrowDownward) {
+                                            arrayHelpers.swap(index, index + 1);
+                                          }
+                                        }}
+                                      >
+                                        <ArrowDownward />
+                                      </IconButton>
+                                      <IconButton
+                                        disabled={disabledArrowUpward}
+                                        onClick={() => {
+                                          if (!disabledArrowUpward) {
+                                            arrayHelpers.swap(index, index - 1);
+                                          }
+                                        }}
+                                      >
+                                        <ArrowUpward />
+                                      </IconButton>
+                                      <IconButton
+                                        onClick={() =>
+                                          arrayHelpers.remove(index)
                                         }
-                                      }}
-                                    >
-                                      <ArrowUpward />
-                                    </IconButton>
-                                    <IconButton
-                                      onClick={() => arrayHelpers.remove(index)}
-                                    >
-                                      <Delete />
-                                    </IconButton>
+                                      >
+                                        <Delete />
+                                      </IconButton>
+                                    </Grid>
                                   </Grid>
-                                </Grid>
-                              </div>
-                            );
-                          })}
+                                </div>
+                              );
+                            }
+                          )}
                           <FormControl className={globalClasses.spacing}>
                             <Button
                               variant="contained"

@@ -42,7 +42,6 @@ const initAppointment: Appointment = {
 };
 
 const initQuestionnaire: Questionnaire = {
-  _id: "",
   name: "",
   questions: [],
 };

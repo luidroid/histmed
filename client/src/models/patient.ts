@@ -80,7 +80,7 @@ export enum Status {
 }
 
 export interface Questionnaire {
-  _id: string;
+  _id?: string;
   name: string;
   questions: string[];
 }
