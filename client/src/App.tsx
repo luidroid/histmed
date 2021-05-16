@@ -41,6 +41,10 @@ function App() {
             <Route path="/patients/:id/edit" component={_PatientEditForm} />
             <Route path="/patients/:id" component={PatientDetailPage} />
             <Route path="/patients" component={_Patients} />
+            <Route
+              path="/appointments/:id/edit"
+              component={_AppointmentEditForm}
+            />
             <Route path="/appointments/:id" component={_AppointmentDetails} />
             <Route path="/appointments" component={_Appointments} />
             <Route path="/scheduler" component={_AppointmentScheduler} />

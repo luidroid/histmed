@@ -7,6 +7,7 @@ import {
 } from "../models/patient";
 
 const initPatient: Patient = {
+  _id: "",
   avatar: "",
   reference: "",
   firstname: "init lui",
@@ -25,7 +26,8 @@ const initPatient: Patient = {
 };
 
 const initAppointment: Appointment = {
-  patient: initPatient,
+  _id: "",
+  person: initPatient,
   title: "",
   description: "",
   category: AppointmentType.PreliminaryTalk,

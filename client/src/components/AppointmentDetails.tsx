@@ -10,19 +10,12 @@ import { Appointment } from "../models/patient";
 import { initAppointment } from "../api/patientService";
 
 import Grid from "@material-ui/core/Grid";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 
-import CakeIcon from "@material-ui/icons/Cake";
-import EmojiPeopleIcon from "@material-ui/icons/EmojiPeople";
-import NotesIcon from "@material-ui/icons/Notes";
-import RecentActorsIcon from "@material-ui/icons/RecentActors";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Dialog from "@material-ui/core/Dialog";
@@ -33,6 +26,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
 import AppointmentStatus from "./AppointmentStatus";
 import { formatAppointmentType } from "../helpers/helpers";
+import PersonInfoCompact from "./PersonInfoCompact";
 
 export default function AppointmentDetails() {
   const globalClasses = useGlobalStyles();
@@ -188,7 +182,7 @@ export default function AppointmentDetails() {
             {/* Anaylis */}
             <Grid item xs={12} md={12} lg={4}>
               <Typography component="span" variant="body1" color="textPrimary">
-                Análisis
+                Exámen físico
               </Typography>
             </Grid>
             <Grid item xs={12} md={12} lg={8}>
@@ -269,8 +263,8 @@ export default function AppointmentDetails() {
           aria-describedby="alert-dialog-description"
         >
           <DialogTitle id="alert-dialog-title">
-            Desea eliminar esta consulta de {appointment.patient?.firstname}{" "}
-            {appointment.patient?.lastname}?
+            Desea eliminar esta consulta de {appointment.person.firstname}{" "}
+            {appointment.person.lastname}?
           </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
@@ -303,98 +297,15 @@ export default function AppointmentDetails() {
           </Typography>
         </Paper>
       </Grid>
+
       <Grid item xs={12} md={12} lg={4}>
-        <Paper className={globalClasses.paper}>
-          <Typography component="h2" variant="h6" color="primary">
-            Datos personales
-          </Typography>
-
-          <Typography component="p" variant="h5">
-            {appointment.patient?.firstname} {appointment.patient?.lastname}
-          </Typography>
-
-          <List dense disablePadding>
-            <ListItem alignItems="flex-start">
-              <ListItemIcon>
-                <EmojiPeopleIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary=""
-                secondary={
-                  <Typography
-                    component="span"
-                    variant="body2"
-                    color="textSecondary"
-                  >
-                    <PatientGender
-                      gender={appointment.patient!.gender}
-                    ></PatientGender>
-                  </Typography>
-                }
-              />
-            </ListItem>
-
-            <ListItem alignItems="flex-start">
-              <ListItemIcon>
-                <CakeIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary=""
-                secondary={
-                  <Typography
-                    component="span"
-                    variant="body2"
-                    color="textSecondary"
-                  >
-                    {appointment.patient?.birth} - 38 anios
-                  </Typography>
-                }
-              />
-            </ListItem>
-
-            <ListItem alignItems="flex-start">
-              <ListItemIcon>
-                <RecentActorsIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary=""
-                secondary={
-                  <Typography
-                    component="span"
-                    variant="body2"
-                    color="textSecondary"
-                  >
-                    {appointment.patient?.dni}
-                  </Typography>
-                }
-              />
-            </ListItem>
-
-            <ListItem alignItems="flex-start">
-              <ListItemIcon>
-                <NotesIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary=""
-                secondary={
-                  <Typography
-                    component="span"
-                    variant="body2"
-                    color="textSecondary"
-                  >
-                    {appointment.patient?.notes}
-                  </Typography>
-                }
-              />
-            </ListItem>
-          </List>
-        </Paper>
+        <PersonInfoCompact person={appointment.person}></PersonInfoCompact>
         <Paper className={globalClasses.paper}>
           <Typography component="h2" variant="h6" color="primary">
             Antecedentes
           </Typography>
           <PatientHistoryGeneric
-            records={appointment.patient!.historyList}
+            records={appointment.person.historyList}
           ></PatientHistoryGeneric>
         </Paper>
       </Grid>

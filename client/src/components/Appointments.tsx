@@ -103,11 +103,9 @@ export default function Appointments() {
                 title: "Paciente",
                 field: "patient",
                 sorting: false,
-                customSort: (a, b) =>
-                  a.patient!.firstname.length - b.patient!.firstname.length,
                 render: (rowData) => (
-                  <RouterLink to={`/patients/${rowData.patient?.id}`}>
-                    {rowData.patient?.firstname} {rowData.patient?.lastname}
+                  <RouterLink to={`/patients/${rowData.person._id}`}>
+                    {rowData.person.firstname} {rowData.person.lastname}
                   </RouterLink>
                 ),
               },
@@ -136,20 +134,20 @@ export default function Appointments() {
                     <IconButton
                       aria-label="view"
                       component={RouterLink}
-                      to={`/appointments/${rowData.id}`}
+                      to={`/appointments/${rowData._id}`}
                     >
                       <VisibilityIcon />
                     </IconButton>
                     <IconButton
                       aria-label="edit"
                       component={RouterLink}
-                      to={`/appointments/${rowData.id}/edit`}
+                      to={`/appointments/${rowData._id}/edit`}
                     >
                       <EditIcon />
                     </IconButton>
                     <IconButton
                       aria-label="delete"
-                      onClick={() => handleClickOpen(rowData.id!)}
+                      onClick={() => handleClickOpen(Number(rowData._id))}
                     >
                       <DeleteIcon />
                     </IconButton>

@@ -21,8 +21,22 @@ const createAppointment = (req, res) => {
 
 const readAppointments = (req, res) => {
   Appointment.find()
+    .populate("person")
     .then((data) => {
       console.log("Appointments found!");
+      res.status(200).json(data);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).json(err);
+    });
+};
+
+const readAppointment = (req, res) => {
+  Appointment.findById(req.params.id)
+    .populate("person")
+    .then((data) => {
+      console.log("Appointment found!");
       res.status(200).json(data);
     })
     .catch((err) => {
@@ -72,6 +86,7 @@ const deleteAppointment = (req, res) => {
 module.exports = {
   createAppointment,
   readAppointments,
+  readAppointment,
   updateAppointment,
   deleteAppointment,
 };

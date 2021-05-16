@@ -1,4 +1,5 @@
 export interface Patient {
+  _id: string;
   id?: number;
   reference: string;
   avatar: string;
@@ -30,8 +31,9 @@ export interface History {
 }
 
 export interface Appointment {
+  _id: string;
   id?: number;
-  patient?: Patient;
+  person: Patient;
   title: string;
   description: string;
   category: AppointmentType;
