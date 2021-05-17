@@ -14,16 +14,17 @@ import Link from "@material-ui/core/Link";
 import List from "@material-ui/core/List";
 
 import EditIcon from "@material-ui/icons/Edit";
+import DeleteIcon from "@material-ui/icons/Delete";
 import AddIcon from "@material-ui/icons/Add";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import AlertError from "./AlertError";
 import Fab from "@material-ui/core/Fab";
 import Collapse from "@material-ui/core/Collapse";
+import Divider from "@material-ui/core/Divider";
 
 export default function Questionnaires() {
   const globalClasses = useGlobalStyles();
-  const [open, setOpen] = React.useState(true);
   const [loading, setLoading] = useState(true);
   const [questionnaires, setQuestionnaires] = useState<Questionnaire[]>();
   const [error, setError] = useState(false);
@@ -31,10 +32,6 @@ export default function Questionnaires() {
     status: "",
     message: "",
   });
-
-  const handleClick = () => {
-    setOpen(!open);
-  };
 
   useEffect(() => {
     (async () => {
@@ -55,25 +52,45 @@ export default function Questionnaires() {
 
   const questionnaireList = questionnaires?.map((questionnaire, index) => (
     <div key={index}>
-      <ListItem dense onClick={handleClick}>
+      <ListItem dense>
         <ListItemText
           primary={
             <Typography component="span" variant="body1" color="textPrimary">
-              <strong>{`${index + 1}. `}</strong> {questionnaire.name}
+              {questionnaire.name}
+              <IconButton
+                component={RouterLink}
+                to={`/questionnaires/${questionnaire._id}/edit`}
+              >
+                <EditIcon />
+              </IconButton>
+              <IconButton>
+                <DeleteIcon />
+              </IconButton>
             </Typography>
           }
+          secondary={
+            <List>
+              {questionnaire.questions.map((question, index) => (
+                <ListItem dense>
+                  <ListItemText
+                    primary={
+                      <Typography
+                        component="span"
+                        variant="body1"
+                        color="textSecondary"
+                      >
+                        <strong>{index + 1}. </strong>
+                        {question}
+                      </Typography>
+                    }
+                  />
+                </ListItem>
+              ))}
+            </List>
+          }
         />
-        {open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
       </ListItem>
-      <Collapse in={open} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          {questionnaire.questions.map((question) => (
-            <ListItem button>
-              <ListItemText primary={question} />
-            </ListItem>
-          ))}
-        </List>
-      </Collapse>
+      <Divider></Divider>
     </div>
   ));
 
