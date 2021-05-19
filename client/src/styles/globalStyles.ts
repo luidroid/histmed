@@ -24,4 +24,7 @@ export const useGlobalStyles = makeStyles((theme) => ({
     color: theme.palette.getContrastText(deepOrange[500]),
     backgroundColor: deepOrange[500],
   },
+  textField: {
+    width: "50ch",
+  },
 }));

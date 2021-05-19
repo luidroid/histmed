@@ -20,6 +20,7 @@ import * as yup from "yup";
 import { ArrowDownward, ArrowUpward, Delete } from "@material-ui/icons";
 import { initQuestionnaire } from "../api/patientService";
 import { QUESTIONNAIRES_URL } from "../constants/constants";
+import { FormHelperText, FormLabel } from "@material-ui/core";
 
 const validationSchema = yup.object({
   name: yup.string().required("Nombre es requerido"),
@@ -61,21 +62,30 @@ export default function QuestionnaireForm({ edit }: Props) {
     let url = QUESTIONNAIRES_URL;
     if (edit) {
       url = questionnaireUrl;
+      (async () => {
+        try {
+          await axios.put(url, questionnaire);
+          history.push(QUESTIONNAIRES_URL);
+        } catch (error) {
+          console.log(error);
+        }
+      })();
+    } else {
+      (async () => {
+        try {
+          await axios.post(url, questionnaire);
+          history.push(QUESTIONNAIRES_URL);
+        } catch (error) {
+          console.log(error);
+        }
+      })();
     }
-    (async () => {
-      try {
-        await axios.put(url, questionnaire);
-        history.push(QUESTIONNAIRES_URL);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
   };
 
   return (
     <React.Fragment>
       <Formik
-        initialValues={{ questionnaireItem: questionnaire }}
+        initialValues={questionnaire}
         validationSchema={validationSchema}
         enableReinitialize
         onSubmit={(values) => {
@@ -99,99 +109,92 @@ export default function QuestionnaireForm({ edit }: Props) {
                 <Loading></Loading>
               ) : (
                 <FormControl component="fieldset">
-                  <TextField
-                    variant="filled"
-                    id="name"
-                    name="name"
-                    label="Nombre *"
-                    value={formik.values.questionnaireItem.name}
-                    onChange={formik.handleChange}
-                    error={
-                      formik.touched.questionnaireItem?.name &&
-                      Boolean(formik.errors.questionnaireItem?.name)
-                    }
-                    helperText={
-                      formik.touched.questionnaireItem?.name &&
-                      formik.errors.questionnaireItem?.name
-                    }
-                  />
+                  <FormControl>
+                    <TextField
+                      variant="outlined"
+                      id="name"
+                      name="name"
+                      label="Nombre del cuestionario*"
+                      value={formik.values.name}
+                      onChange={formik.handleChange}
+                      error={formik.touched.name && Boolean(formik.errors.name)}
+                      helperText={formik.touched.name && formik.errors.name}
+                      className={globalClasses.textField}
+                    />
+                  </FormControl>
+
                   <FieldArray
                     name="questions"
                     render={(arrayHelpers) => {
-                      const len =
-                        formik.values.questionnaireItem.questions.length;
+                      const len = formik.values.questions.length;
                       return (
                         <div>
-                          {formik.values.questionnaireItem.questions.map(
-                            (question, index) => {
-                              const questionIndex = `questions[${index}]`;
-                              const touchedQuestion = getIn(
-                                formik.touched,
-                                questionIndex
-                              );
-                              const errorQuestion = getIn(
-                                formik.errors,
-                                questionIndex
-                              );
+                          {formik.values.questions.map((question, index) => {
+                            const questionIndex = `questions[${index}]`;
+                            const touchedQuestion = getIn(
+                              formik.touched,
+                              questionIndex
+                            );
+                            const errorQuestion = getIn(
+                              formik.errors,
+                              questionIndex
+                            );
 
-                              const disabledArrowDownward = index === len - 1;
-                              const disabledArrowUpward = index === 0;
+                            const disabledArrowDownward = index === len - 1;
+                            const disabledArrowUpward = index === 0;
 
-                              return (
-                                <div key={index}>
-                                  <Grid container spacing={1}>
-                                    <Grid item xs={12} md={12} lg={8}>
-                                      <TextField
-                                        fullWidth
-                                        variant="filled"
-                                        name={questionIndex}
-                                        label="Pregunta"
-                                        value={question}
-                                        onChange={formik.handleChange}
-                                        error={Boolean(
-                                          touchedQuestion && errorQuestion
-                                        )}
-                                        helperText={
-                                          touchedQuestion && errorQuestion
-                                            ? errorQuestion
-                                            : ""
-                                        }
-                                      />
-                                    </Grid>
-                                    <Grid item xs={12} md={12} lg={4}>
-                                      <IconButton
-                                        disabled={disabledArrowDownward}
-                                        onClick={() => {
-                                          if (!disabledArrowDownward) {
-                                            arrayHelpers.swap(index, index + 1);
-                                          }
-                                        }}
-                                      >
-                                        <ArrowDownward />
-                                      </IconButton>
-                                      <IconButton
-                                        disabled={disabledArrowUpward}
-                                        onClick={() => {
-                                          if (!disabledArrowUpward) {
-                                            arrayHelpers.swap(index, index - 1);
-                                          }
-                                        }}
-                                      >
-                                        <ArrowUpward />
-                                      </IconButton>
-                                      <IconButton
-                                        onClick={() =>
-                                          arrayHelpers.remove(index)
-                                        }
-                                      >
-                                        <Delete />
-                                      </IconButton>
-                                    </Grid>
+                            return (
+                              <div key={index}>
+                                <Grid container spacing={1}>
+                                  <Grid item xs={12} md={12} lg={8}>
+                                    <TextField
+                                      fullWidth
+                                      variant="filled"
+                                      name={questionIndex}
+                                      label="Pregunta"
+                                      value={question}
+                                      onChange={formik.handleChange}
+                                      error={Boolean(
+                                        touchedQuestion && errorQuestion
+                                      )}
+                                      helperText={
+                                        touchedQuestion && errorQuestion
+                                          ? errorQuestion
+                                          : ""
+                                      }
+                                    />
                                   </Grid>
-                                </div>
-                              );
-                            }
-                          )}
+                                  <Grid item xs={12} md={12} lg={4}>
+                                    <IconButton
+                                      disabled={disabledArrowDownward}
+                                      onClick={() => {
+                                        if (!disabledArrowDownward) {
+                                          arrayHelpers.swap(index, index + 1);
+                                        }
+                                      }}
+                                    >
+                                      <ArrowDownward />
+                                    </IconButton>
+                                    <IconButton
+                                      disabled={disabledArrowUpward}
+                                      onClick={() => {
+                                        if (!disabledArrowUpward) {
+                                          arrayHelpers.swap(index, index - 1);
+                                        }
+                                      }}
+                                    >
+                                      <ArrowUpward />
+                                    </IconButton>
+                                    <IconButton
+                                      onClick={() => arrayHelpers.remove(index)}
+                                    >
+                                      <Delete />
+                                    </IconButton>
+                                  </Grid>
+                                </Grid>
+                              </div>
+                            );
+                          })}
                           <FormControl className={globalClasses.spacing}>
                             <Button
                               variant="contained"
@@ -225,7 +228,7 @@ export default function QuestionnaireForm({ edit }: Props) {
                 variant="outlined"
                 size="large"
                 component={RouterLink}
-                to={`/questionnaire`}
+                to={`/questionnaires`}
                 disabled={formik.isSubmitting}
               >
                 Cancelar

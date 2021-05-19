@@ -10,17 +10,13 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import IconButton from "@material-ui/core/IconButton";
-import Link from "@material-ui/core/Link";
 import List from "@material-ui/core/List";
 
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import AddIcon from "@material-ui/icons/Add";
-import ExpandLessIcon from "@material-ui/icons/ExpandLess";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import AlertError from "./AlertError";
 import Fab from "@material-ui/core/Fab";
-import Collapse from "@material-ui/core/Collapse";
 import Divider from "@material-ui/core/Divider";
 
 export default function Questionnaires() {
@@ -55,7 +51,7 @@ export default function Questionnaires() {
       <ListItem dense>
         <ListItemText
           primary={
-            <Typography component="span" variant="body1" color="textPrimary">
+            <Typography component="span" variant="h6" color="secondary">
               {questionnaire.name}
               <IconButton
                 component={RouterLink}
@@ -63,6 +59,7 @@ export default function Questionnaires() {
               >
                 <EditIcon />
               </IconButton>
+
               <IconButton>
                 <DeleteIcon />
               </IconButton>
@@ -77,7 +74,7 @@ export default function Questionnaires() {
                       <Typography
                         component="span"
                         variant="body1"
-                        color="textSecondary"
+                        color="textPrimary"
                       >
                         <strong>{index + 1}. </strong>
                         {question}
@@ -99,6 +96,7 @@ export default function Questionnaires() {
       <Typography component="h2" variant="h6" color="primary">
         Cuestionarios
         <Fab
+          className={globalClasses.spacing}
           color="primary"
           aria-label="add"
           size="medium"
