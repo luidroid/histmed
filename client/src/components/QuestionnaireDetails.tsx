@@ -69,15 +69,6 @@ export default function QuestionnaireDetails() {
     <Paper className={globalClasses.paper}>
       <Typography component="h2" variant="h6" color="primary">
         Vista previa
-        <IconButton
-          component={RouterLink}
-          to={`/questionnaires/${questionnaire._id}/edit`}
-        >
-          <EditIcon />
-        </IconButton>
-        <IconButton>
-          <DeleteIcon />
-        </IconButton>
       </Typography>
       {error && (
         <AlertError
@@ -91,7 +82,18 @@ export default function QuestionnaireDetails() {
         <List
           subheader={
             <ListSubheader component="div" id="nested-list-subheader">
-              {questionnaire.name}
+              <Typography component="h1" variant="subtitle1" color="secondary">
+                {questionnaire.name}
+                <IconButton
+                  component={RouterLink}
+                  to={`/questionnaires/${questionnaire._id}/edit`}
+                >
+                  <EditIcon />
+                </IconButton>
+                <IconButton>
+                  <DeleteIcon />
+                </IconButton>
+              </Typography>
             </ListSubheader>
           }
         >
