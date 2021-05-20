@@ -17,7 +17,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import AddIcon from "@material-ui/icons/Add";
 import AlertError from "./AlertError";
 import Fab from "@material-ui/core/Fab";
-import Divider from "@material-ui/core/Divider";
+import { Link } from "@material-ui/core";
 
 export default function Questionnaires() {
   const globalClasses = useGlobalStyles();
@@ -47,48 +47,53 @@ export default function Questionnaires() {
   }, []);
 
   const questionnaireList = questionnaires?.map((questionnaire, index) => (
-    <div key={index}>
-      <ListItem dense>
-        <ListItemText
-          primary={
-            <Typography component="span" variant="h6" color="secondary">
+    <ListItem dense key={index}>
+      <ListItemText
+        primary={
+          <div>
+            <Link
+              variant="subtitle1"
+              color="secondary"
+              component={RouterLink}
+              to={`/questionnaires/${questionnaire._id}`}
+            >
               {questionnaire.name}
-              <IconButton
-                component={RouterLink}
-                to={`/questionnaires/${questionnaire._id}/edit`}
-              >
-                <EditIcon />
-              </IconButton>
+            </Link>
 
-              <IconButton>
-                <DeleteIcon />
-              </IconButton>
-            </Typography>
-          }
-          secondary={
-            <List>
-              {questionnaire.questions.map((question, index) => (
-                <ListItem dense>
-                  <ListItemText
-                    primary={
-                      <Typography
-                        component="span"
-                        variant="body1"
-                        color="textPrimary"
-                      >
-                        <strong>{index + 1}. </strong>
-                        {question}
-                      </Typography>
-                    }
-                  />
-                </ListItem>
-              ))}
-            </List>
-          }
-        />
-      </ListItem>
-      <Divider></Divider>
-    </div>
+            <IconButton
+              component={RouterLink}
+              to={`/questionnaires/${questionnaire._id}/edit`}
+            >
+              <EditIcon />
+            </IconButton>
+
+            <IconButton>
+              <DeleteIcon />
+            </IconButton>
+          </div>
+        }
+        secondary={
+          <List>
+            {questionnaire.questions.map((question, index) => (
+              <ListItem dense>
+                <ListItemText
+                  primary={
+                    <Typography
+                      component="span"
+                      variant="body1"
+                      color="textPrimary"
+                    >
+                      <strong>{index + 1}. </strong>
+                      {question}
+                    </Typography>
+                  }
+                />
+              </ListItem>
+            ))}
+          </List>
+        }
+      />
+    </ListItem>
   ));
 
   return (

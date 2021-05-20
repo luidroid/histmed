@@ -34,9 +34,9 @@ export default function QuestionnaireForm({ edit }: Props) {
   const globalClasses = useGlobalStyles();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const history = useHistory();
   const { id } = useParams<{ id: string }>();
   const questionnaireUrl = QUESTIONNAIRES_URL.concat(`/${id}`);
-  const history = useHistory();
   const [questionnaire, setQuestionnaire] = useState(initQuestionnaire);
 
   useEffect(() => {

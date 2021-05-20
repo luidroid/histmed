@@ -19,6 +19,7 @@ import _AppointmentCreateForm from "./pages/_AppointmentCreateForm";
 import _AppointmentEditForm from "./pages/_AppointmentEditForm";
 import _Appointments from "./pages/_Appointments";
 import _AppointmentDetails from "./pages/_AppointmentDetails";
+import _QuestionnaireDetails from "./pages/_QuestionnaireDetails";
 //import './App.css';
 
 function App() {
@@ -56,6 +57,10 @@ function App() {
             <Route
               path="/questionnaires/:id/edit"
               component={_QuestionnaireEditForm}
+            />
+            <Route
+              path="/questionnaires/:id"
+              component={_QuestionnaireDetails}
             />
             <Route path="/questionnaires" component={_Questionnaires} />
             <Route path="*" component={_PageNotFound} />
