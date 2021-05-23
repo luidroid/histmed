@@ -4,6 +4,9 @@ import axios from "../api/apiConfig";
 import { useGlobalStyles } from "../styles/globalStyles";
 import Loading from "./Loading";
 import CustomAlertError from "./CustomAlertError";
+import { initCustomError, initQuestionnaire } from "../api/patientService";
+import { QUESTIONNAIRES_URL } from "../constants/constants";
+import { CustomError } from "../models/patient";
 
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
@@ -18,12 +21,20 @@ import Typography from "@material-ui/core/Typography";
 import { Formik, Form, FieldArray, getIn } from "formik";
 import * as yup from "yup";
 import { ArrowDownward, ArrowUpward, Delete } from "@material-ui/icons";
-import { initQuestionnaire } from "../api/patientService";
-import { QUESTIONNAIRES_URL } from "../constants/constants";
 
 const validationSchema = yup.object({
-  name: yup.string().required("Nombre es requerido"),
-  questions: yup.array().of(yup.string().required("Pregunta es requerida")),
+  name: yup
+    .string()
+    .required("Nombre es requerido")
+    .max(100, "Máx. 100 caracteres"),
+  questions: yup
+    .array()
+    .of(
+      yup
+        .string()
+        .required("Pregunta es requerida")
+        .max(250, "Máx. 250 caracteres")
+    ),
 });
 
 type Props = {
