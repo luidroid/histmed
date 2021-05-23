@@ -21,7 +21,7 @@ import AlertError from "./AlertError";
 export default function Questions() {
   const globalClasses = useGlobalStyles();
   const [loading, setLoading] = useState(true);
-  const [questionnarie, setQuestionnarie] = useState<Questionnaire>();
+  const [questionnaire, setQuestionnaire] = useState<Questionnaire>();
   const [error, setError] = useState(false);
   const [customError, setCustomError] = useState<CustomError>({
     status: "",
@@ -40,7 +40,7 @@ export default function Questions() {
       try {
         const { data } = await axios.get(`/questionnaire`);
         console.log("🚀 ~ file: Questions.tsx ~ line 42 ~ data", data);
-        setQuestionnarie(data[0]);
+        setQuestionnaire(data[0]);
       } catch (error) {
         setCustomError(error);
         setError(true);
@@ -54,15 +54,15 @@ export default function Questions() {
     let content = mailSalutation;
 
     let result = "";
-    questionnarie?.questions.map((q, index) => {
+    questionnaire?.questions.map((q, index) => {
       return (result = result.concat(`${index + 1}. ${q}%0A`));
     });
     content = content.concat(result).concat(mailSignature);
     setMailContent(content);
     setLoading(false);
-  }, [questionnarie]);
+  }, [questionnaire]);
 
-  const questionList = questionnarie?.questions.map((question, index) => (
+  const questionList = questionnaire?.questions.map((question, index) => (
     <ListItem dense key={index}>
       <ListItemText
         primary={
@@ -80,7 +80,7 @@ export default function Questions() {
         Cuestionario
         <IconButton
           component={RouterLink}
-          to={`/questionnaire/${questionnarie?._id}/edit`}
+          to={`/questionnaire/${questionnaire?._id}/edit`}
         >
           <EditIcon />
         </IconButton>

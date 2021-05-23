@@ -42,8 +42,9 @@ export default function Questionnaires() {
 
   const [loading, setLoading] = useState(true);
   const [questionnaires, setQuestionnaires] = useState<Questionnaire[]>([]);
-  const [questionnaire, setQuestionnaire] =
-    useState<Questionnaire>(initQuestionnaire);
+  const [questionnaire, setQuestionnaire] = useState<Questionnaire>(
+    initQuestionnaire
+  );
   const [error, setError] = useState(false);
   const [customError, setCustomError] = useState<CustomError>({
     status: "",
@@ -151,6 +152,33 @@ export default function Questionnaires() {
     );
   }
 
+  const deleteDialog = (
+    <Dialog
+      open={open}
+      onClose={handleClose}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+    >
+      <DialogTitle id="alert-dialog-title">
+        {"Desea eliminar esta consulta?"}
+      </DialogTitle>
+      <DialogContent>
+        <DialogContentText id="alert-dialog-description">
+          La consulta <strong>"{questionnaire.name}"</strong> será eliminada
+          definitivamente del sistema.
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose} color="primary">
+          Cancelar
+        </Button>
+        <Button onClick={handleDelete} color="primary" autoFocus>
+          Eliminar
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
+
   return (
     <Paper className={globalClasses.paper}>
       <Typography component="h2" variant="h6" color="primary">
@@ -173,29 +201,7 @@ export default function Questionnaires() {
         ></AlertError>
       )}
       {loading ? <Loading></Loading> : <List>{questionnaireList}</List>}
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          {"Desea eliminar esta consulta?"}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            La consulta será definitivamente del sistema.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Cancelar
-          </Button>
-          <Button onClick={handleDelete} color="primary" autoFocus>
-            Eliminar
-          </Button>
-        </DialogActions>
-      </Dialog>
+      {deleteDialog}
     </Paper>
   );
 }

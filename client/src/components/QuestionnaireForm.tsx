@@ -20,7 +20,6 @@ import * as yup from "yup";
 import { ArrowDownward, ArrowUpward, Delete } from "@material-ui/icons";
 import { initQuestionnaire } from "../api/patientService";
 import { QUESTIONNAIRES_URL } from "../constants/constants";
-import { FormHelperText, FormLabel } from "@material-ui/core";
 
 const validationSchema = yup.object({
   name: yup.string().required("Nombre es requerido"),

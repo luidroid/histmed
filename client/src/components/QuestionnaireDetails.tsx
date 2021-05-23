@@ -16,9 +16,9 @@ import List from "@material-ui/core/List";
 
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
-import AddIcon from "@material-ui/icons/Add";
+import MailIcon from "@material-ui/icons/Mail";
+import PrintIcon from "@material-ui/icons/Print";
 import AlertError from "./AlertError";
-import Fab from "@material-ui/core/Fab";
 import { Link } from "@material-ui/core";
 import { initQuestionnaire } from "../api/patientService";
 
@@ -33,15 +33,21 @@ export default function QuestionnaireDetails() {
   const globalClasses = useGlobalStyles();
   const history = useHistory();
   const { id } = useParams<{ id: string }>();
-  const questionnarieUrl = QUESTIONNAIRES_URL.concat(`/${id}`);
+  const questionnaireUrl = QUESTIONNAIRES_URL.concat(`/${id}`);
   const [loading, setLoading] = useState(true);
-  const [questionnaire, setQuestionnaire] =
-    useState<Questionnaire>(initQuestionnaire);
+  const [questionnaire, setQuestionnaire] = useState<Questionnaire>(
+    initQuestionnaire
+  );
   const [error, setError] = useState(false);
   const [customError, setCustomError] = useState<CustomError>({
     status: "",
     message: "",
   });
+  const [mailContent, setMailContent] = useState("");
+  const subject = "Cuestionario";
+  const mailSalutation = "Estimado(a)%20,%0A%0A";
+  const mailSignature =
+    "%0A%0ASaludos cordiales,%0A%0ADr.%20Andrés%20Amoroso%0AEspecialista%20en%20Cirugía%20Plástica,%20Estética%20y%20Reconstructiva%0Awww.doctoramoroso.com";
 
   const [open, setOpen] = React.useState(false);
 
@@ -78,7 +84,7 @@ export default function QuestionnaireDetails() {
       setLoading(true);
       setError(false);
       try {
-        const { data } = await axios.get(questionnarieUrl);
+        const { data } = await axios.get(questionnaireUrl);
         setQuestionnaire(data);
       } catch (error) {
         setCustomError(error);
@@ -87,7 +93,7 @@ export default function QuestionnaireDetails() {
       }
       setLoading(false);
     })();
-  }, []);
+  }, [questionnaireUrl]);
 
   const questions = questionnaire.questions.map((question, index) => (
     <ListItem dense key={index}>
@@ -102,38 +108,51 @@ export default function QuestionnaireDetails() {
     </ListItem>
   ));
 
-  function deleteDialog() {
-    return (
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          {"Desea eliminar esta consulta?"}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            La consulta será eliminada definitivamente del sistema.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Cancelar
-          </Button>
-          <Button onClick={handleDelete} color="primary" autoFocus>
-            Eliminar
-          </Button>
-        </DialogActions>
-      </Dialog>
-    );
-  }
+  useEffect(() => {
+    let content = mailSalutation;
+
+    let result = "";
+    questionnaire.questions.map((q, index) => {
+      return (result = result.concat(`${index + 1}. ${q}%0A`));
+    });
+    content = content.concat(result).concat(mailSignature);
+    setMailContent(content);
+  }, [questionnaire]);
+
+  const deleteDialog = (
+    <Dialog
+      open={open}
+      onClose={handleClose}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+    >
+      <DialogTitle id="alert-dialog-title">
+        {"Desea eliminar esta consulta?"}
+      </DialogTitle>
+      <DialogContent>
+        <DialogContentText id="alert-dialog-description">
+          La consulta <strong>"{questionnaire.name}"</strong> será eliminada
+          definitivamente del sistema.
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose} color="primary">
+          Cancelar
+        </Button>
+        <Button onClick={handleDelete} color="primary" autoFocus>
+          Eliminar
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
 
   return (
     <Paper className={globalClasses.paper}>
       <Typography component="h2" variant="h6" color="primary">
         Vista previa
+        <IconButton onClick={() => window.print()}>
+          <PrintIcon />
+        </IconButton>
       </Typography>
       {error && (
         <AlertError
@@ -155,10 +174,14 @@ export default function QuestionnaireDetails() {
                 >
                   <EditIcon />
                 </IconButton>
-
                 <IconButton onClick={handleClickOpen}>
                   <DeleteIcon />
                 </IconButton>
+                <Link href={`mailto:?subject=${subject}&body=${mailContent}`}>
+                  <IconButton>
+                    <MailIcon />
+                  </IconButton>
+                </Link>
               </Typography>
             </ListSubheader>
           }
@@ -166,7 +189,7 @@ export default function QuestionnaireDetails() {
           {questions}
         </List>
       )}
-      {deleteDialog()}
+      {deleteDialog}
     </Paper>
   );
 }
