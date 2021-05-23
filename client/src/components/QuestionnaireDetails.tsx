@@ -5,6 +5,7 @@ import { useGlobalStyles } from "../styles/globalStyles";
 import { CustomError, Questionnaire } from "../models/patient";
 import Loading from "./Loading";
 import { QUESTIONNAIRES_URL } from "../constants/constants";
+import { initCustomError, initQuestionnaire } from "../api/patientService";
 
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -18,9 +19,8 @@ import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import MailIcon from "@material-ui/icons/Mail";
 import PrintIcon from "@material-ui/icons/Print";
-import AlertError from "./AlertError";
-import { Link } from "@material-ui/core";
-import { initQuestionnaire } from "../api/patientService";
+import CustomAlertError from "./CustomAlertError";
+import Link from "@material-ui/core/Link";
 
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
@@ -39,10 +39,7 @@ export default function QuestionnaireDetails() {
     initQuestionnaire
   );
   const [error, setError] = useState(false);
-  const [customError, setCustomError] = useState<CustomError>({
-    status: "",
-    message: "",
-  });
+  const [customError, setCustomError] = useState<CustomError>(initCustomError);
   const [mailContent, setMailContent] = useState("");
   const subject = "Cuestionario";
   const mailSalutation = "Estimado(a)%20,%0A%0A";
@@ -155,10 +152,10 @@ export default function QuestionnaireDetails() {
         </IconButton>
       </Typography>
       {error && (
-        <AlertError
+        <CustomAlertError
           status={customError.status}
           message={customError.message}
-        ></AlertError>
+        ></CustomAlertError>
       )}
       {loading ? (
         <Loading></Loading>

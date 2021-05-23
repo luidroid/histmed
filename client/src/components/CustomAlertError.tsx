@@ -5,7 +5,7 @@ type Props = {
   status: string;
   message: string;
 };
-export default function AlertError({ status, message }: Props) {
+export default function CustomAlertError({ status, message }: Props) {
   return (
     <Alert severity="error">
       <AlertTitle>Error</AlertTitle>

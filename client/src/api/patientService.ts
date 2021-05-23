@@ -1,3 +1,4 @@
+import { CustomError } from "./../models/patient";
 import {
   Patient,
   Gender,
@@ -46,4 +47,9 @@ const initQuestionnaire: Questionnaire = {
   questions: [""],
 };
 
-export { initPatient, initAppointment, initQuestionnaire };
+const initCustomError: CustomError = {
+  status: "",
+  message: "",
+};
+
+export { initPatient, initAppointment, initQuestionnaire, initCustomError };

@@ -3,7 +3,7 @@ import { useParams, useHistory, Link as RouterLink } from "react-router-dom";
 import axios from "../api/apiConfig";
 import { useGlobalStyles } from "../styles/globalStyles";
 import Loading from "./Loading";
-import AlertError from "./AlertError";
+import CustomAlertError from "./CustomAlertError";
 
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
@@ -33,6 +33,7 @@ export default function QuestionnaireForm({ edit }: Props) {
   const globalClasses = useGlobalStyles();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [customError, setCustomError] = useState<CustomError>(initCustomError);
   const history = useHistory();
   const { id } = useParams<{ id: string }>();
   const questionnaireUrl = QUESTIONNAIRES_URL.concat(`/${id}`);
@@ -47,6 +48,7 @@ export default function QuestionnaireForm({ edit }: Props) {
           setQuestionnaire(data);
           setLoading(false);
         } catch (error) {
+          setCustomError(error);
           setError(true);
           setLoading(false);
           console.log(error);
@@ -62,19 +64,25 @@ export default function QuestionnaireForm({ edit }: Props) {
     if (edit) {
       url = questionnaireUrl;
       (async () => {
+        setError(false);
         try {
           await axios.put(url, questionnaire);
           history.push(QUESTIONNAIRES_URL);
         } catch (error) {
+          setCustomError(error);
+          setError(true);
           console.log(error);
         }
       })();
     } else {
       (async () => {
+        setError(false);
         try {
           await axios.post(url, questionnaire);
           history.push(QUESTIONNAIRES_URL);
         } catch (error) {
+          setCustomError(error);
+          setError(true);
           console.log(error);
         }
       })();
@@ -99,10 +107,10 @@ export default function QuestionnaireForm({ edit }: Props) {
                 {edit ? "Editar" : "Nuevo"} cuestionario
               </Typography>
               {error && (
-                <AlertError
-                  status="No existe conexión"
-                  message="Reinicie la base de datos"
-                ></AlertError>
+                <CustomAlertError
+                  status={customError.status}
+                  message={customError.message}
+                ></CustomAlertError>
               )}
               {loading ? (
                 <Loading></Loading>

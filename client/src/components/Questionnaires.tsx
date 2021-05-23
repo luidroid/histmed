@@ -4,6 +4,7 @@ import axios from "../api/apiConfig";
 import { useGlobalStyles } from "../styles/globalStyles";
 import { CustomError, Questionnaire } from "../models/patient";
 import Loading from "./Loading";
+import { initCustomError, initQuestionnaire } from "../api/patientService";
 
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -15,7 +16,7 @@ import List from "@material-ui/core/List";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import AddIcon from "@material-ui/icons/Add";
-import AlertError from "./AlertError";
+import CustomAlertError from "./CustomAlertError";
 import Fab from "@material-ui/core/Fab";
 import { Box, Link } from "@material-ui/core";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
@@ -26,7 +27,6 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import { initQuestionnaire } from "../api/patientService";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -46,10 +46,7 @@ export default function Questionnaires() {
     initQuestionnaire
   );
   const [error, setError] = useState(false);
-  const [customError, setCustomError] = useState<CustomError>({
-    status: "",
-    message: "",
-  });
+  const [customError, setCustomError] = useState<CustomError>(initCustomError);
 
   const [open, setOpen] = React.useState(false);
 
@@ -195,10 +192,10 @@ export default function Questionnaires() {
         </Fab>
       </Typography>
       {error && (
-        <AlertError
+        <CustomAlertError
           status={customError.status}
           message={customError.message}
-        ></AlertError>
+        ></CustomAlertError>
       )}
       {loading ? <Loading></Loading> : <List>{questionnaireList}</List>}
       {deleteDialog}
