@@ -43,7 +43,7 @@ const initAppointment: Appointment = {
 
 const initQuestionnaire: Questionnaire = {
   name: "",
-  questions: [],
+  questions: [""],
 };
 
 export { initPatient, initAppointment, initQuestionnaire };

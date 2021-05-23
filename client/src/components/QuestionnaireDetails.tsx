@@ -22,6 +22,13 @@ import Fab from "@material-ui/core/Fab";
 import { Link } from "@material-ui/core";
 import { initQuestionnaire } from "../api/patientService";
 
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+
 export default function QuestionnaireDetails() {
   const globalClasses = useGlobalStyles();
   const history = useHistory();
@@ -35,6 +42,36 @@ export default function QuestionnaireDetails() {
     status: "",
     message: "",
   });
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleDelete = () => {
+    handleDeleteQuestionnaire();
+    setOpen(false);
+  };
+
+  /** Delete questionnaire */
+  const handleDeleteQuestionnaire = () => {
+    (async () => {
+      setError(false);
+      try {
+        await axios.delete(`${QUESTIONNAIRES_URL}/${questionnaire._id}`);
+        history.push(QUESTIONNAIRES_URL);
+      } catch (error) {
+        setCustomError(error);
+        setError(true);
+        console.log(error);
+      }
+    })();
+  };
 
   useEffect(() => {
     (async () => {
@@ -65,6 +102,34 @@ export default function QuestionnaireDetails() {
     </ListItem>
   ));
 
+  function deleteDialog() {
+    return (
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Desea eliminar esta consulta?"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            La consulta será eliminada definitivamente del sistema.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Cancelar
+          </Button>
+          <Button onClick={handleDelete} color="primary" autoFocus>
+            Eliminar
+          </Button>
+        </DialogActions>
+      </Dialog>
+    );
+  }
+
   return (
     <Paper className={globalClasses.paper}>
       <Typography component="h2" variant="h6" color="primary">
@@ -86,11 +151,12 @@ export default function QuestionnaireDetails() {
                 {questionnaire.name}
                 <IconButton
                   component={RouterLink}
-                  to={`/questionnaires/${questionnaire._id}/edit`}
+                  to={`${QUESTIONNAIRES_URL}/${questionnaire._id}/edit`}
                 >
                   <EditIcon />
                 </IconButton>
-                <IconButton>
+
+                <IconButton onClick={handleClickOpen}>
                   <DeleteIcon />
                 </IconButton>
               </Typography>
@@ -100,6 +166,7 @@ export default function QuestionnaireDetails() {
           {questions}
         </List>
       )}
+      {deleteDialog()}
     </Paper>
   );
 }

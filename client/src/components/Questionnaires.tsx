@@ -20,21 +20,18 @@ import Fab from "@material-ui/core/Fab";
 import { Box, Link } from "@material-ui/core";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 
+import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import Button from "@material-ui/core/Button";
 import { initQuestionnaire } from "../api/patientService";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     fab: {
-      margin: " 0 16px",
-    },
-    inline: {
-      display: "inline",
+      margin: " 0 3ch",
     },
   })
 );
@@ -62,18 +59,17 @@ export default function Questionnaires() {
 
   const handleClose = () => {
     setOpen(false);
-    setQuestionnaire(initQuestionnaire);
   };
 
   const handleDelete = () => {
     handleDeleteQuestionnaire();
-    setQuestionnaire(initQuestionnaire);
     setOpen(false);
   };
 
   /** Delete questionnaire */
   const handleDeleteQuestionnaire = () => {
     (async () => {
+      setError(false);
       try {
         await axios.delete(`/questionnaires/${questionnaire._id}`);
         const results = questionnaires.filter(
@@ -81,6 +77,8 @@ export default function Questionnaires() {
         );
         setQuestionnaires(results);
       } catch (error) {
+        setCustomError(error);
+        setError(true);
         console.log(error);
       }
     })();
@@ -132,7 +130,7 @@ export default function Questionnaires() {
 
   function questionList(questionnaire: Questionnaire) {
     return (
-      <List className={classes.inline}>
+      <List>
         {questionnaire.questions.map((question, index) => (
           <ListItem dense key={index}>
             <ListItemText
@@ -154,39 +152,39 @@ export default function Questionnaires() {
   }
 
   return (
-    <div>
-      <Paper className={globalClasses.paper}>
-        <Typography component="h2" variant="h6" color="primary">
-          Cuestionarios
-          <Fab
-            className={classes.fab}
-            color="primary"
-            aria-label="add"
-            size="medium"
-            component={RouterLink}
-            to={`/questionnaires/new`}
-          >
-            <AddIcon />
-          </Fab>
-        </Typography>
-        {error && (
-          <AlertError
-            status={customError.status}
-            message={customError.message}
-          ></AlertError>
-        )}
-        {loading ? <Loading></Loading> : <List>{questionnaireList}</List>}
-      </Paper>
+    <Paper className={globalClasses.paper}>
+      <Typography component="h2" variant="h6" color="primary">
+        Cuestionarios
+        <Fab
+          className={classes.fab}
+          color="primary"
+          aria-label="add"
+          size="medium"
+          component={RouterLink}
+          to={`/questionnaires/new`}
+        >
+          <AddIcon />
+        </Fab>
+      </Typography>
+      {error && (
+        <AlertError
+          status={customError.status}
+          message={customError.message}
+        ></AlertError>
+      )}
+      {loading ? <Loading></Loading> : <List>{questionnaireList}</List>}
       <Dialog
         open={open}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">Eliminar cuestionario</DialogTitle>
+        <DialogTitle id="alert-dialog-title">
+          {"Desea eliminar esta consulta?"}
+        </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            ` Desea eliminar el cuestionario {questionnaire}? `{" "}
+            La consulta será definitivamente del sistema.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -194,10 +192,10 @@ export default function Questionnaires() {
             Cancelar
           </Button>
           <Button onClick={handleDelete} color="primary" autoFocus>
-            OK
+            Eliminar
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </Paper>
   );
 }
