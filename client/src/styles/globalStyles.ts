@@ -27,4 +27,8 @@ export const useGlobalStyles = makeStyles((theme) => ({
   textField: {
     width: "50ch",
   },
+  fab: {
+    margin: " 0 3ch",
+    float: "right",
+  },
 }));

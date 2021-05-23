@@ -1,3 +1,4 @@
+const PAITIENTS_URL = "/patients";
 const APPOINTMENTS_URL = "/appointments";
 const QUESTIONNAIRES_URL = "/questionnaires";
 const DATE_FORMAT = "DD/MMM/YYYY";

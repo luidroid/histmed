@@ -5,6 +5,7 @@ import { useGlobalStyles } from "../styles/globalStyles";
 import { CustomError, Questionnaire } from "../models/patient";
 import Loading from "./Loading";
 import { initCustomError, initQuestionnaire } from "../api/patientService";
+import CustomAlertError from "./CustomAlertError";
 
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -16,10 +17,8 @@ import List from "@material-ui/core/List";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import AddIcon from "@material-ui/icons/Add";
-import CustomAlertError from "./CustomAlertError";
 import Fab from "@material-ui/core/Fab";
 import { Box, Link } from "@material-ui/core";
-import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
@@ -28,17 +27,8 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    fab: {
-      margin: " 0 3ch",
-    },
-  })
-);
-
 export default function Questionnaires() {
   const globalClasses = useGlobalStyles();
-  const classes = useStyles();
 
   const [loading, setLoading] = useState(true);
   const [questionnaires, setQuestionnaires] = useState<Questionnaire[]>([]);
@@ -181,7 +171,7 @@ export default function Questionnaires() {
       <Typography component="h2" variant="h6" color="primary">
         Cuestionarios
         <Fab
-          className={classes.fab}
+          className={globalClasses.fab}
           color="primary"
           aria-label="add"
           size="medium"

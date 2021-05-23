@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from "react";
+import { Link as RouterLink } from "react-router-dom";
+
 import axios from "../api/apiConfig";
+import { useGlobalStyles } from "../styles/globalStyles";
 
 import Grid from "@material-ui/core/Grid";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import AddIcon from "@material-ui/icons/Add";
+import Fab from "@material-ui/core/Fab";
 
 import Paper from "@material-ui/core/Paper";
 import InputBase from "@material-ui/core/InputBase";
@@ -47,6 +53,8 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export default function Patients() {
+  const globalClasses = useGlobalStyles();
+
   const classes = useStyles();
   const [patients, setPatients] = useState<Patient[]>([]);
   const [filteredPatients, setFilteredPatients] = useState<Patient[]>([]);
@@ -201,20 +209,43 @@ export default function Patients() {
 
   return (
     <React.Fragment>
-      <Grid item xs={12} md={12} lg={12}>
+      <Typography component="h2" variant="h6" color="primary">
+        Pacientes
+        <Fab
+          className={globalClasses.fab}
+          color="primary"
+          aria-label="add"
+          size="medium"
+          component={RouterLink}
+          to={`/patients/new`}
+        >
+          <AddIcon />
+        </Fab>
+      </Typography>
+
+      <Grid container direction="row" spacing={3}>
+        <Grid item xs={12} md={12} lg={2}></Grid>
+        <Grid item xs={12} md={12} lg={6}>
+          {searchComponent}
+        </Grid>
+        <Grid item xs={12} md={12} lg={2}>
+          {sortComponent}
+        </Grid>
+        <Grid item xs={12} md={12} lg={4}></Grid>
+      </Grid>
+
+      {/* <Grid item xs={12} md={12} lg={12}>
         {loading && <Loading></Loading>}
         {alertMessage}
       </Grid>
-
       <Grid item xs={12} md={6} lg={9}>
         {searchComponent}
       </Grid>
-
       <Grid item xs={12} md={6} lg={3}>
         <Grid container direction="row" justify="flex-end">
           {sortComponent}
         </Grid>
-      </Grid>
+      </Grid> */}
 
       {filteredPatients.length > 0 ? (
         filteredPatientsComponent
