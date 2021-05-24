@@ -3,6 +3,10 @@ import { Link as RouterLink } from "react-router-dom";
 
 import axios from "../api/apiConfig";
 import { useGlobalStyles } from "../styles/globalStyles";
+import { initCustomError } from "../api/patientService";
+import Loading from "./Loading";
+import { CustomError, Patient } from "../models/patient";
+import CustomAlertError from "./CustomAlertError";
 
 import Grid from "@material-ui/core/Grid";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
@@ -20,10 +24,6 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 
 import PatientCard from "./PatientCard";
-import Alert from "@material-ui/lab/Alert";
-
-import { Patient } from "../models/patient";
-import Loading from "./Loading";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -53,39 +53,34 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export default function Patients() {
-  const globalClasses = useGlobalStyles();
-
   const classes = useStyles();
+  const globalClasses = useGlobalStyles();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const [customError, setCustomError] = useState<CustomError>(initCustomError);
+  const [open, setOpen] = React.useState(false);
+
   const [patients, setPatients] = useState<Patient[]>([]);
   const [filteredPatients, setFilteredPatients] = useState<Patient[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortBy, setSortBy] = useState("nameAsc");
-  const [showNetError, setShowNetError] = useState(false);
-  const [loading, setLoading] = useState(true);
-  let alertMessage;
 
   /** Get patients */
   const getPatients = async () => {
     setLoading(true);
+    setError(false);
     try {
       const { data } = await axios.get<Patient[]>("/patients");
       setPatients(data);
+      setLoading(false);
     } catch (error) {
-      if (!error.response) {
-        setShowNetError(true);
-      } else {
-        //setShowPatientsError(true);
-        console.log(error);
-      }
+      setLoading(false);
+      setCustomError(error);
+      setError(true);
+      console.log(error);
     }
     setLoading(false);
   };
-
-  if (showNetError) {
-    alertMessage = (
-      <Alert severity="error">No se puede conectar con la base de datos!</Alert>
-    );
-  }
 
   useEffect(() => {
     getPatients();
@@ -161,7 +156,7 @@ export default function Patients() {
     })();
   };
 
-  const searchComponent = (
+  const searchBar = (
     <Paper elevation={3} component="form" className={classes.root}>
       <InputBase
         className={classes.input}
@@ -198,62 +193,71 @@ export default function Patients() {
     </FormControl>
   );
 
-  const filteredPatientsComponent = filteredPatients.map((patient) => (
-    <Grid item xs={12} md={4} lg={3} key={patient.id}>
+  const filteredPatientsComponent = filteredPatients.map((patient, index) => (
+    <Grid item xs={12} md={4} lg={3} key={index}>
       <PatientCard
+        key={patient.id}
         patient={patient}
         onPatientDelete={handlePatientDelete}
       ></PatientCard>
     </Grid>
   ));
 
+  const header = (
+    <Typography component="h2" variant="h6" color="primary">
+      Pacientes
+      <Fab
+        className={globalClasses.fab}
+        color="primary"
+        aria-label="add"
+        size="medium"
+        component={RouterLink}
+        to={`/patients/new`}
+      >
+        <AddIcon />
+      </Fab>
+    </Typography>
+  );
+
+  const actionBar = (
+    <Grid container direction="row" spacing={3}>
+      <Grid item xs={12} md={12} lg={2}></Grid>
+      <Grid item xs={12} md={12} lg={6}>
+        {searchBar}
+      </Grid>
+      <Grid item xs={12} md={12} lg={2}>
+        {sortComponent}
+      </Grid>
+      <Grid item xs={12} md={12} lg={4}></Grid>
+    </Grid>
+  );
+
   return (
-    <React.Fragment>
-      <Typography component="h2" variant="h6" color="primary">
-        Pacientes
-        <Fab
-          className={globalClasses.fab}
-          color="primary"
-          aria-label="add"
-          size="medium"
-          component={RouterLink}
-          to={`/patients/new`}
-        >
-          <AddIcon />
-        </Fab>
-      </Typography>
-
-      <Grid container direction="row" spacing={3}>
-        <Grid item xs={12} md={12} lg={2}></Grid>
-        <Grid item xs={12} md={12} lg={6}>
-          {searchComponent}
-        </Grid>
-        <Grid item xs={12} md={12} lg={2}>
-          {sortComponent}
-        </Grid>
-        <Grid item xs={12} md={12} lg={4}></Grid>
-      </Grid>
-
-      {/* <Grid item xs={12} md={12} lg={12}>
-        {loading && <Loading></Loading>}
-        {alertMessage}
-      </Grid>
-      <Grid item xs={12} md={6} lg={9}>
-        {searchComponent}
-      </Grid>
-      <Grid item xs={12} md={6} lg={3}>
-        <Grid container direction="row" justify="flex-end">
-          {sortComponent}
-        </Grid>
-      </Grid> */}
-
-      {filteredPatients.length > 0 ? (
-        filteredPatientsComponent
-      ) : (
-        <Grid item xs={12} md={4} lg={3}>
-          No existen pacientes
-        </Grid>
+    <div>
+      {header}
+      {error && (
+        <CustomAlertError
+          status={customError.status}
+          message={customError.message}
+        ></CustomAlertError>
       )}
-    </React.Fragment>
+      {loading ? (
+        <Loading></Loading>
+      ) : (
+        <React.Fragment>
+          {actionBar}
+
+          <Grid container direction="row" spacing={3}>
+            {filteredPatients.length > 0 ? (
+              filteredPatientsComponent
+            ) : (
+              <Grid item xs={12} md={4} lg={6}>
+                No existen pacientes
+              </Grid>
+            )}
+          </Grid>
+        </React.Fragment>
+      )}
+    </div>
   );
 }

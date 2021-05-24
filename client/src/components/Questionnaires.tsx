@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import axios from "../api/apiConfig";
 import { useGlobalStyles } from "../styles/globalStyles";
-import { CustomError, Questionnaire } from "../models/patient";
-import Loading from "./Loading";
 import { initCustomError, initQuestionnaire } from "../api/patientService";
+import Loading from "./Loading";
+import { CustomError, Questionnaire } from "../models/patient";
 import CustomAlertError from "./CustomAlertError";
 
 import ListItem from "@material-ui/core/ListItem";
@@ -29,16 +29,14 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 
 export default function Questionnaires() {
   const globalClasses = useGlobalStyles();
-
   const [loading, setLoading] = useState(true);
-  const [questionnaires, setQuestionnaires] = useState<Questionnaire[]>([]);
-  const [questionnaire, setQuestionnaire] = useState<Questionnaire>(
-    initQuestionnaire
-  );
   const [error, setError] = useState(false);
   const [customError, setCustomError] = useState<CustomError>(initCustomError);
-
   const [open, setOpen] = React.useState(false);
+
+  const [questionnaires, setQuestionnaires] = useState<Questionnaire[]>([]);
+  const [questionnaire, setQuestionnaire] =
+    useState<Questionnaire>(initQuestionnaire);
 
   const handleClickOpen = (q: Questionnaire) => {
     setQuestionnaire(q);
@@ -139,6 +137,22 @@ export default function Questionnaires() {
     );
   }
 
+  const header = (
+    <Typography component="h2" variant="h6" color="primary">
+      Cuestionarios
+      <Fab
+        className={globalClasses.fab}
+        color="primary"
+        aria-label="add"
+        size="medium"
+        component={RouterLink}
+        to={`/questionnaires/new`}
+      >
+        <AddIcon />
+      </Fab>
+    </Typography>
+  );
+
   const deleteDialog = (
     <Dialog
       open={open}
@@ -168,19 +182,7 @@ export default function Questionnaires() {
 
   return (
     <Paper className={globalClasses.paper}>
-      <Typography component="h2" variant="h6" color="primary">
-        Cuestionarios
-        <Fab
-          className={globalClasses.fab}
-          color="primary"
-          aria-label="add"
-          size="medium"
-          component={RouterLink}
-          to={`/questionnaires/new`}
-        >
-          <AddIcon />
-        </Fab>
-      </Typography>
+      {header}
       {error && (
         <CustomAlertError
           status={customError.status}
