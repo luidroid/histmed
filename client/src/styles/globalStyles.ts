@@ -43,4 +43,7 @@ export const useGlobalStyles = makeStyles((theme) => ({
     margin: " 0 3ch",
     float: "right",
   },
+  alignRight: {
+    float: "right",
+  },
 }));

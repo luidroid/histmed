@@ -87,8 +87,7 @@ export default function Patients() {
     const results = patients.filter((patient) => {
       const firtname = patient.firstname.toLowerCase();
       const lastname = patient.lastname.toLowerCase();
-      const reference = patient.reference?.toLowerCase();
-      const name = firtname.concat(lastname).concat(reference);
+      const name = firtname.concat(lastname);
       return name.includes(searchTerm.trim().toLowerCase());
     });
 
@@ -120,35 +119,22 @@ export default function Patients() {
   }
 
   function sortByDateAsc(p1: Patient, p2: Patient) {
-    const d1 = new Date(p1.lastModified).getTime();
-    const d2 = new Date(p2.lastModified).getTime();
+    const d1 = new Date(p1.updatedAt).getTime();
+    const d2 = new Date(p2.updatedAt).getTime();
     return d1 - d2;
   }
 
   function sortByDateDesc(p1: Patient, p2: Patient) {
-    const d1 = new Date(p1.lastModified).getTime();
-    const d2 = new Date(p2.lastModified).getTime();
+    const d1 = new Date(p1.updatedAt).getTime();
+    const d2 = new Date(p2.updatedAt).getTime();
     return (d1 - d2) * -1;
   }
-
-  /** Delete patient */
-  const handlePatientDelete = (patientId: number) => {
-    (async () => {
-      try {
-        await axios.delete(`${PATIENTS_URL}/${patientId}`);
-        const results = patients.filter((patient) => patient.id !== patientId);
-        setPatients(results);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-  };
 
   const searchBar = (
     <Paper elevation={3} component="form" className={classes.root}>
       <InputBase
         className={classes.input}
-        placeholder="Búsqueda de pacientes por nombre, apellido y referencia"
+        placeholder="Búsqueda de pacientes por nombre y apellido "
         inputProps={{ "aria-label": "búsqueda" }}
         value={searchTerm}
         onChange={handleSearch}
@@ -183,10 +169,7 @@ export default function Patients() {
 
   const filteredPatientsComponent = filteredPatients.map((patient, index) => (
     <Grid item xs={12} md={4} lg={3} key={index}>
-      <PatientCard
-        patient={patient}
-        onPatientDelete={handlePatientDelete}
-      ></PatientCard>
+      <PatientCard patient={patient}></PatientCard>
     </Grid>
   ));
 

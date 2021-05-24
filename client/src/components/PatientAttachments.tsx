@@ -17,7 +17,7 @@ import {
 import { BeachAccess, Edit, Image } from "@material-ui/icons";
 
 type Props = {
-  patientId?: number;
+  patientId?: string;
 };
 export default function PatientAttachments({ patientId }: Props) {
   const globalClasses = useGlobalStyles();

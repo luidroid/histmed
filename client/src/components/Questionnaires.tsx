@@ -26,6 +26,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import { QUESTIONNAIRES_URL } from "../constants/constants";
 
 export default function Questionnaires() {
   const globalClasses = useGlobalStyles();
@@ -57,7 +58,7 @@ export default function Questionnaires() {
     (async () => {
       setError(false);
       try {
-        await axios.delete(`/questionnaires/${questionnaire._id}`);
+        await axios.delete(`${QUESTIONNAIRES_URL}/${questionnaire._id}`);
         const results = questionnaires.filter(
           (q) => q._id !== questionnaire._id
         );
@@ -75,7 +76,7 @@ export default function Questionnaires() {
       setLoading(true);
       setError(false);
       try {
-        const { data } = await axios.get(`/questionnaires`);
+        const { data } = await axios.get(`${QUESTIONNAIRES_URL}`);
         setQuestionnaires(data);
         setLoading(false);
       } catch (error) {
@@ -94,14 +95,14 @@ export default function Questionnaires() {
           variant="subtitle1"
           color="secondary"
           component={RouterLink}
-          to={`/questionnaires/${questionnaire._id}`}
+          to={`${QUESTIONNAIRES_URL}/${questionnaire._id}`}
         >
           {questionnaire.name}
         </Link>
 
         <IconButton
           component={RouterLink}
-          to={`/questionnaires/${questionnaire._id}/edit`}
+          to={`${QUESTIONNAIRES_URL}/${questionnaire._id}/edit`}
         >
           <EditIcon />
         </IconButton>
@@ -146,7 +147,7 @@ export default function Questionnaires() {
         aria-label="add"
         size="medium"
         component={RouterLink}
-        to={`/questionnaires/new`}
+        to={`${QUESTIONNAIRES_URL}/new`}
       >
         <AddIcon />
       </Fab>

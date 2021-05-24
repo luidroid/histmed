@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link as RouterLink, useHistory } from "react-router-dom";
 import axios from "../api/apiConfig";
 import { useGlobalStyles } from "../styles/globalStyles";
+import { initCustomError } from "../api/patientService";
+import Loading from "./Loading";
+import { CustomError, Questionnaire } from "../models/patient";
+import CustomAlertError from "./CustomAlertError";
 
 import { Gender, Patient } from "../models/patient";
 import { initPatient } from "../api/patientService";
@@ -13,37 +17,43 @@ import {
   Theme,
 } from "@material-ui/core/styles";
 
-import {
-  FormControl,
-  TextField,
-  Select,
-  InputLabel,
-  Button,
-  Box,
-  Avatar,
-  Badge,
-  IconButton,
-  Grid,
-  Icon,
-  Paper,
-  Typography,
-  Divider,
-} from "@material-ui/core";
+import FormControl from "@material-ui/core/FormControl";
+import TextField from "@material-ui/core/TextField";
+import Select from "@material-ui/core/Select";
+import InputLabel from "@material-ui/core/InputLabel";
+import Button from "@material-ui/core/Button";
+import Box from "@material-ui/core/Box";
+import Avatar from "@material-ui/core/Avatar";
+import Badge from "@material-ui/core/Badge";
+import IconButton from "@material-ui/core/IconButton";
+import Grid from "@material-ui/core/Grid";
+import Icon from "@material-ui/core/Icon";
+import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
+import Divider from "@material-ui/core/Divider";
 
-import { Delete as DeleteIcon } from "@material-ui/icons";
-
+import DeleteIcon from "@material-ui/icons/Delete";
 import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
 
 import DateFnsUtils from "@date-io/date-fns"; // choose your lib
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-} from "@material-ui/pickers";
+import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
 
 import { Formik, Form, FieldArray } from "formik";
 import * as yup from "yup";
 
 import { DropzoneArea } from "material-ui-dropzone";
+import { PATIENTS_URL, QUESTIONNAIRES_URL } from "../constants/constants";
+import MenuItem from "@material-ui/core/MenuItem";
+import ListIcon from "@material-ui/icons/List";
+
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -79,11 +89,9 @@ const SmallAvatar = withStyles((theme: Theme) =>
 const validationSchema = yup.object({
   firstname: yup.string().required("Nombre es requerido"),
   lastname: yup.string().required("Apellido es requerido"),
-  secondName: yup.string(),
-  secondLastname: yup.string(),
+  birth: yup.date(),
   gender: yup.string(),
   dni: yup.string(),
-  notes: yup.string(),
   email: yup.string().email("Ingrese un correo válido"),
   phone: yup.string(),
   mobile: yup.string(),
@@ -94,6 +102,7 @@ const validationSchema = yup.object({
       description: yup.string(),
     })
   ),
+  notes: yup.string(),
   lastModified: yup.string(),
 });
 
@@ -105,38 +114,63 @@ export default function PatientForm({ edit }: Props) {
   const globalClasses = useGlobalStyles();
   const classes = useStyles();
   const history = useHistory();
+  const [open, setOpen] = React.useState(false);
 
   const { id } = useParams<{ id: string }>();
-  const urlPatient = `/patients/${id}`;
-  const urlPatients = `/patients`;
-  const gotoPage = edit ? urlPatient : urlPatients;
+  const patientUrl = `${PATIENTS_URL}/${id}`;
+  const gotoPage = edit ? patientUrl : PATIENTS_URL;
 
   const [patient, setPatient] = useState<Patient>(initPatient);
+  const [questionnaires, setQuestionnaires] = useState<Questionnaire[]>([]);
+  const [filteredQuestionnaires, setFilteredQuestionnaires] = useState<
+    Questionnaire[]
+  >([]);
+  const [selectedQuestionnaire, setSelectedQuestionnaire] = useState("none");
+
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const [customError, setCustomError] = useState<CustomError>(initCustomError);
 
   useEffect(() => {
+    setLoading(true);
     if (edit) {
       (async () => {
+        setError(false);
         try {
-          const { data } = await axios.get<Patient>(urlPatient);
+          const { data } = await axios.get<Patient>(patientUrl);
           setPatient(data);
+          setLoading(false);
         } catch (error) {
+          setLoading(false);
+          setCustomError(error);
+          setError(true);
           console.log(error);
         }
       })();
     } else {
-      (async () => {
-        try {
-          const { data } = await axios.get<Patient>(`/patient`);
-          setPatient(data);
-        } catch (error) {
-          console.log(error);
-        }
-      })();
+      setLoading(false);
     }
-  }, [id, edit, urlPatient]);
+  }, [id, edit, patientUrl]);
+
+  useEffect(() => {
+    (async () => {
+      setLoading(true);
+      setError(false);
+      try {
+        const { data } = await axios.get(`${QUESTIONNAIRES_URL}`);
+        setQuestionnaires(data);
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+        setCustomError(error);
+        setError(true);
+        console.log(error);
+      }
+    })();
+  }, []);
 
   const [selectedDate, setSelectedDate] = React.useState<Date | null>(
-    new Date("2014-08-18T21:11:54")
+    new Date()
   );
 
   const handleDateChange = (date: Date | null) => {
@@ -188,8 +222,88 @@ export default function PatientForm({ edit }: Props) {
     </Badge>
   );
 
+  const handleClickOpen = () => {
+    setSelectedQuestionnaire("");
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleAdd = () => {
+    setOpen(false);
+  };
+
+  const handleSelected = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setSelectedQuestionnaire(event.target.value as string);
+  };
+
+  useEffect(() => {
+    const results = questionnaires.filter(
+      (q) => q._id === selectedQuestionnaire
+    );
+    setFilteredQuestionnaires(results);
+  }, [selectedQuestionnaire]);
+
+  const questions = filteredQuestionnaires.map((q, index) => (
+    <div key={index}>
+      <ul>
+        {q.questions.map((question, index) => (
+          <li key={index}>{question}</li>
+        ))}
+      </ul>
+    </div>
+  ));
+
+  const questionnarieDialog = (
+    <Dialog
+      open={open}
+      onClose={handleClose}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+    >
+      <DialogTitle id="alert-dialog-title">
+        {"Elija un cuestionario"}
+      </DialogTitle>
+      <DialogContent>
+        <FormControl fullWidth>
+          <InputLabel id="demo-simple-select-label">Cuestionario</InputLabel>
+          <Select
+            defaultValue={""}
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={selectedQuestionnaire}
+            onChange={handleSelected}
+          >
+            <MenuItem value={""}>Ninguno</MenuItem>
+            {questionnaires.map((q) => (
+              <MenuItem value={q._id}>{q.name}</MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        {questions}
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose} color="primary">
+          Cancelar
+        </Button>
+        <Button onClick={handleAdd} color="primary" autoFocus>
+          Aceptar
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
+
   return (
     <React.Fragment>
+      {error && (
+        <CustomAlertError
+          status={customError.status}
+          message={customError.message}
+        ></CustomAlertError>
+      )}
+      {loading && <Loading></Loading>}
       <Formik
         initialValues={patient}
         validationSchema={validationSchema}
@@ -199,19 +313,31 @@ export default function PatientForm({ edit }: Props) {
 
           if (edit) {
             (async () => {
+              setLoading(true);
+              setError(false);
               try {
-                await axios.put<Patient>(urlPatient, values);
-                history.push(urlPatient);
+                await axios.put<Patient>(patientUrl, values);
+                setLoading(false);
+                history.push(patientUrl);
               } catch (error) {
+                setLoading(false);
+                setCustomError(error);
+                setError(true);
                 console.log(error);
               }
             })();
           } else {
             (async () => {
+              setLoading(true);
+              setError(false);
               try {
-                await axios.post<Patient>(urlPatients, values);
-                history.push(urlPatients);
+                await axios.post<Patient>(PATIENTS_URL, values);
+                setLoading(false);
+                history.push(PATIENTS_URL);
               } catch (error) {
+                setLoading(false);
+                setCustomError(error);
+                setError(true);
                 console.log(error);
               }
             })();
@@ -270,19 +396,15 @@ export default function PatientForm({ edit }: Props) {
                         />
 
                         <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                          <KeyboardDatePicker
-                            disableToolbar
+                          <DatePicker
                             inputVariant="filled"
-                            variant="inline"
-                            format="MM/dd/yyyy"
-                            margin="normal"
-                            id="date-picker-inline"
+                            disableFuture
+                            openTo="year"
+                            format="dd/MMM/yyyy"
                             label="Fecha de nacimiento"
+                            views={["year", "month", "date"]}
                             value={selectedDate}
                             onChange={handleDateChange}
-                            KeyboardButtonProps={{
-                              "aria-label": "change date",
-                            }}
                           />
                         </MuiPickersUtilsProvider>
 
@@ -290,18 +412,19 @@ export default function PatientForm({ edit }: Props) {
                           variant="filled"
                           className={globalClasses.spacing}
                         >
-                          <InputLabel htmlFor="outlined-age-native-simple">
+                          <InputLabel id="demo-simple-select-label">
                             Sexo
                           </InputLabel>
                           <Select
-                            value={formik.values.gender}
-                            label="Sexo"
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
                             name="gender"
+                            value={formik.values.gender}
                             onChange={formik.handleChange}
                           >
-                            <option value={Gender.Female}>Femenino</option>
-                            <option value={Gender.Male}>Masculino</option>
-                            <option value={Gender.Other}>Otro</option>
+                            <MenuItem value={Gender.Female}>Femenino</MenuItem>
+                            <MenuItem value={Gender.Male}>Masculino</MenuItem>
+                            <MenuItem value={Gender.Other}>Otro</MenuItem>
                           </Select>
                         </FormControl>
 
@@ -403,6 +526,15 @@ export default function PatientForm({ edit }: Props) {
                     gutterBottom
                   >
                     Antecedentes{" "}
+                    <Button
+                      size="small"
+                      color="secondary"
+                      className={globalClasses.alignRight}
+                      startIcon={<ListIcon />}
+                      onClick={handleClickOpen}
+                    >
+                      Usar cuestionario
+                    </Button>
                   </Typography>
 
                   <FormControl component="fieldset">
@@ -498,6 +630,7 @@ export default function PatientForm({ edit }: Props) {
                 variant="contained"
                 size="large"
                 type="submit"
+                disabled={formik.isSubmitting}
               >
                 Guardar
               </Button>
@@ -508,6 +641,7 @@ export default function PatientForm({ edit }: Props) {
                 size="large"
                 component={RouterLink}
                 to={gotoPage}
+                disabled={formik.isSubmitting}
               >
                 Cancelar
               </Button>
@@ -515,6 +649,7 @@ export default function PatientForm({ edit }: Props) {
           </Form>
         )}
       </Formik>
+      {questionnarieDialog}
     </React.Fragment>
   );
 }

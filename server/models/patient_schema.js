@@ -2,7 +2,6 @@ const { Schema, model } = require("mongoose");
 
 const patientSchema = new Schema(
   {
-    reference: { type: String },
     avatar: { type: String },
     firstname: {
       type: String,

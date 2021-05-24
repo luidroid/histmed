@@ -38,10 +38,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export default function PatientCard(props: {
-  patient: Patient;
-  onPatientDelete?: any;
-}) {
+export default function PatientCard(props: { patient: Patient }) {
   const globalClasses = useGlobalStyles();
 
   const classes = useStyles();

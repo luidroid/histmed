@@ -1,11 +1,9 @@
 export interface Patient {
   _id: string;
-  id?: number;
-  reference: string;
   avatar: string;
   firstname: string;
   lastname: string;
-  birth: string;
+  birth: Date;
   gender: Gender;
   dni: string;
   email: string;
@@ -15,8 +13,8 @@ export interface Patient {
   historyList: History[];
   appointments: Appointment[];
   notes: string;
-  created?: string;
-  lastModified: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export enum Gender {
@@ -32,7 +30,6 @@ export interface History {
 
 export interface Appointment {
   _id: string;
-  id?: number;
   person: Patient;
   title: string;
   description: string;
@@ -46,21 +43,9 @@ export interface Appointment {
   status: Status;
 }
 
-export interface Surgery {
-  patientId?: string;
-  title: string;
-  description: string;
-  date: string;
-  comment: string;
-  attachmentsBefore: Attachment[];
-  attachmentsAfter: Attachment[];
-  status: string;
-}
-
 export interface Attachment {
   name: string;
   size: string;
-  modified: string;
 }
 
 export enum AppointmentType {
@@ -80,7 +65,7 @@ export enum Status {
 }
 
 export interface Questionnaire {
-  _id?: string;
+  _id: string;
   name: string;
   questions: string[];
 }

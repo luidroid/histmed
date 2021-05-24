@@ -1,4 +1,3 @@
-import { CustomError } from "./../models/patient";
 import {
   Patient,
   Gender,
@@ -6,25 +5,32 @@ import {
   AppointmentType,
   Status,
   Questionnaire,
+  CustomError,
+  History,
 } from "../models/patient";
+
+const initHistory: History = {
+  name: "",
+  description: "",
+};
 
 const initPatient: Patient = {
   _id: "",
   avatar: "",
-  reference: "",
-  firstname: "init lui",
+  firstname: "",
   lastname: "",
-  birth: "",
-  gender: Gender.Other,
+  birth: new Date(),
+  gender: Gender.Female,
   dni: "",
   email: "",
   phone: "",
   mobile: "",
   address: "",
-  historyList: [],
+  historyList: [initHistory],
   appointments: [],
   notes: "",
-  lastModified: "",
+  createdAt: new Date(),
+  updatedAt: new Date(),
 };
 
 const initAppointment: Appointment = {
@@ -43,6 +49,7 @@ const initAppointment: Appointment = {
 };
 
 const initQuestionnaire: Questionnaire = {
+  _id: "",
   name: "",
   questions: [""],
 };

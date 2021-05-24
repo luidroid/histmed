@@ -57,11 +57,11 @@ export default function AppointmentDetails() {
   };
 
   const handleDelete = () => {
-    handlePatientDelete(appointment.id!);
+    handlePatientDelete(appointment._id!);
   };
 
   /** Delete patient */
-  const handlePatientDelete = (appointmentId: number) => {
+  const handlePatientDelete = (appointmentId: string) => {
     (async () => {
       try {
         await axios.delete(`/appointments/${appointmentId}`);

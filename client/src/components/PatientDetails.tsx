@@ -38,7 +38,7 @@ export default function PatientDetails() {
         <PatientAppointments
           appointments={info.appointments}
         ></PatientAppointments>{" "}
-        <PatientAttachments patientId={info?.id}></PatientAttachments>
+        <PatientAttachments patientId={info?._id}></PatientAttachments>
       </Grid>
     </React.Fragment>
   );

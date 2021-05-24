@@ -70,11 +70,11 @@ export default function PatientInfo(patient: Patient) {
   };
 
   const handleDelete = () => {
-    handlePatientDelete(patient.id!);
+    handlePatientDelete(patient._id!);
   };
 
   /** Delete patient */
-  const handlePatientDelete = (patientId: number) => {
+  const handlePatientDelete = (patientId: string) => {
     (async () => {
       try {
         await axios.delete(`/patients/${patientId}`);
@@ -93,7 +93,7 @@ export default function PatientInfo(patient: Patient) {
           Datos personales
           <IconButton
             component={RouterLink}
-            to={`/patients/${patient.id}/edit`}
+            to={`/patients/${patient._id}/edit`}
           >
             <EditIcon />
           </IconButton>
@@ -109,8 +109,6 @@ export default function PatientInfo(patient: Patient) {
             <Typography component="p" variant="h4">
               {patient?.firstname} {patient?.lastname}
             </Typography>
-
-            <Typography color="textSecondary">{patient?.reference}</Typography>
           </Grid>
           <Grid item xs={12} md={12} lg={6}>
             <List dense disablePadding className={classes.root}>
