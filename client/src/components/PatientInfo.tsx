@@ -103,11 +103,7 @@ export default function PatientInfo(patient: Patient) {
         </Typography>
         <Grid container spacing={1} direction="row">
           <Grid item>
-            <Avatar
-              className={classes.avatar}
-              alt={patient?.firstname}
-              src={patient?.avatar}
-            />
+            <Avatar className={classes.avatar} src={patient?.avatar} />
           </Grid>
           <Grid item xs={12} md={12} lg={6}>
             <Typography component="p" variant="h4">

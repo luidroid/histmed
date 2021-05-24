@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { Link as RouterLink } from "react-router-dom";
 
 import axios from "../api/apiConfig";
-import { useGlobalStyles } from "../styles/globalStyles";
 import { initCustomError } from "../api/patientService";
 import Loading from "./Loading";
 import { CustomError, Patient } from "../models/patient";
 import CustomAlertError from "./CustomAlertError";
 
+import { PATIENTS_URL } from "../constants/constants";
+import PatientCard from "./PatientCard";
+import Title from "./Title";
+
 import Grid from "@material-ui/core/Grid";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import AddIcon from "@material-ui/icons/Add";
-import Fab from "@material-ui/core/Fab";
 
 import Paper from "@material-ui/core/Paper";
 import InputBase from "@material-ui/core/InputBase";
@@ -22,8 +21,6 @@ import SearchIcon from "@material-ui/icons/Search";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-
-import PatientCard from "./PatientCard";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -39,26 +36,17 @@ const useStyles = makeStyles((theme: Theme) =>
     iconButton: {
       padding: 10,
     },
-    divider: {
-      height: 28,
-      margin: 4,
-    },
     formControl: {
       minWidth: 120,
-    },
-    selectEmpty: {
-      marginTop: theme.spacing(2),
     },
   })
 );
 
 export default function Patients() {
   const classes = useStyles();
-  const globalClasses = useGlobalStyles();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [customError, setCustomError] = useState<CustomError>(initCustomError);
-  const [open, setOpen] = React.useState(false);
 
   const [patients, setPatients] = useState<Patient[]>([]);
   const [filteredPatients, setFilteredPatients] = useState<Patient[]>([]);
@@ -70,7 +58,7 @@ export default function Patients() {
     setLoading(true);
     setError(false);
     try {
-      const { data } = await axios.get<Patient[]>("/patients");
+      const { data } = await axios.get<Patient[]>(PATIENTS_URL);
       setPatients(data);
       setLoading(false);
     } catch (error) {
@@ -147,7 +135,7 @@ export default function Patients() {
   const handlePatientDelete = (patientId: number) => {
     (async () => {
       try {
-        await axios.delete(`/patients/${patientId}`);
+        await axios.delete(`${PATIENTS_URL}/${patientId}`);
         const results = patients.filter((patient) => patient.id !== patientId);
         setPatients(results);
       } catch (error) {
@@ -196,28 +184,11 @@ export default function Patients() {
   const filteredPatientsComponent = filteredPatients.map((patient, index) => (
     <Grid item xs={12} md={4} lg={3} key={index}>
       <PatientCard
-        key={patient.id}
         patient={patient}
         onPatientDelete={handlePatientDelete}
       ></PatientCard>
     </Grid>
   ));
-
-  const header = (
-    <Typography component="h2" variant="h6" color="primary">
-      Pacientes
-      <Fab
-        className={globalClasses.fab}
-        color="primary"
-        aria-label="add"
-        size="medium"
-        component={RouterLink}
-        to={`/patients/new`}
-      >
-        <AddIcon />
-      </Fab>
-    </Typography>
-  );
 
   const actionBar = (
     <Grid container direction="row" spacing={3}>
@@ -234,7 +205,7 @@ export default function Patients() {
 
   return (
     <div>
-      {header}
+      <Title title={"Pacientes"} route={`${PATIENTS_URL}/new`}></Title>
       {error && (
         <CustomAlertError
           status={customError.status}
@@ -248,13 +219,7 @@ export default function Patients() {
           {actionBar}
 
           <Grid container direction="row" spacing={3}>
-            {filteredPatients.length > 0 ? (
-              filteredPatientsComponent
-            ) : (
-              <Grid item xs={12} md={4} lg={6}>
-                No existen pacientes
-              </Grid>
-            )}
+            {filteredPatientsComponent}
           </Grid>
         </React.Fragment>
       )}
