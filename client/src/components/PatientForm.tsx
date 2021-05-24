@@ -4,7 +4,7 @@ import axios from "../api/apiConfig";
 import { useGlobalStyles } from "../styles/globalStyles";
 import { initCustomError } from "../api/patientService";
 import Loading from "./Loading";
-import { CustomError, Questionnaire } from "../models/patient";
+import { CustomError, History, Questionnaire } from "../models/patient";
 import CustomAlertError from "./CustomAlertError";
 
 import { Gender, Patient } from "../models/patient";
@@ -125,7 +125,7 @@ export default function PatientForm({ edit }: Props) {
   const [filteredQuestionnaires, setFilteredQuestionnaires] = useState<
     Questionnaire[]
   >([]);
-  const [selectedQuestionnaire, setSelectedQuestionnaire] = useState("none");
+  const [selectedQuestionnaire, setSelectedQuestionnaire] = useState("");
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -154,14 +154,11 @@ export default function PatientForm({ edit }: Props) {
 
   useEffect(() => {
     (async () => {
-      setLoading(true);
       setError(false);
       try {
         const { data } = await axios.get(`${QUESTIONNAIRES_URL}`);
         setQuestionnaires(data);
-        setLoading(false);
       } catch (error) {
-        setLoading(false);
         setCustomError(error);
         setError(true);
         console.log(error);
@@ -232,6 +229,15 @@ export default function PatientForm({ edit }: Props) {
   };
 
   const handleAdd = () => {
+    const historyList: History[] = [];
+    const results = filteredQuestionnaires.map((q) => {
+      q.questions.map((question) => {
+        historyList.push({ name: question, description: "" });
+      });
+    });
+    const p = patient;
+    p.historyList = historyList;
+    setPatient(p);
     setOpen(false);
   };
 
@@ -276,7 +282,6 @@ export default function PatientForm({ edit }: Props) {
             value={selectedQuestionnaire}
             onChange={handleSelected}
           >
-            <MenuItem value={""}>Ninguno</MenuItem>
             {questionnaires.map((q) => (
               <MenuItem value={q._id}>{q.name}</MenuItem>
             ))}
