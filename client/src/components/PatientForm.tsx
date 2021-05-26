@@ -230,16 +230,16 @@ export default function PatientForm({ edit }: Props) {
     setOpen(false);
   };
 
-  const handleAdd = () => {
-    const list: History[] = [];
+  const handleAdd = (arrayHelpers: any) => {
     filteredQuestionnaire.map((q) => {
       return q.questions.map((question) => {
-        list.push({ name: question, description: "" });
+        arrayHelpers.push({
+          name: question,
+          description: "",
+        });
       });
     });
-    const p = patient;
-    p.historyList.push(...list);
-    setPatient(p);
+
     setOpen(false);
   };
 
@@ -264,47 +264,53 @@ export default function PatientForm({ edit }: Props) {
     </div>
   ));
 
-  const questionnarieDialog = (
-    <Dialog
-      open={open}
-      onClose={handleClose}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
-    >
-      <DialogTitle id="alert-dialog-title">
-        {"Elija un cuestionario"}
-      </DialogTitle>
-      <DialogContent>
-        <FormControl fullWidth>
-          <Select
-            labelId="demo-simple-select-placeholder-label-label"
-            id="demo-simple-select-placeholder-label"
-            value={selectedQuestionnaire}
-            onChange={handleSelected}
-            displayEmpty
-          >
-            <MenuItem value="">
-              <em>Ninguno</em>
-            </MenuItem>
-            {questionnaires.map((q, index) => (
-              <MenuItem value={q._id} key={index}>
-                {q.name}
+  const questionnarieDialog = (arrayHelpers: any) => {
+    return (
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Elija un cuestionario"}
+        </DialogTitle>
+        <DialogContent>
+          <FormControl fullWidth>
+            <Select
+              labelId="demo-simple-select-placeholder-label-label"
+              id="demo-simple-select-placeholder-label"
+              value={selectedQuestionnaire}
+              onChange={handleSelected}
+              displayEmpty
+            >
+              <MenuItem value="">
+                <em>Ninguno</em>
               </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        {questions}
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={handleClose} color="primary">
-          Cancelar
-        </Button>
-        <Button onClick={handleAdd} color="primary" autoFocus>
-          Aceptar
-        </Button>
-      </DialogActions>
-    </Dialog>
-  );
+              {questionnaires.map((q, index) => (
+                <MenuItem value={q._id} key={index}>
+                  {q.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          {questions}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Cancelar
+          </Button>
+          <Button
+            onClick={() => handleAdd(arrayHelpers)}
+            color="primary"
+            autoFocus
+          >
+            Aceptar
+          </Button>
+        </DialogActions>
+      </Dialog>
+    );
+  };
 
   return (
     <React.Fragment>
@@ -599,7 +605,6 @@ export default function PatientForm({ edit }: Props) {
                             >
                               Antecedente{" "}
                             </Button>
-                            {testHistory(arrayHelpers)}
                           </FormControl>
                           <FormControl className={globalClasses.spacing}>
                             <Button
@@ -612,6 +617,7 @@ export default function PatientForm({ edit }: Props) {
                               Cuestionario
                             </Button>
                           </FormControl>
+                          {questionnarieDialog(arrayHelpers)}
                         </div>
                       )}
                     />
@@ -663,26 +669,6 @@ export default function PatientForm({ edit }: Props) {
           </Form>
         )}
       </Formik>
-      {questionnarieDialog}
     </React.Fragment>
   );
-
-  function testHistory(arrayHelpers: any) {
-    return (
-      <Button
-        variant="contained"
-        color="secondary"
-        size="small"
-        startIcon={<Icon>subdirectory_arrow_right</Icon>}
-        onClick={() =>
-          arrayHelpers.push({
-            name: "",
-            description: "",
-          })
-        }
-      >
-        Test Antecedente{" "}
-      </Button>
-    );
-  }
 }
