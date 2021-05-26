@@ -54,6 +54,8 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import FormLabel from "@material-ui/core/FormLabel";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -122,7 +124,7 @@ export default function PatientForm({ edit }: Props) {
 
   const [patient, setPatient] = useState<Patient>(initPatient);
   const [questionnaires, setQuestionnaires] = useState<Questionnaire[]>([]);
-  const [filteredQuestionnaires, setFilteredQuestionnaires] = useState<
+  const [filteredQuestionnaire, setFilteredQuestionnaire] = useState<
     Questionnaire[]
   >([]);
   const [selectedQuestionnaire, setSelectedQuestionnaire] = useState("");
@@ -229,14 +231,14 @@ export default function PatientForm({ edit }: Props) {
   };
 
   const handleAdd = () => {
-    const historyList: History[] = [];
-    const results = filteredQuestionnaires.map((q) => {
-      q.questions.map((question) => {
-        historyList.push({ name: question, description: "" });
+    const list: History[] = [];
+    filteredQuestionnaire.map((q) => {
+      return q.questions.map((question) => {
+        list.push({ name: question, description: "" });
       });
     });
     const p = patient;
-    p.historyList = historyList;
+    p.historyList.push(...list);
     setPatient(p);
     setOpen(false);
   };
@@ -249,10 +251,10 @@ export default function PatientForm({ edit }: Props) {
     const results = questionnaires.filter(
       (q) => q._id === selectedQuestionnaire
     );
-    setFilteredQuestionnaires(results);
-  }, [selectedQuestionnaire]);
+    setFilteredQuestionnaire(results);
+  }, [selectedQuestionnaire, questionnaires]);
 
-  const questions = filteredQuestionnaires.map((q, index) => (
+  const questions = filteredQuestionnaire.map((q, index) => (
     <div key={index}>
       <ul>
         {q.questions.map((question, index) => (
@@ -274,16 +276,20 @@ export default function PatientForm({ edit }: Props) {
       </DialogTitle>
       <DialogContent>
         <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">Cuestionario</InputLabel>
           <Select
-            defaultValue={""}
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
+            labelId="demo-simple-select-placeholder-label-label"
+            id="demo-simple-select-placeholder-label"
             value={selectedQuestionnaire}
             onChange={handleSelected}
+            displayEmpty
           >
-            {questionnaires.map((q) => (
-              <MenuItem value={q._id}>{q.name}</MenuItem>
+            <MenuItem value="">
+              <em>Ninguno</em>
+            </MenuItem>
+            {questionnaires.map((q, index) => (
+              <MenuItem value={q._id} key={index}>
+                {q.name}
+              </MenuItem>
             ))}
           </Select>
         </FormControl>
@@ -531,15 +537,6 @@ export default function PatientForm({ edit }: Props) {
                     gutterBottom
                   >
                     Antecedentes{" "}
-                    <Button
-                      size="small"
-                      color="secondary"
-                      className={globalClasses.alignRight}
-                      startIcon={<ListIcon />}
-                      onClick={handleClickOpen}
-                    >
-                      Usar cuestionario
-                    </Button>
                   </Typography>
 
                   <FormControl component="fieldset">
@@ -602,6 +599,18 @@ export default function PatientForm({ edit }: Props) {
                             >
                               Antecedente{" "}
                             </Button>
+                            {testHistory(arrayHelpers)}
+                          </FormControl>
+                          <FormControl className={globalClasses.spacing}>
+                            <Button
+                              variant="outlined"
+                              color="secondary"
+                              size="small"
+                              startIcon={<Icon>subdirectory_arrow_right</Icon>}
+                              onClick={handleClickOpen}
+                            >
+                              Cuestionario
+                            </Button>
                           </FormControl>
                         </div>
                       )}
@@ -657,4 +666,23 @@ export default function PatientForm({ edit }: Props) {
       {questionnarieDialog}
     </React.Fragment>
   );
+
+  function testHistory(arrayHelpers: any) {
+    return (
+      <Button
+        variant="contained"
+        color="secondary"
+        size="small"
+        startIcon={<Icon>subdirectory_arrow_right</Icon>}
+        onClick={() =>
+          arrayHelpers.push({
+            name: "",
+            description: "",
+          })
+        }
+      >
+        Test Antecedente{" "}
+      </Button>
+    );
+  }
 }

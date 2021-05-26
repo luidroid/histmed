@@ -15,7 +15,6 @@ const initHistory: History = {
 };
 
 const initPatient: Patient = {
-  _id: "",
   avatar: "",
   firstname: "",
   lastname: "",
@@ -34,7 +33,6 @@ const initPatient: Patient = {
 };
 
 const initAppointment: Appointment = {
-  _id: "",
   person: initPatient,
   title: "",
   description: "",
@@ -49,7 +47,6 @@ const initAppointment: Appointment = {
 };
 
 const initQuestionnaire: Questionnaire = {
-  _id: "",
   name: "",
   questions: [""],
 };

@@ -1,5 +1,5 @@
 export interface Patient {
-  _id: string;
+  _id?: string;
   avatar: string;
   firstname: string;
   lastname: string;
@@ -29,7 +29,7 @@ export interface History {
 }
 
 export interface Appointment {
-  _id: string;
+  _id?: string;
   person: Patient;
   title: string;
   description: string;
@@ -65,7 +65,7 @@ export enum Status {
 }
 
 export interface Questionnaire {
-  _id: string;
+  _id?: string;
   name: string;
   questions: string[];
 }
