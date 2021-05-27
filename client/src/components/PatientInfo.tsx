@@ -41,6 +41,7 @@ import {
   EmojiPeople as EmojiPeopleIcon,
 } from "@material-ui/icons";
 import PatientGender from "./PatientGender";
+import { PATIENTS_URL } from "../constants/constants";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -77,7 +78,7 @@ export default function PatientInfo(patient: Patient) {
   const handlePatientDelete = (patientId: string) => {
     (async () => {
       try {
-        await axios.delete(`/patients/${patientId}`);
+        await axios.delete(`${PATIENTS_URL}/${patientId}`);
         setOpen(false);
         history.push("/");
       } catch (error) {
@@ -110,7 +111,7 @@ export default function PatientInfo(patient: Patient) {
               {patient?.firstname} {patient?.lastname}
             </Typography>
           </Grid>
-          <Grid item xs={12} md={12} lg={6}>
+          {/* <Grid item xs={12} md={12} lg={6}>
             <List dense disablePadding className={classes.root}>
               <ListItem alignItems="flex-start">
                 <ListItemIcon>
@@ -248,7 +249,7 @@ export default function PatientInfo(patient: Patient) {
               </ListItem>
               <Divider variant="inset" component="li" />
             </List>
-          </Grid>
+          </Grid>*/}
         </Grid>
       </Paper>
       <Dialog
