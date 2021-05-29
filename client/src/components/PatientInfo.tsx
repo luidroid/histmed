@@ -1,9 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link as RouterLink, useHistory } from "react-router-dom";
 import axios from "../api/apiConfig";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import { DATE_FORMAT } from "../constants/constants";
+
 import { useGlobalStyles } from "../styles/globalStyles";
 
-import { Patient } from "../models/patient";
+import { Patient, CustomError } from "../models/patient";
+import { initCustomError } from "../api/patientService";
+import Loading from "./Loading";
+import CustomAlertError from "./CustomAlertError";
+
 import { red } from "@material-ui/core/colors";
 
 import {
@@ -17,7 +25,6 @@ import {
   List,
   ListItem,
   ListItemText,
-  Divider,
   ListItemIcon,
   Box,
   Dialog,
@@ -58,9 +65,15 @@ const useStyles = makeStyles((theme) => ({
 export default function PatientInfo(patient: Patient) {
   const globalClasses = useGlobalStyles();
   const classes = useStyles();
-
   const history = useHistory();
   const [open, setOpen] = React.useState(false);
+  const patientUrl = `${PATIENTS_URL}/${patient._id}`;
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [customError, setCustomError] = useState<CustomError>(initCustomError);
+  dayjs.extend(relativeTime);
+  const dtBirth = dayjs(patient.birth).format(DATE_FORMAT);
+  const age = dayjs(patient.birth).toNow(true);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -71,17 +84,18 @@ export default function PatientInfo(patient: Patient) {
   };
 
   const handleDelete = () => {
-    handlePatientDelete(patient._id!);
-  };
-
-  /** Delete patient */
-  const handlePatientDelete = (patientId: string) => {
     (async () => {
+      setLoading(true);
+      setError(false);
       try {
-        await axios.delete(`${PATIENTS_URL}/${patientId}`);
+        await axios.delete(patientUrl);
         setOpen(false);
+        setLoading(false);
         history.push("/");
       } catch (error) {
+        setLoading(false);
+        setCustomError(error);
+        setError(true);
         console.log(error);
       }
     })();
@@ -102,16 +116,22 @@ export default function PatientInfo(patient: Patient) {
             <DeleteIcon />
           </IconButton>
         </Typography>
+        {error && (
+          <CustomAlertError
+            status={customError.status}
+            message={customError.message}
+          ></CustomAlertError>
+        )}
         <Grid container spacing={1} direction="row">
           <Grid item>
-            <Avatar className={classes.avatar} src={patient?.avatar} />
+            <Avatar className={classes.avatar} src={patient.avatar} />
           </Grid>
           <Grid item xs={12} md={12} lg={6}>
             <Typography component="p" variant="h4">
-              {patient?.firstname} {patient?.lastname}
+              {patient.firstname} {patient.lastname}
             </Typography>
           </Grid>
-          {/* <Grid item xs={12} md={12} lg={6}>
+          <Grid item xs={12} md={12} lg={6}>
             <List dense disablePadding className={classes.root}>
               <ListItem alignItems="flex-start">
                 <ListItemIcon>
@@ -125,12 +145,12 @@ export default function PatientInfo(patient: Patient) {
                       variant="body2"
                       color="textSecondary"
                     >
-                      <PatientGender gender={patient?.gender}></PatientGender>
+                      <PatientGender gender={patient.gender}></PatientGender>
                     </Typography>
                   }
                 />
               </ListItem>
-              <Divider variant="inset" component="li" />
+
               <ListItem alignItems="flex-start">
                 <ListItemIcon>
                   <CakeIcon />
@@ -143,12 +163,12 @@ export default function PatientInfo(patient: Patient) {
                       variant="body2"
                       color="textSecondary"
                     >
-                      {patient?.birth} - 38 anios
+                      {dtBirth} - {age}
                     </Typography>
                   }
                 />
               </ListItem>
-              <Divider variant="inset" component="li" />
+
               <ListItem alignItems="flex-start">
                 <ListItemIcon>
                   <RecentActorsIcon />
@@ -161,12 +181,11 @@ export default function PatientInfo(patient: Patient) {
                       variant="body2"
                       color="textSecondary"
                     >
-                      {patient?.dni}
+                      {patient.dni}
                     </Typography>
                   }
                 />
               </ListItem>
-              <Divider variant="inset" component="li" />
 
               <ListItem alignItems="flex-start">
                 <ListItemIcon>
@@ -175,11 +194,11 @@ export default function PatientInfo(patient: Patient) {
                 <ListItemText
                   primary="Teléfono"
                   secondary={
-                    <Link href={`tel:${patient?.phone}`}>{patient?.phone}</Link>
+                    <Link href={`tel:${patient.phone}`}>{patient.phone}</Link>
                   }
                 />
               </ListItem>
-              <Divider variant="inset" component="li" />
+
               <ListItem alignItems="flex-start">
                 <ListItemIcon>
                   <PhoneIphoneIcon />
@@ -187,13 +206,10 @@ export default function PatientInfo(patient: Patient) {
                 <ListItemText
                   primary="Móvil"
                   secondary={
-                    <Link href={`tel:${patient?.mobile}`}>
-                      {patient?.mobile}
-                    </Link>
+                    <Link href={`tel:${patient.mobile}`}>{patient.mobile}</Link>
                   }
                 />
               </ListItem>
-              <Divider variant="inset" component="li" />
             </List>
           </Grid>
           <Grid item xs={12} md={12} lg={6}>
@@ -205,13 +221,13 @@ export default function PatientInfo(patient: Patient) {
                 <ListItemText
                   primary="Email"
                   secondary={
-                    <Link href={`mailto:${patient?.email}`}>
-                      {patient?.email}
+                    <Link href={`mailto:${patient.email}`}>
+                      {patient.email}
                     </Link>
                   }
                 />
               </ListItem>
-              <Divider variant="inset" component="li" />
+
               <ListItem alignItems="flex-start">
                 <ListItemIcon>
                   <HomeIcon />
@@ -224,12 +240,12 @@ export default function PatientInfo(patient: Patient) {
                       variant="body2"
                       color="textSecondary"
                     >
-                      {patient?.address}
+                      {patient.address}
                     </Typography>
                   }
                 />
               </ListItem>
-              <Divider variant="inset" component="li" />
+
               <ListItem alignItems="flex-start">
                 <ListItemIcon>
                   <NotesIcon />
@@ -242,14 +258,13 @@ export default function PatientInfo(patient: Patient) {
                       variant="body2"
                       color="textSecondary"
                     >
-                      {patient?.notes}
+                      {patient.notes}
                     </Typography>
                   }
                 />
               </ListItem>
-              <Divider variant="inset" component="li" />
             </List>
-          </Grid>*/}
+          </Grid>
         </Grid>
       </Paper>
       <Dialog
@@ -266,6 +281,7 @@ export default function PatientInfo(patient: Patient) {
             Los datos de {patient.firstname} {patient.lastname} serán borrados
             del sistema y no se podrán recuperar posteriormente.
           </DialogContentText>
+          {loading && <Loading></Loading>}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">

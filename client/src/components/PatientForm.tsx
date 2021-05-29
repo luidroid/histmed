@@ -4,7 +4,7 @@ import axios from "../api/apiConfig";
 import { useGlobalStyles } from "../styles/globalStyles";
 import { initCustomError } from "../api/patientService";
 import Loading from "./Loading";
-import { CustomError, History, Questionnaire } from "../models/patient";
+import { CustomError, Questionnaire } from "../models/patient";
 import CustomAlertError from "./CustomAlertError";
 
 import { Gender, Patient } from "../models/patient";
@@ -44,18 +44,11 @@ import * as yup from "yup";
 import { DropzoneArea } from "material-ui-dropzone";
 import { PATIENTS_URL, QUESTIONNAIRES_URL } from "../constants/constants";
 import MenuItem from "@material-ui/core/MenuItem";
-import ListIcon from "@material-ui/icons/List";
 
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import FormHelperText from "@material-ui/core/FormHelperText";
-import FormLabel from "@material-ui/core/FormLabel";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -233,7 +226,7 @@ export default function PatientForm({ edit }: Props) {
   const handleAdd = (arrayHelpers: any) => {
     filteredQuestionnaire.map((q) => {
       return q.questions.map((question) => {
-        arrayHelpers.push({
+        return arrayHelpers.push({
           name: question,
           description: "",
         });
