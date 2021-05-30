@@ -8,20 +8,21 @@ import PatientHistoryGeneric from "./PatientHistoryGeneric";
 import { Paper, Typography, IconButton } from "@material-ui/core";
 
 import { Edit as EditIcon } from "@material-ui/icons";
+import { PATIENTS_URL } from "../constants/constants";
 
 type Props = {
   historyList: History[];
 };
 export default function PatientHistory({ historyList }: Props) {
-  const { id } = useParams<{ id: string }>();
-
   const globalClasses = useGlobalStyles();
+  const { id } = useParams<{ id: string }>();
+  const patientUrl = `${PATIENTS_URL}/${id}`;
 
   return (
     <Paper className={globalClasses.paper}>
       <Typography component="h2" variant="h6" color="primary" gutterBottom>
         Antecedentes
-        <IconButton component={RouterLink} to={`/patients/${id}/edit`}>
+        <IconButton component={RouterLink} to={`${patientUrl}/edit`}>
           <EditIcon />
         </IconButton>
       </Typography>

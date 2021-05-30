@@ -407,14 +407,18 @@ export default function PatientForm({ edit }: Props) {
 
                         <MuiPickersUtilsProvider utils={DateFnsUtils}>
                           <DatePicker
+                            id="birth"
+                            name="birth"
                             inputVariant="filled"
                             disableFuture
                             openTo="year"
                             format="dd/MMM/yyyy"
                             label="Fecha de nacimiento"
                             views={["year", "month", "date"]}
-                            value={selectedDate}
-                            onChange={handleDateChange}
+                            value={formik.values.birth}
+                            onChange={(value) =>
+                              formik.setFieldValue("birth", value)
+                            }
                           />
                         </MuiPickersUtilsProvider>
 
