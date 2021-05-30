@@ -2,6 +2,7 @@ const express = require("express");
 
 const {
   createAppointment,
+  readPatientAppointments,
   readAppointments,
   readAppointment,
   updateAppointment,
@@ -12,6 +13,7 @@ const router = express.Router();
 
 router
   .post("/", createAppointment)
+  .get("/:id/patient", readPatientAppointments)
   .get("/", readAppointments)
   .get("/:id", readAppointment)
   .put("/:id", updateAppointment)

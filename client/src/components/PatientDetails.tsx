@@ -19,7 +19,7 @@ import { PATIENTS_URL, APPOINTMENTS_URL } from "../constants/constants";
 export default function PatientDetails() {
   const { id } = useParams<{ id: string }>();
   const patientUrl = `${PATIENTS_URL}/${id}`;
-  const appointmentsUrl = `${patientUrl}/${APPOINTMENTS_URL}`;
+  const appointmentsUrl = `${APPOINTMENTS_URL}/${id}/patient`;
   const [patient, setPatient] = useState<Patient>(initPatient);
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [loading, setLoading] = useState(true);
