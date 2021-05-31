@@ -20,10 +20,9 @@ const createAppointment = (req, res) => {
 };
 
 const readPatientAppointments = (req, res) => {
-  Appointment.find()
-    .populate("person")
+  Appointment.find({ person: req.params.id })
     .then((data) => {
-      console.log("Appointments found!");
+      console.log("Patient appointments found!");
       res.status(200).json(data);
     })
     .catch((err) => {

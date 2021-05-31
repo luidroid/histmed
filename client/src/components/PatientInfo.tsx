@@ -117,10 +117,7 @@ export default function PatientInfo(patient: Patient) {
           </IconButton>
         </Typography>
         {error && (
-          <CustomAlertError
-            status={customError.status}
-            message={customError.message}
-          ></CustomAlertError>
+          <CustomAlertError message={customError.message}></CustomAlertError>
         )}
         <Grid container spacing={1} direction="row">
           <Grid item>

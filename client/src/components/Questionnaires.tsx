@@ -185,10 +185,7 @@ export default function Questionnaires() {
     <Paper className={globalClasses.paper}>
       {header}
       {error && (
-        <CustomAlertError
-          status={customError.status}
-          message={customError.message}
-        ></CustomAlertError>
+        <CustomAlertError message={customError.message}></CustomAlertError>
       )}
       {loading ? <Loading></Loading> : <List>{questionnaireList}</List>}
       {deleteDialog}

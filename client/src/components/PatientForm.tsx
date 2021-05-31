@@ -308,10 +308,7 @@ export default function PatientForm({ edit }: Props) {
   return (
     <React.Fragment>
       {error && (
-        <CustomAlertError
-          status={customError.status}
-          message={customError.message}
-        ></CustomAlertError>
+        <CustomAlertError message={customError.message}></CustomAlertError>
       )}
       {loading && <Loading></Loading>}
       <Formik

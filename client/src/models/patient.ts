@@ -71,6 +71,5 @@ export interface Questionnaire {
 }
 
 export interface CustomError {
-  status: string;
   message: string;
 }

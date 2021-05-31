@@ -190,10 +190,7 @@ export default function Patients() {
     <div>
       <Title title={"Pacientes"} route={`${PATIENTS_URL}/new`}></Title>
       {error && (
-        <CustomAlertError
-          status={customError.status}
-          message={customError.message}
-        ></CustomAlertError>
+        <CustomAlertError message={customError.message}></CustomAlertError>
       )}
       {loading ? (
         <Loading></Loading>

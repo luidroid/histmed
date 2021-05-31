@@ -119,7 +119,6 @@ export default function QuestionnaireForm({ edit }: Props) {
               </Typography>
               {error && (
                 <CustomAlertError
-                  status={customError.status}
                   message={customError.message}
                 ></CustomAlertError>
               )}

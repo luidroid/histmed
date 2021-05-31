@@ -52,7 +52,6 @@ const initQuestionnaire: Questionnaire = {
 };
 
 const initCustomError: CustomError = {
-  status: "",
   message: "",
 };
 

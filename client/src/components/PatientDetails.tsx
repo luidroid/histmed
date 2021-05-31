@@ -19,7 +19,7 @@ import { PATIENTS_URL, APPOINTMENTS_URL } from "../constants/constants";
 export default function PatientDetails() {
   const { id } = useParams<{ id: string }>();
   const patientUrl = `${PATIENTS_URL}/${id}`;
-  const appointmentsUrl = `${APPOINTMENTS_URL}/${id}/patient`;
+  const appointmentsUrl = `${APPOINTMENTS_URL}${patientUrl}`;
   const [patient, setPatient] = useState<Patient>(initPatient);
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [loading, setLoading] = useState(true);
@@ -63,26 +63,27 @@ export default function PatientDetails() {
   return (
     <React.Fragment>
       {error && (
-        <CustomAlertError
-          status={customError.status}
-          message={customError.message}
-        ></CustomAlertError>
+        <Grid item xs={12} md={12} lg={12}>
+          <CustomAlertError message={customError.message}></CustomAlertError>
+        </Grid>
       )}
       {loading ? (
         <Loading></Loading>
       ) : (
-        <Grid item xs={12} md={8} lg={8}>
-          <PatientInfo {...patient}></PatientInfo>
-          <PatientHistory historyList={patient.historyList}></PatientHistory>
-        </Grid>
-      )}
+        <React.Fragment>
+          <Grid item xs={12} md={8} lg={8}>
+            <PatientInfo {...patient}></PatientInfo>
+            <PatientHistory historyList={patient.historyList}></PatientHistory>
+          </Grid>
 
-      <Grid item xs={12} md={4} lg={4}>
-        <PatientAppointments
-          appointments={patient.appointments}
-        ></PatientAppointments>{" "}
-        <PatientAttachments patientId={patient?._id}></PatientAttachments>
-      </Grid>
+          <Grid item xs={12} md={4} lg={4}>
+            <PatientAppointments
+              appointments={appointments}
+            ></PatientAppointments>{" "}
+            <PatientAttachments patientId={patient?._id}></PatientAttachments>
+          </Grid>
+        </React.Fragment>
+      )}
     </React.Fragment>
   );
 }

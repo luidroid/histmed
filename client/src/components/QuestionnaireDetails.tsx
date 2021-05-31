@@ -35,9 +35,8 @@ export default function QuestionnaireDetails() {
   const { id } = useParams<{ id: string }>();
   const questionnaireUrl = QUESTIONNAIRES_URL.concat(`/${id}`);
   const [loading, setLoading] = useState(true);
-  const [questionnaire, setQuestionnaire] = useState<Questionnaire>(
-    initQuestionnaire
-  );
+  const [questionnaire, setQuestionnaire] =
+    useState<Questionnaire>(initQuestionnaire);
   const [error, setError] = useState(false);
   const [customError, setCustomError] = useState<CustomError>(initCustomError);
   const [mailContent, setMailContent] = useState("");
@@ -152,10 +151,7 @@ export default function QuestionnaireDetails() {
         </IconButton>
       </Typography>
       {error && (
-        <CustomAlertError
-          status={customError.status}
-          message={customError.message}
-        ></CustomAlertError>
+        <CustomAlertError message={customError.message}></CustomAlertError>
       )}
       {loading ? (
         <Loading></Loading>
