@@ -1,31 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useHistory, Link as RouterLink } from "react-router-dom";
 import axios from "../api/apiConfig";
-
-import { useGlobalStyles } from "../styles/globalStyles";
-
-import { Appointment, AppointmentType, Patient } from "../models/patient";
-
 import { Formik, Form } from "formik";
 import * as yup from "yup";
+
+import { useGlobalStyles } from "../styles/globalStyles";
+import { Appointment, AppointmentType, Patient } from "../models/patient";
 import { initAppointment, initPatient } from "../api/patientService";
 
-import {
-  Box,
-  Button,
-  Paper,
-  Typography,
-  Grid,
-  FormControl,
-  TextField,
-  InputLabel,
-  Select,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Avatar,
-} from "@material-ui/core";
+import Box from "@material-ui/core/Box";
+import Button from "@material-ui/core/Button";
+import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
+import FormControl from "@material-ui/core/FormControl";
+import TextField from "@material-ui/core/TextField";
+import InputLabel from "@material-ui/core/InputLabel";
+import Select from "@material-ui/core/Select";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
 
 import DateFnsUtils from "@date-io/date-fns"; // choose your lib
 import {
@@ -37,6 +32,7 @@ import { DropzoneArea } from "material-ui-dropzone";
 import PatientHistoryGeneric from "./PatientHistoryGeneric";
 import { Cake, EmojiPeople, Notes, RecentActors } from "@material-ui/icons";
 import PatientGender from "./PatientGender";
+import { PATIENTS_URL } from "../constants/constants";
 
 const validationSchema = yup.object({
   type: yup.string(),
@@ -56,7 +52,7 @@ export default function AppointmentForm({ edit }: Props) {
   const globalClasses = useGlobalStyles();
 
   const { id } = useParams<{ id: string }>();
-  const urlPatient = `/patients/${id}`;
+  const patientUrl = `${PATIENTS_URL}/${id}`;
 
   const [patient, setPatient] = useState<Patient>(initPatient);
   const [appointment] = useState<Appointment>(initAppointment);
@@ -70,15 +66,17 @@ export default function AppointmentForm({ edit }: Props) {
   };
 
   useEffect(() => {
-    (async () => {
-      try {
-        const { data } = await axios.get<Patient>(urlPatient);
-        setPatient(data);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-  }, [id, edit, urlPatient]);
+    if (edit) {
+      (async () => {
+        try {
+          const { data } = await axios.get<Patient>(patientUrl);
+          setPatient(data);
+        } catch (error) {
+          console.log(error);
+        }
+      })();
+    }
+  }, [id, edit, patientUrl]);
 
   return (
     <Formik

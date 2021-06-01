@@ -19,7 +19,7 @@ import { PATIENTS_URL, APPOINTMENTS_URL } from "../constants/constants";
 export default function PatientDetails() {
   const { id } = useParams<{ id: string }>();
   const patientUrl = `${PATIENTS_URL}/${id}`;
-  const appointmentsUrl = `${APPOINTMENTS_URL}${patientUrl}`;
+  const appointmentsUrl = `${APPOINTMENTS_URL}/patient/${id}`;
   const [patient, setPatient] = useState<Patient>(initPatient);
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [loading, setLoading] = useState(true);
@@ -58,7 +58,7 @@ export default function PatientDetails() {
         console.log(error);
       }
     })();
-  }, [id]);
+  }, [id, appointmentsUrl]);
 
   return (
     <React.Fragment>

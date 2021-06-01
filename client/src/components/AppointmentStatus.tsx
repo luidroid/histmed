@@ -1,7 +1,6 @@
 import React from "react";
 import { Status } from "../models/patient";
 import Typography from "@material-ui/core/Typography";
-import { Chip } from "@material-ui/core";
 import { blue, green, pink, orange, grey } from "@material-ui/core/colors";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import { Theme } from "@material-ui/core";

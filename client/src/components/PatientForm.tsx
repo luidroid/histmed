@@ -161,14 +161,6 @@ export default function PatientForm({ edit }: Props) {
     })();
   }, []);
 
-  const [selectedDate, setSelectedDate] = React.useState<Date | null>(
-    new Date()
-  );
-
-  const handleDateChange = (date: Date | null) => {
-    setSelectedDate(date);
-  };
-
   const [selectedPhoto, setSelectedPhoto] = useState<File | null>();
 
   const handleUploadPhoto = (event: React.ChangeEvent<HTMLInputElement>) => {

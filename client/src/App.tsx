@@ -31,18 +31,14 @@ function App() {
             <Route exact path="/">
               <Redirect to="/patients" />
             </Route>
-            <Route
-              path="/patients/:id/appointments/new"
-              component={_AppointmentCreateForm}
-            />
-            <Route
-              path="/patients/:id/appointments/:id/edit"
-              component={_AppointmentEditForm}
-            />
             <Route path="/patients/new" component={_PatientCreateForm} />
             <Route path="/patients/:id/edit" component={_PatientEditForm} />
             <Route path="/patients/:id" component={PatientDetailPage} />
             <Route path="/patients" component={_Patients} />
+            <Route
+              path="/appointments/new/patient/:id"
+              component={_AppointmentCreateForm}
+            />
             <Route
               path="/appointments/:id/edit"
               component={_AppointmentEditForm}

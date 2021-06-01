@@ -13,7 +13,7 @@ const router = express.Router();
 
 router
   .post("/", createAppointment)
-  .get("/patients/:id", readPatientAppointments)
+  .get("/patient/:id", readPatientAppointments)
   .get("/", readAppointments)
   .get("/:id", readAppointment)
   .put("/:id", updateAppointment)

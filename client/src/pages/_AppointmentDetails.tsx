@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Typography } from "@material-ui/core";
+import Grid from "@material-ui/core/Grid";
 import AppointmentDetails from "../components/AppointmentDetails";
 
 export default function _AppointmentDetails() {

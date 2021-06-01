@@ -30,6 +30,7 @@ const readPatientAppointments = (req, res) => {
       res.status(500).json(err);
     });
 };
+
 const readAppointments = (req, res) => {
   Appointment.find()
     .populate("person")

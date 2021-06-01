@@ -4,7 +4,6 @@ import axios from "../api/apiConfig";
 import { useParams, useHistory, Link as RouterLink } from "react-router-dom";
 
 import { useGlobalStyles } from "../styles/globalStyles";
-import PatientGender from "./PatientGender";
 import PatientHistoryGeneric from "./PatientHistoryGeneric";
 import { Appointment } from "../models/patient";
 import { initAppointment } from "../api/patientService";
@@ -14,7 +13,6 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
 
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
