@@ -7,6 +7,7 @@ import * as yup from "yup";
 import { useGlobalStyles } from "../styles/globalStyles";
 import { Appointment, AppointmentType, Patient } from "../models/patient";
 import { initAppointment, initPatient } from "../api/patientService";
+import PersonInfoCompact from "../components/PersonInfoCompact";
 
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
@@ -50,10 +51,8 @@ type Props = {
 };
 export default function AppointmentForm({ edit }: Props) {
   const globalClasses = useGlobalStyles();
-
   const { id } = useParams<{ id: string }>();
   const patientUrl = `${PATIENTS_URL}/${id}`;
-
   const [patient, setPatient] = useState<Patient>(initPatient);
   const [appointment] = useState<Appointment>(initAppointment);
 
@@ -66,17 +65,15 @@ export default function AppointmentForm({ edit }: Props) {
   };
 
   useEffect(() => {
-    if (edit) {
-      (async () => {
-        try {
-          const { data } = await axios.get<Patient>(patientUrl);
-          setPatient(data);
-        } catch (error) {
-          console.log(error);
-        }
-      })();
-    }
-  }, [id, edit, patientUrl]);
+    (async () => {
+      try {
+        const { data } = await axios.get<Patient>(patientUrl);
+        setPatient(data);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, [patientUrl]);
 
   return (
     <Formik
@@ -273,91 +270,8 @@ export default function AppointmentForm({ edit }: Props) {
               </Box>
             </Grid>
             <Grid item xs={12} md={12} lg={4}>
-              <Paper className={globalClasses.paper}>
-                <Typography component="h2" variant="h6" color="primary">
-                  Datos personales
-                </Typography>
+              {/* <PersonInfoCompact person={patient}></PersonInfoCompact> */}
 
-                <Typography component="p" variant="h5">
-                  {patient?.firstname} {patient?.lastname}
-                </Typography>
-
-                <List dense disablePadding>
-                  <ListItem alignItems="flex-start">
-                    <ListItemIcon>
-                      <EmojiPeople />
-                    </ListItemIcon>
-                    <ListItemText
-                      primary=""
-                      secondary={
-                        <Typography
-                          component="span"
-                          variant="body2"
-                          color="textSecondary"
-                        >
-                          <PatientGender
-                            gender={patient?.gender}
-                          ></PatientGender>
-                        </Typography>
-                      }
-                    />
-                  </ListItem>
-
-                  <ListItem alignItems="flex-start">
-                    <ListItemIcon>
-                      <Cake />
-                    </ListItemIcon>
-                    <ListItemText
-                      primary=""
-                      secondary={
-                        <Typography
-                          component="span"
-                          variant="body2"
-                          color="textSecondary"
-                        >
-                          {patient?.birth} - 38 anios
-                        </Typography>
-                      }
-                    />
-                  </ListItem>
-
-                  <ListItem alignItems="flex-start">
-                    <ListItemIcon>
-                      <RecentActors />
-                    </ListItemIcon>
-                    <ListItemText
-                      primary=""
-                      secondary={
-                        <Typography
-                          component="span"
-                          variant="body2"
-                          color="textSecondary"
-                        >
-                          {patient?.dni}
-                        </Typography>
-                      }
-                    />
-                  </ListItem>
-
-                  <ListItem alignItems="flex-start">
-                    <ListItemIcon>
-                      <Notes />
-                    </ListItemIcon>
-                    <ListItemText
-                      primary=""
-                      secondary={
-                        <Typography
-                          component="span"
-                          variant="body2"
-                          color="textSecondary"
-                        >
-                          {patient?.notes}
-                        </Typography>
-                      }
-                    />
-                  </ListItem>
-                </List>
-              </Paper>
               <Paper className={globalClasses.paper}>
                 <Typography component="h2" variant="h6" color="primary">
                   Antecedentes
