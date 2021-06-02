@@ -33,11 +33,11 @@ import { DropzoneArea } from "material-ui-dropzone";
 import PatientHistoryGeneric from "./PatientHistoryGeneric";
 import { Cake, EmojiPeople, Notes, RecentActors } from "@material-ui/icons";
 import PatientGender from "./PatientGender";
-import { PATIENTS_URL } from "../constants/constants";
+import { APPOINTMENTS_URL, PATIENTS_URL } from "../constants/constants";
 
 const validationSchema = yup.object({
   type: yup.string(),
-  createdAt: yup.string(),
+  scheduled: yup.date(),
   title: yup.string().required("Motivo es requerido"),
   description: yup.string(),
   analysis: yup.string(),
@@ -53,16 +53,9 @@ export default function AppointmentForm({ edit }: Props) {
   const globalClasses = useGlobalStyles();
   const { id } = useParams<{ id: string }>();
   const patientUrl = `${PATIENTS_URL}/${id}`;
+  const appointmentUrl = `${APPOINTMENTS_URL}`;
   const [patient, setPatient] = useState<Patient>(initPatient);
-  const [appointment] = useState<Appointment>(initAppointment);
-
-  // Datepicker
-  const [selectedDate, setSelectedDate] = React.useState<Date | null>(
-    new Date("2014-08-18T21:11:54")
-  );
-  const handleDateChange = (date: Date | null) => {
-    setSelectedDate(date);
-  };
+  const [appointment, setAppointment] = useState<Appointment>(initAppointment);
 
   useEffect(() => {
     (async () => {
@@ -73,6 +66,19 @@ export default function AppointmentForm({ edit }: Props) {
         console.log(error);
       }
     })();
+  }, [patientUrl]);
+
+  useEffect(() => {
+    if (edit) {
+      (async () => {
+        try {
+          const { data } = await axios.get<Appointment>(patientUrl);
+          setAppointment(data);
+        } catch (error) {
+          console.log(error);
+        }
+      })();
+    }
   }, [patientUrl]);
 
   return (
@@ -139,14 +145,17 @@ export default function AppointmentForm({ edit }: Props) {
                   <MuiPickersUtilsProvider utils={DateFnsUtils}>
                     <KeyboardDatePicker
                       disableToolbar
+                      id="scheduled"
+                      name="scheduled"
                       inputVariant="filled"
                       variant="inline"
-                      format="MM/dd/yyyy"
+                      format="dd/MM/yyyy"
                       margin="normal"
-                      id="date-picker-inline"
                       label="Fecha"
-                      value={selectedDate}
-                      onChange={handleDateChange}
+                      value={formik.values.scheduled}
+                      onChange={(value) =>
+                        formik.setFieldValue("scheduled", value)
+                      }
                       KeyboardButtonProps={{
                         "aria-label": "change date",
                       }}

@@ -37,7 +37,7 @@ const initAppointment: Appointment = {
   title: "",
   description: "",
   category: AppointmentType.PreliminaryTalk,
-  scheduled: "",
+  scheduled: new Date(),
   analysis: "",
   plan: "",
   comment: "",
