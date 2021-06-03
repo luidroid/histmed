@@ -27,6 +27,7 @@ import DateFnsUtils from "@date-io/date-fns"; // choose your lib
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
+  DatePicker,
 } from "@material-ui/pickers";
 
 import { DropzoneArea } from "material-ui-dropzone";
@@ -120,6 +121,33 @@ export default function AppointmentForm({ edit }: Props) {
                   {edit ? "Editar" : "Nueva"} consulta
                 </Typography>
                 <FormControl fullWidth className={globalClasses.root}>
+                  <TextField
+                    variant="filled"
+                    id="title"
+                    name="title"
+                    label="Motivo *"
+                    value={formik.values.title}
+                    onChange={formik.handleChange}
+                    error={formik.touched.title && Boolean(formik.errors.title)}
+                    helperText={formik.touched.title && formik.errors.title}
+                  />
+                  <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                    <KeyboardDatePicker
+                      id="scheduled"
+                      name="scheduled"
+                      inputVariant="filled"
+                      variant="inline"
+                      format="dd/MM/yyyy"
+                      margin="normal"
+                      label="Fecha"
+                      placeholder="dd/mm/yyyy"
+                      value={formik.values.scheduled}
+                      onChange={(value) =>
+                        formik.setFieldValue("scheduled", value)
+                      }
+                    />
+                  </MuiPickersUtilsProvider>
+
                   <FormControl
                     variant="filled"
                     className={globalClasses.spacing}
@@ -142,36 +170,6 @@ export default function AppointmentForm({ edit }: Props) {
                     </Select>
                   </FormControl>
 
-                  <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                    <KeyboardDatePicker
-                      disableToolbar
-                      id="scheduled"
-                      name="scheduled"
-                      inputVariant="filled"
-                      variant="inline"
-                      format="dd/MM/yyyy"
-                      margin="normal"
-                      label="Fecha"
-                      value={formik.values.scheduled}
-                      onChange={(value) =>
-                        formik.setFieldValue("scheduled", value)
-                      }
-                      KeyboardButtonProps={{
-                        "aria-label": "change date",
-                      }}
-                    />
-                  </MuiPickersUtilsProvider>
-
-                  <TextField
-                    variant="filled"
-                    id="title"
-                    name="title"
-                    label="Motivo *"
-                    value={formik.values.title}
-                    onChange={formik.handleChange}
-                    error={formik.touched.title && Boolean(formik.errors.title)}
-                    helperText={formik.touched.title && formik.errors.title}
-                  />
                   <TextField
                     variant="filled"
                     id="description"
