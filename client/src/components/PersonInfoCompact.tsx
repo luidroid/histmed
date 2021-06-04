@@ -1,4 +1,8 @@
 import React from "react";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import { DATE_FORMAT } from "../constants/constants";
+import { formatGender } from "../helpers/formatter";
 
 import { useGlobalStyles } from "../styles/globalStyles";
 import { Patient } from "../models/patient";
@@ -14,94 +18,53 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import PatientGender from "./PatientGender";
 
 type Props = {
   person: Patient;
 };
 export default function PersonInfoCompact({ person }: Props) {
   const globalClasses = useGlobalStyles();
+  dayjs.extend(relativeTime);
+  const dtBirth = dayjs(person.birth).format(DATE_FORMAT);
+  const age = dayjs(person.birth).toNow(true);
+
   return (
     <Paper className={globalClasses.paper}>
       <Typography component="h2" variant="h6" color="primary">
         Datos personales
       </Typography>
 
-      <Typography component="p" variant="h5">
+      <Typography component="h3" variant="h5">
         {person.firstname} {person.lastname}
       </Typography>
 
-      <List dense disablePadding>
-        <ListItem alignItems="flex-start">
+      <List dense disablePadding component="div">
+        <ListItem button>
           <ListItemIcon>
             <EmojiPeopleIcon />
           </ListItemIcon>
-          <ListItemText
-            primary=""
-            secondary={
-              <Typography
-                component="span"
-                variant="body2"
-                color="textSecondary"
-              >
-                <PatientGender gender={person.gender}></PatientGender>
-              </Typography>
-            }
-          />
+          <ListItemText primary={formatGender(person.gender)} />
         </ListItem>
 
-        <ListItem alignItems="flex-start">
+        <ListItem button>
           <ListItemIcon>
             <CakeIcon />
           </ListItemIcon>
-          <ListItemText
-            primary=""
-            secondary={
-              <Typography
-                component="span"
-                variant="body2"
-                color="textSecondary"
-              >
-                {person.birth} - 38 anios
-              </Typography>
-            }
-          />
+          <ListItemText primary={`${dtBirth} - ${age}`} />
         </ListItem>
 
-        <ListItem alignItems="flex-start">
+        <ListItem button>
           <ListItemIcon>
             <RecentActorsIcon />
           </ListItemIcon>
-          <ListItemText
-            primary=""
-            secondary={
-              <Typography
-                component="span"
-                variant="body2"
-                color="textSecondary"
-              >
-                {person.dni}
-              </Typography>
-            }
-          />
+          <ListItemText primary={person.dni} />
         </ListItem>
 
-        <ListItem alignItems="flex-start">
+        <ListItem button>
           <ListItemIcon>
             <NotesIcon />
           </ListItemIcon>
-          <ListItemText
-            primary=""
-            secondary={
-              <Typography
-                component="span"
-                variant="body2"
-                color="textSecondary"
-              >
-                {person.notes}
-              </Typography>
-            }
-          />
+          <ListItemText primary={person.notes} />
         </ListItem>
       </List>
     </Paper>

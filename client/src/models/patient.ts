@@ -30,7 +30,7 @@ export interface History {
 
 export interface Appointment {
   _id?: string;
-  person: Patient;
+  person: string | Patient;
   title: string;
   description: string;
   category: AppointmentType;

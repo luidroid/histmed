@@ -18,22 +18,15 @@ import FormControl from "@material-ui/core/FormControl";
 import TextField from "@material-ui/core/TextField";
 import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
 
 import DateFnsUtils from "@date-io/date-fns"; // choose your lib
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
-  DatePicker,
 } from "@material-ui/pickers";
 
 import { DropzoneArea } from "material-ui-dropzone";
 import PatientHistoryGeneric from "./PatientHistoryGeneric";
-import { Cake, EmojiPeople, Notes, RecentActors } from "@material-ui/icons";
-import PatientGender from "./PatientGender";
 import { APPOINTMENTS_URL, PATIENTS_URL } from "../constants/constants";
 
 const validationSchema = yup.object({
@@ -52,6 +45,7 @@ type Props = {
 };
 export default function AppointmentForm({ edit }: Props) {
   const globalClasses = useGlobalStyles();
+  const history = useHistory();
   const { id } = useParams<{ id: string }>();
   const patientUrl = `${PATIENTS_URL}/${id}`;
   const appointmentUrl = `${APPOINTMENTS_URL}`;
@@ -80,7 +74,7 @@ export default function AppointmentForm({ edit }: Props) {
         }
       })();
     }
-  }, [patientUrl]);
+  }, [edit, patientUrl]);
 
   return (
     <Formik
@@ -88,6 +82,9 @@ export default function AppointmentForm({ edit }: Props) {
       validationSchema={validationSchema}
       enableReinitialize
       onSubmit={(values, actions) => {
+        if (!edit) {
+          values.person = id;
+        }
         console.log(values);
         /**
     if (edit) {
@@ -131,6 +128,7 @@ export default function AppointmentForm({ edit }: Props) {
                     error={formik.touched.title && Boolean(formik.errors.title)}
                     helperText={formik.touched.title && formik.errors.title}
                   />
+
                   <MuiPickersUtilsProvider utils={DateFnsUtils}>
                     <KeyboardDatePicker
                       id="scheduled"
@@ -277,7 +275,7 @@ export default function AppointmentForm({ edit }: Props) {
               </Box>
             </Grid>
             <Grid item xs={12} md={12} lg={4}>
-              {/* <PersonInfoCompact person={patient}></PersonInfoCompact> */}
+              <PersonInfoCompact person={patient}></PersonInfoCompact>
 
               <Paper className={globalClasses.paper}>
                 <Typography component="h2" variant="h6" color="primary">

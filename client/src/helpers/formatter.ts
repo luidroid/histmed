@@ -1,4 +1,4 @@
-import { AppointmentType } from "../models/patient";
+import { AppointmentType, Gender } from "../models/patient";
 
 const formatAppointmentType = (key: AppointmentType) => {
   let result = "";
@@ -24,4 +24,22 @@ const formatAppointmentType = (key: AppointmentType) => {
   return result;
 };
 
-export { formatAppointmentType };
+const formatGender = (key: Gender) => {
+  let result = "";
+  switch (key) {
+    case Gender.Female:
+      result = "Femenino";
+      break;
+
+    case Gender.Male:
+      result = "Masculino";
+      break;
+
+    default:
+      result = "Otro";
+      break;
+  }
+  return result;
+};
+
+export { formatAppointmentType, formatGender };

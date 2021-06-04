@@ -26,7 +26,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
-import { formatAppointmentType } from "../helpers/helpers";
+import { formatAppointmentType } from "../helpers/formatter";
 
 type Props = {
   appointments: Appointment[];
@@ -103,11 +103,10 @@ export default function Appointments() {
                 title: "Paciente",
                 field: "patient",
                 sorting: false,
-                render: (rowData) => (
-                  <RouterLink to={`/patients/${rowData.person._id}`}>
-                    {rowData.person.firstname} {rowData.person.lastname}
-                  </RouterLink>
-                ),
+                render: (rowData) => "test",
+                // <RouterLink to={`/patients/${rowData.person._id}`}>
+                //   {rowData.person.firstname} {rowData.person.lastname}
+                // </RouterLink>
               },
               { title: "Motivo", field: "title", sorting: false },
               {

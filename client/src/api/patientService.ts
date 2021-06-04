@@ -33,7 +33,7 @@ const initPatient: Patient = {
 };
 
 const initAppointment: Appointment = {
-  person: initPatient,
+  person: "",
   title: "",
   description: "",
   category: AppointmentType.PreliminaryTalk,

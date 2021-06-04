@@ -23,7 +23,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
 import AppointmentStatus from "./AppointmentStatus";
-import { formatAppointmentType } from "../helpers/helpers";
+import { formatAppointmentType } from "../helpers/formatter";
 import PersonInfoCompact from "./PersonInfoCompact";
 
 export default function AppointmentDetails() {
@@ -261,8 +261,8 @@ export default function AppointmentDetails() {
           aria-describedby="alert-dialog-description"
         >
           <DialogTitle id="alert-dialog-title">
-            Desea eliminar esta consulta de {appointment.person.firstname}{" "}
-            {appointment.person.lastname}?
+            Desea eliminar esta consulta de {appointment.person}{" "}
+            {appointment.person}?
           </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
@@ -296,7 +296,7 @@ export default function AppointmentDetails() {
         </Paper>
       </Grid>
 
-      <Grid item xs={12} md={12} lg={4}>
+      {/* <Grid item xs={12} md={12} lg={4}>
         <PersonInfoCompact person={appointment.person}></PersonInfoCompact>
         <Paper className={globalClasses.paper}>
           <Typography component="h2" variant="h6" color="primary">
@@ -306,7 +306,7 @@ export default function AppointmentDetails() {
             records={appointment.person.historyList}
           ></PatientHistoryGeneric>
         </Paper>
-      </Grid>
+      </Grid> */}
     </Grid>
   );
 }
