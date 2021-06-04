@@ -86,27 +86,26 @@ export default function AppointmentForm({ edit }: Props) {
           values.person = id;
         }
         console.log(values);
-        /**
-    if (edit) {
-      (async () => {
-        try {
-          await axios.put<Patient>(urlPatient, values);
-          history.push(urlPatient);
-        } catch (error) {
-          console.log(error);
+
+        if (edit) {
+          (async () => {
+            try {
+              await axios.put<Appointment>(patientUrl, values);
+              history.push(patientUrl);
+            } catch (error) {
+              console.log(error);
+            }
+          })();
+        } else {
+          (async () => {
+            try {
+              await axios.post<Appointment>(patientUrl, values);
+              history.push(patientUrl);
+            } catch (error) {
+              console.log(error);
+            }
+          })();
         }
-      })();
-    } else {
-      (async () => {
-        try {
-          await axios.post<Patient>(urlPatients, values);
-          history.push(urlPatients);
-        } catch (error) {
-          console.log(error);
-        }
-      })();
-    }
-     */
       }}
     >
       {(formik) => (
