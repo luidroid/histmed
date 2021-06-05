@@ -35,6 +35,8 @@ export interface Appointment {
   description: string;
   category: AppointmentType;
   scheduled: Date;
+  from: Date;
+  to: Date;
   analysis: string;
   plan: string;
   comment: string;

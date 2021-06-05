@@ -10,6 +10,7 @@ import {
   AppointmentType,
   CustomError,
   Patient,
+  Status,
 } from "../models/patient";
 import {
   initAppointment,
@@ -32,6 +33,7 @@ import DateFnsUtils from "@date-io/date-fns"; // choose your lib
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
+  TimePicker,
 } from "@material-ui/pickers";
 
 import { DropzoneArea } from "material-ui-dropzone";
@@ -44,12 +46,15 @@ import Loading from "./Loading";
 const validationSchema = yup.object({
   category: yup.string(),
   scheduled: yup.date(),
+  from: yup.date(),
+  to: yup.date(),
   title: yup.string().required("Motivo es requerido"),
   description: yup.string(),
   analysis: yup.string(),
   plan: yup.string(),
   comment: yup.string(),
   recommendations: yup.string(),
+  status: yup.string(),
 });
 
 type Props = {
@@ -159,6 +164,29 @@ export default function AppointmentForm({ edit }: Props) {
                       helperText={formik.touched.title && formik.errors.title}
                     />
 
+                    <FormControl
+                      variant="filled"
+                      className={globalClasses.spacing}
+                    >
+                      <InputLabel id="status-select-label">Tipo</InputLabel>
+                      <Select
+                        labelId="status-select-label"
+                        id="status-select"
+                        label="Estado"
+                        name="status"
+                        value={formik.values.status}
+                        onChange={formik.handleChange}
+                      >
+                        <MenuItem value={Status.Open}>Abierta</MenuItem>
+                        <MenuItem value={Status.InProgress}>
+                          En progreso
+                        </MenuItem>
+                        <MenuItem value={Status.Done}>Finalizada</MenuItem>
+                        <MenuItem value={Status.Pending}>Pendiente</MenuItem>
+                        <MenuItem value={Status.Canceled}>Cancelada</MenuItem>
+                      </Select>
+                    </FormControl>
+
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
                       <KeyboardDatePicker
                         autoOk
@@ -176,6 +204,24 @@ export default function AppointmentForm({ edit }: Props) {
                         }
                       />
                     </MuiPickersUtilsProvider>
+
+                    <TimePicker
+                      clearable
+                      ampm={false}
+                      label="Desde:"
+                      value={formik.values.from}
+                      onChange={(value) => formik.setFieldValue("from", value)}
+                      inputVariant="filled"
+                    />
+
+                    <TimePicker
+                      clearable
+                      ampm={false}
+                      label="Hasta:"
+                      value={formik.values.to}
+                      onChange={(value) => formik.setFieldValue("to", value)}
+                      inputVariant="filled"
+                    />
 
                     <FormControl
                       variant="filled"

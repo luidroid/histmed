@@ -38,6 +38,8 @@ const initAppointment: Appointment = {
   description: "",
   category: AppointmentType.PreliminaryTalk,
   scheduled: new Date(),
+  from: new Date(),
+  to: new Date(),
   analysis: "",
   plan: "",
   comment: "",

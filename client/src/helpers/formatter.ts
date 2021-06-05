@@ -1,4 +1,4 @@
-import { AppointmentType, Gender } from "../models/patient";
+import { AppointmentType, Gender, Status } from "../models/patient";
 
 const formatAppointmentType = (key: AppointmentType) => {
   let result = "";
@@ -42,4 +42,28 @@ const formatGender = (key: Gender) => {
   return result;
 };
 
-export { formatAppointmentType, formatGender };
+const formatStatus = (key: Status) => {
+  let result = "";
+  switch (key) {
+    case Status.InProgress:
+      result = "En progreso";
+      break;
+
+    case Status.Done:
+      result = "Finalizada";
+      break;
+    case Status.Pending:
+      result = "Pendiente";
+      break;
+    case Status.Canceled:
+      result = "Cancelada";
+      break;
+
+    default:
+      result = "Abierta";
+      break;
+  }
+  return result;
+};
+
+export { formatAppointmentType, formatGender, formatStatus };

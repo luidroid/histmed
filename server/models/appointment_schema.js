@@ -10,6 +10,8 @@ const appointmentSchema = new Schema(
     description: { type: String },
     category: { type: String, enum: ["T", "C", "S", "O", "P"], default: "T" },
     scheduled: { type: Date },
+    from: { type: Date },
+    to: { type: Date },
     analysis: { type: String },
     plan: { type: String },
     comment: { type: String },
