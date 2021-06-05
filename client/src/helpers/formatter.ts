@@ -1,4 +1,7 @@
 import { AppointmentType, Gender, Status } from "../models/patient";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import { DATE_FORMAT } from "../constants/constants";
 
 const formatAppointmentType = (key: AppointmentType) => {
   let result = "";
@@ -66,4 +69,19 @@ const formatStatus = (key: Status) => {
   return result;
 };
 
-export { formatAppointmentType, formatGender, formatStatus };
+const formatAppointmentDate = (dt: Date) => {
+  dayjs.extend(relativeTime);
+  return dayjs(dt).format(DATE_FORMAT);
+};
+
+const addAppointmentDate = (dt: Date, minutes: number) => {
+  // dayjs.add(minutes, 'm');
+  return dayjs(dt).format(DATE_FORMAT);
+};
+
+export {
+  formatAppointmentType,
+  formatGender,
+  formatStatus,
+  formatAppointmentDate,
+};

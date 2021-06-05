@@ -203,25 +203,30 @@ export default function AppointmentForm({ edit }: Props) {
                           formik.setFieldValue("scheduled", value)
                         }
                       />
+
+                      <TimePicker
+                        showTodayButton
+                        todayLabel="Ahora"
+                        minutesStep={5}
+                        label="Desde:"
+                        value={formik.values.from}
+                        onChange={(value) => {
+                          formik.setFieldValue("from", value);
+                          formik.setFieldValue("to", value);
+                        }}
+                        inputVariant="filled"
+                      />
+
+                      <TimePicker
+                        showTodayButton
+                        todayLabel="Ahora"
+                        minutesStep={5}
+                        label="Hasta:"
+                        value={formik.values.to}
+                        onChange={(value) => formik.setFieldValue("to", value)}
+                        inputVariant="filled"
+                      />
                     </MuiPickersUtilsProvider>
-
-                    <TimePicker
-                      clearable
-                      ampm={false}
-                      label="Desde:"
-                      value={formik.values.from}
-                      onChange={(value) => formik.setFieldValue("from", value)}
-                      inputVariant="filled"
-                    />
-
-                    <TimePicker
-                      clearable
-                      ampm={false}
-                      label="Hasta:"
-                      value={formik.values.to}
-                      onChange={(value) => formik.setFieldValue("to", value)}
-                      inputVariant="filled"
-                    />
 
                     <FormControl
                       variant="filled"

@@ -1,4 +1,5 @@
 import React from "react";
+import { AppointmentType, Appointment } from "../models/patient";
 
 import {
   Avatar,
@@ -16,7 +17,7 @@ import {
   SettingsInputSvideo,
 } from "@material-ui/icons";
 import { blue, green, red } from "@material-ui/core/colors";
-import { AppointmentType, Appointment } from "../models/patient";
+import { formatAppointmentDate } from "../helpers/formatter";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -47,6 +48,7 @@ type Props = {
 export default function PatientAppointmentItem({ item }: Props) {
   const classes = useStyles();
   let avatar;
+  const scheduled = formatAppointmentDate(item.scheduled);
 
   switch (item.category) {
     case AppointmentType.PreliminaryTalk:
@@ -85,7 +87,7 @@ export default function PatientAppointmentItem({ item }: Props) {
   return (
     <ListItem>
       <ListItemAvatar>{avatar}</ListItemAvatar>
-      <ListItemText primary={item.title} secondary={item.scheduled} />
+      <ListItemText primary={item.title} secondary={scheduled} />
     </ListItem>
   );
 }
