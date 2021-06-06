@@ -74,9 +74,8 @@ const formatAppointmentDate = (dt: Date) => {
   return dayjs(dt).format(DATE_FORMAT);
 };
 
-const addAppointmentDate = (dt: Date, minutes: number) => {
-  // dayjs.add(minutes, 'm');
-  return dayjs(dt).format(DATE_FORMAT);
+const addAppointmentTime = (dt: Date, minutes: number) => {
+  return dayjs(dt).add(minutes, "m");
 };
 
 export {
@@ -84,4 +83,5 @@ export {
   formatGender,
   formatStatus,
   formatAppointmentDate,
+  addAppointmentTime,
 };

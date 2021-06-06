@@ -3,7 +3,7 @@ import { useParams, useHistory, Link as RouterLink } from "react-router-dom";
 import axios from "../api/apiConfig";
 import { Formik, Form } from "formik";
 import * as yup from "yup";
-
+import { addAppointmentTime } from "../helpers/formatter";
 import { useGlobalStyles } from "../styles/globalStyles";
 import {
   Appointment,
