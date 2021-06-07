@@ -3,7 +3,6 @@ import { useParams, useHistory, Link as RouterLink } from "react-router-dom";
 import axios from "../api/apiConfig";
 import { Formik, Form } from "formik";
 import * as yup from "yup";
-import { addAppointmentTime } from "../helpers/formatter";
 import { useGlobalStyles } from "../styles/globalStyles";
 import {
   Appointment,
@@ -168,7 +167,7 @@ export default function AppointmentForm({ edit }: Props) {
                       variant="filled"
                       className={globalClasses.spacing}
                     >
-                      <InputLabel id="status-select-label">Tipo</InputLabel>
+                      <InputLabel id="status-select-label">Estado</InputLabel>
                       <Select
                         labelId="status-select-label"
                         id="status-select"
@@ -212,7 +211,6 @@ export default function AppointmentForm({ edit }: Props) {
                         value={formik.values.from}
                         onChange={(value) => {
                           formik.setFieldValue("from", value);
-                          formik.setFieldValue("to", value);
                         }}
                         inputVariant="filled"
                       />
@@ -355,7 +353,7 @@ export default function AppointmentForm({ edit }: Props) {
                     variant="outlined"
                     size="large"
                     component={RouterLink}
-                    to={`/questionnaire`}
+                    to={patientUrl}
                     disabled={formik.isSubmitting}
                   >
                     Cancelar

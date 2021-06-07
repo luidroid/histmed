@@ -17,7 +17,10 @@ import {
   SettingsInputSvideo,
 } from "@material-ui/icons";
 import { blue, green, red } from "@material-ui/core/colors";
-import { formatAppointmentDate } from "../helpers/formatter";
+import {
+  formatAppointmentDate,
+  formatAppointmentTime,
+} from "../helpers/formatter";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -49,6 +52,8 @@ export default function PatientAppointmentItem({ item }: Props) {
   const classes = useStyles();
   let avatar;
   const scheduled = formatAppointmentDate(item.scheduled);
+  const from = formatAppointmentTime(item.from);
+  const to = formatAppointmentTime(item.to);
 
   switch (item.category) {
     case AppointmentType.PreliminaryTalk:
@@ -87,7 +92,10 @@ export default function PatientAppointmentItem({ item }: Props) {
   return (
     <ListItem>
       <ListItemAvatar>{avatar}</ListItemAvatar>
-      <ListItemText primary={item.title} secondary={scheduled} />
+      <ListItemText
+        primary={item.title}
+        secondary={`${scheduled} (${from} - ${to})`}
+      />
     </ListItem>
   );
 }

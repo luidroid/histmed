@@ -45,7 +45,7 @@ const initAppointment: Appointment = {
   comment: "",
   recommendation: "",
   attachments: [],
-  status: Status.Open,
+  status: Status.Pending,
 };
 
 const initQuestionnaire: Questionnaire = {
